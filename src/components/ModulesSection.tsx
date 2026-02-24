@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import WhatsAppChat, { type WAMessage } from "./WhatsAppChat";
 import TipCard from "./TipCard";
 import { cn } from "@/lib/utils";
@@ -206,57 +207,110 @@ const Module4 = () => (
 );
 
 /* MODULE 5 */
-const Module5 = () => (
-  <Module
-    number={5}
-    title="Tu Vitrina Digital: la tienda que nunca cierra"
-    concept="Tienes una tienda abierta 24 horas que la mayoría ni sabe que tiene."
-    tip="Pon mínimo 1 Estado al día. La venta es más fácil cuando no eres una extraña."
-  >
-    <div className="grid sm:grid-cols-2 gap-4 mb-6">
-      {[
-        { title: "WhatsApp Business", desc: "El letrero en la puerta", icon: "🏪" },
-        { title: "Tu Catálogo Personal", desc: "Los racks con tus favoritos", icon: "👗" },
-        { title: "Catálogo Interactivo Price Shoes", desc: "La tienda completa con caja incluida", icon: "🛒" },
-        { title: "Estados de WhatsApp", desc: "El cartelón de ofertas que trabaja mientras duermes", icon: "📱" },
-      ].map((tool, i) => (
-        <div key={i} className="bg-card border border-border rounded-xl p-5 hover:shadow-lg transition-shadow">
-          <span className="text-3xl mb-3 block">{tool.icon}</span>
-          <h4 className="font-bold text-sm mb-1">{tool.title}</h4>
-          <p className="text-xs text-muted-foreground">{tool.desc}</p>
-        </div>
-      ))}
-    </div>
+const outfitSteps = [
+  { num: 1, text: "Tú armas el look, yo consigo las piezas 😊 Vamos...", label: "Intro — el gancho" },
+  { num: 2, text: "Botas Price Shoes + \"¿Con qué las combinarías? 👀\"", label: "Pieza base" },
+  { num: 3, text: "Dos opciones de jeans + \"¿Opción A o B?\"", label: "Segunda pieza" },
+  { num: 4, text: "Dos blusas + \"¿Cuál le va mejor?\"", label: "Tercera pieza" },
+  { num: 5, text: "Dos bolsas + \"¿Con cuál la rematas?\"", label: "Accesorio" },
+  { num: 6, text: "Outfit completo + \"Así quedó el look que armaron 🔥\"", label: "El reveal final" },
+];
 
-    <h4 className="font-semibold mb-3">Chat template — Catálogo Personal:</h4>
-    <WhatsAppChat
-      contactName="Clienta"
-      messages={[{ text: "Hermosa aquí te mando mis favoritos de la temporada 😊 Si ves algo que te late me dices — [link catálogo]", sent: true, time: "11:00 AM" }]}
-      className="mb-4"
-    />
-    <h4 className="font-semibold mb-3">Chat template — Catálogo Interactivo:</h4>
-    <WhatsAppChat
-      contactName="Clienta VIP"
-      messages={[{ text: "Oye hermosa, ya que eres de mis clientas de confianza 😊 te mando el catálogo completo de Price Shoes — ahí puedes ver todo a tu ritmo y si encuentras algo me avisas para levantamos el pedido juntas — [link catálogo]", sent: true, time: "11:15 AM" }]}
-      className="mb-6"
-    />
+const Module5 = () => {
+  const [outfitOpen, setOutfitOpen] = useState(false);
 
-    <h4 className="font-semibold mb-3">📱 4 tipos de Estados:</h4>
-    <div className="grid grid-cols-2 gap-3">
-      {[
-        { title: "Prueba social", desc: "Foto de clienta feliz con su compra" },
-        { title: "Outfit completo", desc: "Combinación de pies a cabeza" },
-        { title: "Gancho de curiosidad", desc: '"¿Adivinen qué llegó?" sin mostrar todo' },
-        { title: "El reveal", desc: "Mostrar producto estrella del día" },
-      ].map((s, i) => (
-        <div key={i} className="bg-muted rounded-lg p-3 border border-border">
-          <p className="font-bold text-xs mb-1">{s.title}</p>
-          <p className="text-xs text-muted-foreground">{s.desc}</p>
-        </div>
-      ))}
-    </div>
-  </Module>
-);
+  return (
+    <Module
+      number={5}
+      title="Tu Vitrina Digital: la tienda que nunca cierra"
+      concept="Tienes una tienda abierta 24 horas que la mayoría ni sabe que tiene."
+      tip="Pon mínimo 1 Estado al día. La venta es más fácil cuando no eres una extraña."
+    >
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        {[
+          { title: "WhatsApp Business", desc: "El letrero en la puerta", icon: "🏪" },
+          { title: "Tu Catálogo Personal", desc: "Los racks con tus favoritos", icon: "👗" },
+          { title: "Catálogo Interactivo Price Shoes", desc: "La tienda completa con caja incluida", icon: "🛒" },
+          { title: "Estados de WhatsApp", desc: "El cartelón de ofertas que trabaja mientras duermes", icon: "📱" },
+        ].map((tool, i) => (
+          <div key={i} className="bg-card border border-border rounded-xl p-5 hover:shadow-lg transition-shadow">
+            <span className="text-3xl mb-3 block">{tool.icon}</span>
+            <h4 className="font-bold text-sm mb-1">{tool.title}</h4>
+            <p className="text-xs text-muted-foreground">{tool.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <h4 className="font-semibold mb-3">Chat template — Catálogo Personal:</h4>
+      <WhatsAppChat
+        contactName="Clienta"
+        messages={[{ text: "Hermosa aquí te mando mis favoritos de la temporada 😊 Si ves algo que te late me dices — [link catálogo]", sent: true, time: "11:00 AM" }]}
+        className="mb-4"
+      />
+      <h4 className="font-semibold mb-3">Chat template — Catálogo Interactivo:</h4>
+      <WhatsAppChat
+        contactName="Clienta VIP"
+        messages={[{ text: "Oye hermosa, ya que eres de mis clientas de confianza 😊 te mando el catálogo completo de Price Shoes — ahí puedes ver todo a tu ritmo y si encuentras algo me avisas para levantamos el pedido juntas — [link catálogo]", sent: true, time: "11:15 AM" }]}
+        className="mb-6"
+      />
+
+      <h4 className="font-semibold mb-3">📱 4 tipos de Estados:</h4>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        {[
+          { title: "Prueba social", desc: "Foto de clienta feliz con su compra" },
+          { title: "Outfit completo", desc: "Combinación de pies a cabeza" },
+          { title: "Gancho de curiosidad", desc: '"¿Adivinen qué llegó?" sin mostrar todo' },
+          { title: "El reveal", desc: "Mostrar producto estrella del día" },
+        ].map((s, i) => (
+          <div key={i} className="bg-muted rounded-lg p-3 border border-border">
+            <p className="font-bold text-xs mb-1">{s.title}</p>
+            <p className="text-xs text-muted-foreground">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Outfit Colaborativo expandible */}
+      <div className="border border-primary/30 rounded-xl overflow-hidden">
+        <button
+          onClick={() => setOutfitOpen(!outfitOpen)}
+          className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 hover:from-primary/15 hover:via-accent/15 hover:to-secondary/15 transition-all"
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">👗</span>
+            <div className="text-left">
+              <p className="font-display font-bold text-sm">Outfit Colaborativo — Secuencia de 6 Estados</p>
+              <p className="text-xs text-muted-foreground">Tu clienta arma el look contigo, paso a paso</p>
+            </div>
+          </div>
+          <ChevronDown className={cn("w-5 h-5 text-primary transition-transform duration-300", outfitOpen && "rotate-180")} />
+        </button>
+
+        {outfitOpen && (
+          <div className="px-5 py-6 space-y-0">
+            {outfitSteps.map((step, i) => (
+              <div key={i} className="flex gap-4">
+                {/* Timeline */}
+                <div className="flex flex-col items-center">
+                  <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center text-primary-foreground font-bold text-sm shrink-0">
+                    {step.num}
+                  </div>
+                  {i < outfitSteps.length - 1 && (
+                    <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-secondary/40 my-1" />
+                  )}
+                </div>
+                {/* Card */}
+                <div className={cn("flex-1 rounded-xl border border-border p-4 mb-3", i === outfitSteps.length - 1 ? "bg-primary/10 border-primary/30" : "bg-card")}>
+                  <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wide">{step.label}</p>
+                  <p className="text-sm text-foreground">{step.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </Module>
+  );
+};
 
 /* MODULE 6 */
 const labels = [
