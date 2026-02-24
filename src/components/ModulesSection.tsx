@@ -47,7 +47,26 @@ const Module1 = () => (
     tip="Tu perfil es lo primero que ve tu clienta antes de responderte. Si está vacío, es como llegar a una tienda con las luces apagadas."
   >
     <h3 className="font-semibold text-lg mb-3">🛠 Herramienta: WhatsApp Business</h3>
+
+    <p className="text-sm text-muted-foreground mb-2">Configura tu perfil profesional:</p>
+    <ul className="list-disc list-inside text-sm space-y-1 mb-6 text-foreground">
+      <li>Nombre del negocio</li>
+      <li>Descripción del perfil</li>
+      <li>Horario de atención</li>
+      <li>Mensaje de bienvenida automático</li>
+      <li>Mensaje de ausencia automático</li>
+    </ul>
+
     <div className="space-y-4">
+      <div>
+        <p className="text-sm font-medium text-muted-foreground mb-2">Descripción del perfil:</p>
+        <WhatsAppChat
+          contactName="Tu Perfil"
+          messages={[
+            { text: "Hola, soy Lupita 👋 Te ayudo a verte increíble con calzado, bolsas y accesorios Price Shoes. Escríbeme y con gusto te asesoro.", sent: true, time: "Bio" },
+          ]}
+        />
+      </div>
       <div>
         <p className="text-sm font-medium text-muted-foreground mb-2">Mensaje de bienvenida:</p>
         <WhatsAppChat
@@ -58,11 +77,11 @@ const Module1 = () => (
         />
       </div>
       <div>
-        <p className="text-sm font-medium text-muted-foreground mb-2">Descripción del perfil:</p>
+        <p className="text-sm font-medium text-muted-foreground mb-2">Mensaje de ausencia:</p>
         <WhatsAppChat
-          contactName="Tu Perfil"
+          contactName="Clienta"
           messages={[
-            { text: "Hola, soy Lupita 👋 Te ayudo a verte increíble con calzado, bolsas y accesorios Price Shoes. Escríbeme y con gusto te asesoro.", sent: true, time: "Bio" },
+            { text: "Hola! Ahorita no estoy disponible pero en cuanto pueda te respondo 🙌 Déjame tu pregunta y con gusto te ayudo.", sent: true, time: "11:45 PM" },
           ]}
         />
       </div>
