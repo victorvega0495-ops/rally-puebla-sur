@@ -327,6 +327,7 @@ const Module6 = () => (
     number={6}
     title="Tu base de clientes: las que regresan solas"
     concept="Conseguir una clienta nueva cuesta 5 veces más que retener una que ya te compró."
+    error="Tener 500 contactos en WhatsApp y no saber quién te ha comprado, quién está interesada pero no ha comprado, y quién ya lleva 6 meses sin saber nada de ti."
     tip="15 minutos a la semana revisando tus etiquetas valen más que cualquier anuncio."
   >
     <h3 className="font-semibold text-lg mb-3">🏷 Etiquetas de WhatsApp Business</h3>
