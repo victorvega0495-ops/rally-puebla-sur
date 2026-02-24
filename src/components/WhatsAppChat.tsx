@@ -23,7 +23,7 @@ const WhatsAppChat = ({ contactName, messages, className, compact }: WhatsAppCha
     style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
   >
     {/* Header */}
-    <div className="bg-wa-header px-4 py-2.5 flex items-center gap-3">
+    <div className="bg-[#075E54] px-4 py-2.5 flex items-center gap-3">
       <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-sm text-white font-bold">
         {contactName.charAt(0)}
       </div>
@@ -32,10 +32,10 @@ const WhatsAppChat = ({ contactName, messages, className, compact }: WhatsAppCha
       </span>
     </div>
 
-    {/* Chat body with subtle WhatsApp doodle-pattern overlay */}
+    {/* Chat body */}
     <div
       className={cn(
-        "bg-wa-bg relative p-3 space-y-1.5",
+        "bg-[#ECE5DD] relative p-3 space-y-1.5",
         compact ? "max-h-60 overflow-y-auto" : ""
       )}
       style={{
@@ -49,17 +49,17 @@ const WhatsAppChat = ({ contactName, messages, className, compact }: WhatsAppCha
           className={cn(
             "max-w-[85%] rounded-lg px-3 py-1.5 shadow-sm relative",
             msg.sent
-              ? "ml-auto bg-wa-sent"
-              : "bg-wa-received"
+              ? "ml-auto bg-[#DCF8C6]"
+              : "bg-white"
           )}
         >
-          <p className="text-[14px] text-wa-text leading-relaxed whitespace-pre-wrap">
+          <p className="text-[14px] text-[#111111] leading-relaxed whitespace-pre-wrap">
             {msg.text}
           </p>
           <div className="flex items-center justify-end gap-1 mt-0.5">
-            <span className="text-[10px] text-wa-time">{msg.time}</span>
+            <span className="text-[10px] text-[#737373]">{msg.time}</span>
             {msg.sent && (
-              <CheckCheck className="w-4 h-4 text-wa-check" />
+              <CheckCheck className="w-4 h-4 text-[#53bdeb]" />
             )}
           </div>
         </div>
