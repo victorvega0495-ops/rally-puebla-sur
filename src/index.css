@@ -36,13 +36,14 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* WhatsApp */
-    --wa-header: 174 82% 20%;
-    --wa-bg: 33 22% 89%;
-    --wa-sent: 100 75% 87%;
-    --wa-received: 0 0% 100%;
-    --wa-text: 0 0% 15%;
-    --wa-time: 0 0% 55%;
+    /* WhatsApp — exact brand colors */
+    --wa-header: 174 85% 19%;       /* #075E54 */
+    --wa-bg: 33 22% 89%;            /* #ECE5DD */
+    --wa-sent: 100 75% 87%;         /* #DCF8C6 */
+    --wa-received: 0 0% 100%;       /* #FFFFFF */
+    --wa-text: 0 0% 7%;             /* #111111 */
+    --wa-time: 0 0% 45%;            /* #737373 */
+    --wa-check: 202 78% 47%;        /* #34B7F1 — blue read checks */
 
     /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%), hsl(220 85% 55%));

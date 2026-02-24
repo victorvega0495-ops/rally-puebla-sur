@@ -68,6 +68,7 @@ export default {
           received: "hsl(var(--wa-received))",
           text: "hsl(var(--wa-text))",
           time: "hsl(var(--wa-time))",
+          check: "hsl(var(--wa-check))",
         },
       },
       borderRadius: {
