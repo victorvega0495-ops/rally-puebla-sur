@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState, useRef } from "react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import WhatsAppChat, { type WAMessage } from "./WhatsAppChat";
 import TipCard from "./TipCard";
 import { cn } from "@/lib/utils";
@@ -207,13 +207,13 @@ const Module4 = () => (
 );
 
 /* MODULE 5 */
-const outfitSteps = [
-  { num: 1, text: "Tú armas el look, yo consigo las piezas 😊 Vamos...", label: "Intro — el gancho" },
-  { num: 2, text: "Botas Price Shoes + \"¿Con qué las combinarías? 👀\"", label: "Pieza base" },
-  { num: 3, text: "Dos opciones de jeans + \"¿Opción A o B?\"", label: "Segunda pieza" },
-  { num: 4, text: "Dos blusas + \"¿Cuál le va mejor?\"", label: "Tercera pieza" },
-  { num: 5, text: "Dos bolsas + \"¿Con cuál la rematas?\"", label: "Accesorio" },
-  { num: 6, text: "Outfit completo + \"Así quedó el look que armaron 🔥\"", label: "El reveal final" },
+const outfitSlides = [
+  { src: "/arte-7-colaborativo-arranque.jpg", label: "Estado 1", alt: "Arranque — Arma tu propio look" },
+  { src: "/arte-8-colaborativo-zapatos.jpg", label: "Estado 2", alt: "Zapatos — ¿Con cuál rematas?" },
+  { src: "/arte-9-colaborativo-jeans.jpg", label: "Estado 3", alt: "Jeans — ¿Cuál te gusta más?" },
+  { src: "/arte-10-colaborativo-blusas.jpg", label: "Estado 4", alt: "Blusas — ¿Cuál combiné mejor?" },
+  { src: "/arte-11-colaborativo-bolsas.jpg", label: "Estado 5", alt: "Bolsas — Eleva el outfit con accesorios" },
+  { src: "/arte-12-colaborativo-reveal.jpg", label: "Estado 6", alt: "Reveal — Y así queda el look completo" },
 ];
 
 const Module5 = () => {
@@ -316,7 +316,7 @@ const Module5 = () => {
         </div>
       </div>
 
-      {/* Outfit Colaborativo expandible */}
+      {/* Outfit Colaborativo — carrusel de stories */}
       <div className="border border-primary/30 rounded-xl overflow-hidden">
         <button
           onClick={() => setOutfitOpen(!outfitOpen)}
@@ -332,30 +332,42 @@ const Module5 = () => {
           <ChevronDown className={cn("w-5 h-5 text-primary transition-transform duration-300", outfitOpen && "rotate-180")} />
         </button>
 
-        {outfitOpen && (
-          <div className="px-5 py-6 space-y-0">
-            {outfitSteps.map((step, i) => (
-              <div key={i} className="flex gap-4">
-                {/* Timeline */}
-                <div className="flex flex-col items-center">
-                  <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center text-primary-foreground font-bold text-sm shrink-0">
-                    {step.num}
-                  </div>
-                  {i < outfitSteps.length - 1 && (
-                    <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-secondary/40 my-1" />
-                  )}
-                </div>
-                {/* Card */}
-                <div className={cn("flex-1 rounded-xl border border-border p-4 mb-3", i === outfitSteps.length - 1 ? "bg-primary/10 border-primary/30" : "bg-card")}>
-                  <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wide">{step.label}</p>
-                  <p className="text-sm text-foreground">{step.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        {outfitOpen && <OutfitCarousel />}
       </div>
     </Module>
+  );
+};
+
+const OutfitCarousel = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scroll = (dir: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const amount = 200;
+    scrollRef.current.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
+  };
+
+  return (
+    <div className="relative px-2 py-6">
+      <button onClick={() => scroll("left")} className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-card/80 backdrop-blur border border-border rounded-full p-1.5 shadow-md hover:bg-card transition-colors">
+        <ChevronLeft className="w-5 h-5 text-foreground" />
+      </button>
+      <button onClick={() => scroll("right")} className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-card/80 backdrop-blur border border-border rounded-full p-1.5 shadow-md hover:bg-card transition-colors">
+        <ChevronRight className="w-5 h-5 text-foreground" />
+      </button>
+      <div ref={scrollRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-8 pb-2 scrollbar-hide">
+        {outfitSlides.map((slide, i) => (
+          <div key={i} className="snap-start shrink-0 flex flex-col items-center">
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              className="rounded-2xl shadow-md object-cover max-h-[350px] w-auto aspect-[9/16]"
+              loading="lazy"
+            />
+            <span className="mt-2 gradient-bg text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">{slide.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
