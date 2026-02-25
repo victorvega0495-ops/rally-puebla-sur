@@ -3,6 +3,7 @@ import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import WhatsAppChat, { type WAMessage } from "./WhatsAppChat";
 import TipCard from "./TipCard";
 import { cn } from "@/lib/utils";
+import ImageLightbox from "./ImageLightbox";
 
 interface ModuleProps {
   number: number;
@@ -218,6 +219,7 @@ const outfitSlides = [
 
 const Module5 = () => {
   const [outfitOpen, setOutfitOpen] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
   return (
     <Module
@@ -261,8 +263,9 @@ const Module5 = () => {
           <img
             src="/arte-2-prueba-social.jpg"
             alt="Prueba social — clienta feliz con su compra"
-            className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+            className="rounded-2xl shadow-md object-cover w-full max-h-[400px] cursor-pointer hover:brightness-95 transition-all"
             loading="lazy"
+            onClick={() => setLightbox("/arte-2-prueba-social.jpg")}
           />
           <p className="font-bold text-xs mt-2 text-center">Prueba social</p>
           <p className="text-xs text-muted-foreground text-center">"Así lució hoy 😍"</p>
@@ -272,8 +275,9 @@ const Module5 = () => {
           <img
             src="/arte-3-outfit-completo.jpg"
             alt="Outfit completo de pies a cabeza"
-            className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+            className="rounded-2xl shadow-md object-cover w-full max-h-[400px] cursor-pointer hover:brightness-95 transition-all"
             loading="lazy"
+            onClick={() => setLightbox("/arte-3-outfit-completo.jpg")}
           />
           <p className="font-bold text-xs mt-2 text-center">Outfit completo</p>
           <p className="text-xs text-muted-foreground text-center">"¿Cuál se llevan? 👀"</p>
@@ -285,8 +289,9 @@ const Module5 = () => {
               <img
                 src="/arte-4-gancho-parte1.jpg"
                 alt="Gancho de curiosidad — parte 1"
-                className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+                className="rounded-2xl shadow-md object-cover w-full max-h-[400px] cursor-pointer hover:brightness-95 transition-all"
                 loading="lazy"
+                onClick={() => setLightbox("/arte-4-gancho-parte1.jpg")}
               />
               <span className="text-[10px] font-bold mt-1 gradient-bg text-primary-foreground px-2 py-0.5 rounded-full">Gancho</span>
             </div>
@@ -294,8 +299,9 @@ const Module5 = () => {
               <img
                 src="/arte-5-gancho-parte2.jpg"
                 alt="Gancho de curiosidad — reveal"
-                className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+                className="rounded-2xl shadow-md object-cover w-full max-h-[400px] cursor-pointer hover:brightness-95 transition-all"
                 loading="lazy"
+                onClick={() => setLightbox("/arte-5-gancho-parte2.jpg")}
               />
               <span className="text-[10px] font-bold mt-1 gradient-bg text-primary-foreground px-2 py-0.5 rounded-full">Reveal</span>
             </div>
@@ -308,13 +314,15 @@ const Module5 = () => {
           <img
             src="/arte-6-antes-despues.jpg"
             alt="Antes y después — el poder del outfit correcto"
-            className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+            className="rounded-2xl shadow-md object-cover w-full max-h-[400px] cursor-pointer hover:brightness-95 transition-all"
             loading="lazy"
+            onClick={() => setLightbox("/arte-6-antes-despues.jpg")}
           />
           <p className="font-bold text-xs mt-2 text-center">Antes y después</p>
           <p className="text-xs text-muted-foreground text-center">"El poder del outfit correcto 👌"</p>
         </div>
       </div>
+      <ImageLightbox src={lightbox} onClose={() => setLightbox(null)} />
 
       {/* Outfit Colaborativo — carrusel de stories */}
       <div className="border border-primary/30 rounded-xl overflow-hidden">
@@ -340,6 +348,7 @@ const Module5 = () => {
 
 const OutfitCarousel = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [lightbox, setLightbox] = useState<string | null>(null);
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
     const amount = 200;
@@ -360,13 +369,15 @@ const OutfitCarousel = () => {
             <img
               src={slide.src}
               alt={slide.alt}
-              className="rounded-2xl shadow-md object-cover max-h-[350px] w-auto aspect-[9/16]"
+              className="rounded-2xl shadow-md object-cover max-h-[350px] w-auto aspect-[9/16] cursor-pointer hover:brightness-95 transition-all"
               loading="lazy"
+              onClick={() => setLightbox(slide.src)}
             />
             <span className="mt-2 gradient-bg text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">{slide.label}</span>
           </div>
         ))}
       </div>
+      <ImageLightbox src={lightbox} onClose={() => setLightbox(null)} />
     </div>
   );
 };

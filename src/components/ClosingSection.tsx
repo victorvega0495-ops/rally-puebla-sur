@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ImageLightbox from "./ImageLightbox";
 
 const iaSlides = [
   "/arte-13-ia-1.jpg",
@@ -11,6 +12,7 @@ const iaSlides = [
 
 const ClosingSection = () => {
   const [active, setActive] = useState(0);
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => setActive(p => (p + 1) % iaSlides.length), 5000);
@@ -46,10 +48,11 @@ const ClosingSection = () => {
                 src={src}
                 alt={`Antes y después con asesoría de imagen ${i + 1}`}
                 className={cn(
-                  "rounded-2xl shadow-lg object-cover w-full max-h-[450px] aspect-[9/16] transition-opacity duration-700 absolute inset-0",
-                  i === active ? "opacity-100 relative" : "opacity-0"
+                  "rounded-2xl shadow-lg object-cover w-full max-h-[450px] aspect-[9/16] transition-opacity duration-700 absolute inset-0 cursor-pointer hover:brightness-95",
+                  i === active ? "opacity-100 relative" : "opacity-0 pointer-events-none"
                 )}
                 loading="lazy"
+                onClick={() => setLightbox(src)}
               />
             ))}
           </div>
@@ -67,6 +70,7 @@ const ClosingSection = () => {
           </div>
           <p className="text-xs text-primary-foreground/70 mt-2 italic">Ejemplos de antes y después con asesoría de imagen</p>
         </div>
+        <ImageLightbox src={lightbox} onClose={() => setLightbox(null)} />
 
         <p className="text-sm text-primary-foreground/80 mb-8 italic">
           Las tiendas de lujo tienen personal shopper. Sus clientas merecen lo mismo — y ahora ustedes pueden dárselo.
