@@ -255,18 +255,65 @@ const Module5 = () => {
       />
 
       <h4 className="font-semibold mb-3">📱 4 tipos de Estados:</h4>
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        {[
-          { title: "Prueba social", desc: "Foto de clienta feliz con su compra" },
-          { title: "Outfit completo", desc: "Combinación de pies a cabeza" },
-          { title: "Gancho de curiosidad", desc: '"¿Adivinen qué llegó?" sin mostrar todo' },
-          { title: "El reveal", desc: "Mostrar producto estrella del día" },
-        ].map((s, i) => (
-          <div key={i} className="bg-muted rounded-lg p-3 border border-border">
-            <p className="font-bold text-xs mb-1">{s.title}</p>
-            <p className="text-xs text-muted-foreground">{s.desc}</p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        {/* Prueba social */}
+        <div className="flex flex-col items-center">
+          <img
+            src="/arte-2-prueba-social.jpg"
+            alt="Prueba social — clienta feliz con su compra"
+            className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+            loading="lazy"
+          />
+          <p className="font-bold text-xs mt-2 text-center">Prueba social</p>
+          <p className="text-xs text-muted-foreground text-center">"Así lució hoy 😍"</p>
+        </div>
+        {/* Outfit completo */}
+        <div className="flex flex-col items-center">
+          <img
+            src="/arte-3-outfit-completo.jpg"
+            alt="Outfit completo de pies a cabeza"
+            className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+            loading="lazy"
+          />
+          <p className="font-bold text-xs mt-2 text-center">Outfit completo</p>
+          <p className="text-xs text-muted-foreground text-center">"¿Cuál se llevan? 👀"</p>
+        </div>
+        {/* Gancho de curiosidad — 2 imágenes lado a lado */}
+        <div className="flex flex-col items-center">
+          <div className="flex gap-2 w-full">
+            <div className="flex-1 flex flex-col items-center">
+              <img
+                src="/arte-4-gancho-parte1.jpg"
+                alt="Gancho de curiosidad — parte 1"
+                className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+                loading="lazy"
+              />
+              <span className="text-[10px] font-bold mt-1 gradient-bg text-primary-foreground px-2 py-0.5 rounded-full">Gancho</span>
+            </div>
+            <div className="flex-1 flex flex-col items-center">
+              <img
+                src="/arte-5-gancho-parte2.jpg"
+                alt="Gancho de curiosidad — reveal"
+                className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+                loading="lazy"
+              />
+              <span className="text-[10px] font-bold mt-1 gradient-bg text-primary-foreground px-2 py-0.5 rounded-full">Reveal</span>
+            </div>
           </div>
-        ))}
+          <p className="font-bold text-xs mt-2 text-center">Gancho de curiosidad</p>
+          <p className="text-xs text-muted-foreground text-center">"¿Adivinen qué llegó?" 👀</p>
+        </div>
+        {/* Antes y después */}
+        <div className="flex flex-col items-center">
+          <img
+            src="/arte-6-antes-despues.jpg"
+            alt="Antes y después — el poder del outfit correcto"
+            className="rounded-2xl shadow-md object-cover w-full max-h-[400px]"
+            loading="lazy"
+          />
+          <p className="font-bold text-xs mt-2 text-center">Antes y después</p>
+          <p className="text-xs text-muted-foreground text-center">"El poder del outfit correcto 👌"</p>
+        </div>
       </div>
 
       {/* Outfit Colaborativo expandible */}
