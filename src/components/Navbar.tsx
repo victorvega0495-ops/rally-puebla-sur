@@ -1,4 +1,4 @@
-import { BookOpen, MessageCircle, CalendarDays } from "lucide-react";
+import { BookOpen, MessageCircle, CalendarDays, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -10,6 +10,7 @@ const tabs = [
   { id: "clase", label: "La Clase", icon: BookOpen },
   { id: "asesor", label: "Mi Asesor", icon: MessageCircle },
   { id: "planeador", label: "Mi Planeador", icon: CalendarDays },
+  { id: "plan7", label: "Plan 7 Días", icon: Rocket },
 ];
 
 const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => (

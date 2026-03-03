@@ -6,6 +6,7 @@ import ModulesSection from "@/components/ModulesSection";
 import ClosingSection from "@/components/ClosingSection";
 import SalesAdvisor from "@/components/SalesAdvisor";
 import WeeklyPlanner from "@/components/WeeklyPlanner";
+import CampaignSection from "@/components/CampaignSection";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("clase");
@@ -42,6 +43,7 @@ const Index = () => {
       )}
       {activeTab === "asesor" && <SalesAdvisor />}
       {activeTab === "planeador" && <WeeklyPlanner />}
+      {activeTab === "plan7" && <CampaignSection />}
     </div>
   );
 };
