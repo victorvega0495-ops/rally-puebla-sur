@@ -21,7 +21,7 @@ const Index = () => {
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === "clase" && (
         <>
-          <Hero />
+          <Hero onNavigate={setActiveTab} />
           <StoreSection />
 
           {/* Principio Rector */}

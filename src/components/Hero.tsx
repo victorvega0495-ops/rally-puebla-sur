@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Rocket } from "lucide-react";
 
-const Hero = () => {
+const Hero = ({ onNavigate }: { onNavigate?: (tab: string) => void }) => {
   const scrollToContent = () => {
     document.getElementById("tienda-section")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -21,9 +21,19 @@ const Hero = () => {
           Todas saben cómo funciona una tienda física. Hoy van a descubrir que WhatsApp es exactamente
           lo mismo — con una ventaja: está abierta 24 horas y cabe en el bolsillo de tus clientes.
         </p>
-        <Button variant="hero" size="lg" onClick={scrollToContent} className="text-lg px-10 py-6">
-          Comenzar <ChevronDown className="w-5 h-5 ml-1" />
-        </Button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button variant="hero" size="lg" onClick={scrollToContent} className="text-lg px-10 py-6">
+            Comenzar <ChevronDown className="w-5 h-5 ml-1" />
+          </Button>
+          <Button
+            variant="gradientCool"
+            size="lg"
+            onClick={() => onNavigate?.("plan7")}
+            className="text-lg px-10 py-6"
+          >
+            <Rocket className="w-5 h-5 mr-1" /> Mi Plan de 7 Días
+          </Button>
+        </div>
       </div>
     </section>
   );
