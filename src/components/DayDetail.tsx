@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { ArrowLeft, Copy, Check, Play, Image as ImageIcon, Film } from "lucide-react";
+import { ArrowLeft, Copy, Check, Play, Image as ImageIcon, Film, ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import WhatsAppChat, { WAMessage } from "@/components/WhatsAppChat";
 import { DayData, motivationalMessages } from "@/data/campaignData";
 import { cn } from "@/lib/utils";
@@ -66,7 +67,37 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
       </div>
 
       <div className="px-4 max-w-2xl mx-auto space-y-6 mt-6">
-        {/* Sección 1 — Look del Día */}
+        {/* Sección 1 — Tu Misión de Hoy */}
+        <section
+          className="rounded-2xl overflow-hidden shadow-sm p-5"
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.12), hsl(275 65% 50% / 0.12))" }}
+        >
+          <p className="text-2xl mb-2">🎯</p>
+          <h2 className="font-display font-bold text-sm text-foreground mb-2">Tu Misión de Hoy</h2>
+          <p className="text-sm text-foreground/90 leading-relaxed">{day.mission}</p>
+        </section>
+
+        {/* Sección 2 — Tus Pasos de Hoy */}
+        <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
+          <div className="p-4 border-b border-border bg-muted/30">
+            <h2 className="font-display font-bold text-sm text-foreground">📋 Tus Pasos de Hoy</h2>
+          </div>
+          <div className="p-4 space-y-3">
+            {day.steps.map((step, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0 mt-0.5"
+                  style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+                >
+                  {i + 1}
+                </span>
+                <p className="text-sm text-foreground leading-relaxed">{step}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Sección 3 — Look del Día */}
         <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
           <div className="p-4 border-b border-border bg-muted/30">
             <h2 className="font-display font-bold text-sm text-foreground flex items-center gap-2">
@@ -74,7 +105,6 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
             </h2>
           </div>
           <div className="p-4 space-y-3">
-            {/* Product placeholder */}
             <div
               className="rounded-xl aspect-[3/4] max-h-[280px] w-full flex flex-col items-center justify-center text-white relative overflow-hidden"
               style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.7), hsl(275 65% 50% / 0.7))" }}
@@ -95,7 +125,7 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
           </div>
         </section>
 
-        {/* Sección 2 — Estado de Hoy */}
+        {/* Sección 4 — Estado de Hoy */}
         <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
           <div className="p-4 border-b border-border bg-muted/30">
             <h2 className="font-display font-bold text-sm text-foreground">📱 Tu Estado de Hoy</h2>
@@ -161,7 +191,7 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
           </Tabs>
         </section>
 
-        {/* Sección 3 — Mensaje del Día */}
+        {/* Sección 5 — Mensaje del Día */}
         <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
           <div className="p-4 border-b border-border bg-muted/30">
             <h2 className="font-display font-bold text-sm text-foreground">💬 Tu Mensaje del Día</h2>
@@ -183,7 +213,7 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
           </div>
         </section>
 
-        {/* Sección 4 — Promo (días 3, 5, 7) */}
+        {/* Sección 6 — Promo (días 3, 5, 7) */}
         {day.promo && (
           <section className="rounded-2xl border-2 border-amber-400/50 overflow-hidden shadow-md">
             <div
@@ -209,7 +239,7 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
           </section>
         )}
 
-        {/* Sección 5 — Outfit Colaborativo (día 4) */}
+        {/* Sección — Outfit Colaborativo (día 4) */}
         {day.collabCopies && (
           <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
             <div className="p-4 border-b border-border bg-muted/30">
@@ -250,7 +280,7 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
           </section>
         )}
 
-        {/* Sección 6 — Secuencia de Seguimiento */}
+        {/* Sección 7 — Secuencia de Seguimiento */}
         <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
           <div className="p-4 border-b border-border bg-muted/30">
             <h2 className="font-display font-bold text-sm text-foreground">🔄 Secuencia de Seguimiento</h2>
@@ -277,6 +307,39 @@ const DayDetail = ({ day, totalDays, completed, onBack, onComplete }: DayDetailP
                 </Button>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Sección 8 — Manejo de Objeciones */}
+        <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
+          <div className="p-4 border-b border-border bg-muted/30">
+            <h2 className="font-display font-bold text-sm text-foreground">💬 ¿Qué hago si me dice...?</h2>
+          </div>
+          <div className="p-4">
+            <Accordion type="single" collapsible className="space-y-2">
+              {day.objections.map((obj, i) => (
+                <AccordionItem key={i} value={`obj-${i}`} className="border rounded-lg px-3">
+                  <AccordionTrigger className="text-sm font-medium text-foreground py-3 hover:no-underline">
+                    "{obj.objection}"
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-3 space-y-3">
+                    <WhatsAppChat
+                      contactName="[Nombre]"
+                      messages={[{ text: obj.response, sent: true, time: "10:30 a.m." }]}
+                      compact
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => copyText(obj.response, "Respuesta")}
+                    >
+                      <Copy className="w-3.5 h-3.5 mr-1" /> Copiar ✓
+                    </Button>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </section>
 
