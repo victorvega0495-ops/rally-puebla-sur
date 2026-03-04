@@ -47,33 +47,30 @@ export type Database = {
         }
         Relationships: []
       }
-      day_assets: {
+      day_videos: {
         Row: {
-          asset_type: string
           campaign: string
-          created_at: string
           day_number: number
           id: string
-          storage_url: string
           updated_at: string
+          video_slot: string
+          youtube_url: string
         }
         Insert: {
-          asset_type: string
           campaign: string
-          created_at?: string
           day_number: number
           id?: string
-          storage_url: string
           updated_at?: string
+          video_slot: string
+          youtube_url: string
         }
         Update: {
-          asset_type?: string
           campaign?: string
-          created_at?: string
           day_number?: number
           id?: string
-          storage_url?: string
           updated_at?: string
+          video_slot?: string
+          youtube_url?: string
         }
         Relationships: []
       }
