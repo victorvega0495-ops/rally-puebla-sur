@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ArrowLeft, Check, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Campaign } from "@/data/campaignData";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import CommunityActivityFeed from "@/components/CommunityActivityFeed";
+import CommunityDrawer from "@/components/CommunityDrawer";
 
 interface CampaignViewProps {
   campaign: Campaign;
@@ -55,6 +57,7 @@ const CampaignView = ({ campaign, completedDays, isAdmin, onAdminToggle, onBack,
   const { toast } = useToast();
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [password, setPassword] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const done = completedDays.length;
   const total = campaign.days.length;
   const streak = getStreak(completedDays);
@@ -173,6 +176,20 @@ const CampaignView = ({ campaign, completedDays, isAdmin, onAdminToggle, onBack,
           })}
         </div>
       </div>
+
+        {/* Community activity feed */}
+        <CommunityActivityFeed
+          campaign={campaign.title}
+          onOpenDrawer={() => setDrawerOpen(true)}
+        />
+
+        {/* Community drawer (no floating bubble since externalOpen is used) */}
+        <CommunityDrawer
+          dayNumber={1}
+          campaign={campaign.title}
+          externalOpen={drawerOpen}
+          onExternalClose={() => setDrawerOpen(false)}
+        />
     </div>
   );
 };

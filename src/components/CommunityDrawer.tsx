@@ -7,10 +7,20 @@ import { cn } from "@/lib/utils";
 interface CommunityDrawerProps {
   dayNumber: number;
   campaign: string;
+  externalOpen?: boolean;
+  onExternalClose?: () => void;
 }
 
-const CommunityDrawer = ({ dayNumber, campaign }: CommunityDrawerProps) => {
-  const [open, setOpen] = useState(false);
+const CommunityDrawer = ({ dayNumber, campaign, externalOpen, onExternalClose }: CommunityDrawerProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = externalOpen !== undefined ? externalOpen : internalOpen;
+  const setOpen = (v: boolean) => {
+    if (externalOpen !== undefined) {
+      if (!v && onExternalClose) onExternalClose();
+    } else {
+      setInternalOpen(v);
+    }
+  };
   const [tipCount, setTipCount] = useState(0);
 
   useEffect(() => {
@@ -27,20 +37,22 @@ const CommunityDrawer = ({ dayNumber, campaign }: CommunityDrawerProps) => {
 
   return (
     <>
-      {/* Floating bubble */}
-      <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
-        style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
-        aria-label="Abrir tips de la comunidad"
-      >
-        <span className="text-2xl">💬</span>
-        {tipCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
-            {tipCount > 99 ? "99+" : tipCount}
-          </span>
-        )}
-      </button>
+      {/* Floating bubble - only show when not externally controlled */}
+      {externalOpen === undefined && (
+        <button
+          onClick={() => setOpen(true)}
+          className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+          aria-label="Abrir tips de la comunidad"
+        >
+          <span className="text-2xl">💬</span>
+          {tipCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+              {tipCount > 99 ? "99+" : tipCount}
+            </span>
+          )}
+        </button>
+      )}
 
       {/* Backdrop + Drawer */}
       {open && (
