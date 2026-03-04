@@ -74,19 +74,19 @@ const semana1Days: DayData[] = [
       "Responde a quien te conteste dentro de las siguientes 2 horas — la velocidad de respuesta cierra ventas",
       "Al final del día anota cuántas respondieron",
     ],
-    lookName: "Vestido Midi/Largo",
-    lookProductIds: "ID: 1267366",
+    lookName: "Vestido Estampado Animal Print",
+    lookProductIds: "ID: 1267205",
     brand: "Price Shoes",
     lookAttributes: [
-      "Alarga la figura, tela ligera, va de día y de noche",
+      "Estampado animal print, manga larga con cinturón, va de oficina a salida de noche",
     ],
     idealClient: {
-      quien: "Mujer 25-45 años que quiere verse bien sin complicarse — búscala en contactos de trabajo y grupos de mamás",
+      quien: "Mujer 25-45 años que quiere verse atrevida sin perder elegancia — búscala en contactos de trabajo y amigas que siguen tendencias",
       queBusca: "",
       donde: "",
     },
     salesHacks: [
-      "💡 Muéstrale 2 looks con el mismo vestido — doble valor",
+      "💡 Muéstrale cómo el cinturón cambia todo el look — con y sin él son dos vestidos distintos",
       "💡 Manda el mensaje primero, la foto después",
     ],
     openingMessages: {

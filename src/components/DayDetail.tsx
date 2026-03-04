@@ -239,7 +239,7 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
               style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.06), hsl(275 65% 50% / 0.06))" }}
             >
               <p className="text-sm text-foreground">
-                <span className="font-bold">¿Quién es?</span> {day.idealClient.quien}
+                <span className="font-bold">¿Para quién es?</span> {day.idealClient.quien}
               </p>
             </div>
 
