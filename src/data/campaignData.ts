@@ -481,6 +481,20 @@ export const campaigns: Campaign[] = [
   {
     id: "semana-2",
     title: "Semana 2",
+    subtitle: "Playa y Sandalias",
+    active: false,
+    days: [],
+  },
+  {
+    id: "semana-3",
+    title: "Semana 3",
+    subtitle: "Próximamente",
+    active: false,
+    days: [],
+  },
+  {
+    id: "semana-4",
+    title: "Semana 4",
     subtitle: "Próximamente",
     active: false,
     days: [],
