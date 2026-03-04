@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ImageIcon, Film, Upload, X, Download, Loader2 } from "lucide-react";
+import { ImageIcon, Film, Upload, X, Download, Loader2, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import ImageLightbox from "@/components/ImageLightbox";
 
 interface StatusUploaderProps {
   lookName: string;
@@ -29,6 +30,33 @@ interface AssetData {
 const getStoragePath = (campaign: string, day: number, assetType: AssetType, ext: string) =>
   `${campaign}/dia-${day}/${assetType}.${ext}`;
 
+const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+const downloadBlob = async (url: string, fileName: string, toast: ReturnType<typeof useToast>["toast"]) => {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+  } catch {
+    if (isIOS()) {
+      toast({
+        title: "📱 Descarga en iPhone",
+        description: "Mantén presionado el video y selecciona 'Guardar video'",
+        duration: 5000,
+      });
+    } else {
+      window.open(url, "_blank");
+    }
+  }
+};
+
 /* ── Placeholder (no asset) ── */
 const PlaceholderSlot = ({ label, lookName, type }: { label: string; lookName: string; type: "image" | "video" }) => (
   <div className="flex-1 min-w-0">
@@ -41,9 +69,9 @@ const PlaceholderSlot = ({ label, lookName, type }: { label: string; lookName: s
 );
 
 /* ── Image slot ── */
-const ImageAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: prog, onFile, onRemove }: {
+const ImageAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: prog, onFile, onRemove, onImageTap }: {
   label: string; asset: AssetData | null; lookName: string; isAdmin?: boolean;
-  uploading: boolean; progress: number; onFile: (f: File) => void; onRemove: () => void;
+  uploading: boolean; progress: number; onFile: (f: File) => void; onRemove: () => void; onImageTap: (url: string) => void;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -89,14 +117,14 @@ const ImageAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
   return (
     <div className="flex-1 min-w-0">
       <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wide mb-1.5 text-center">{label}</p>
-      <div className="relative w-full aspect-[9/16] max-h-[220px] rounded-xl overflow-hidden">
+      <div className="relative w-full aspect-[9/16] max-h-[220px] rounded-xl overflow-hidden cursor-pointer" onClick={() => onImageTap(asset.url)}>
         <img src={asset.url} alt={label} className="w-full h-full object-cover" />
         {isAdmin && (
           <>
-            <button onClick={() => inputRef.current?.click()} className="absolute bottom-1.5 left-1.5 w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
+            <button onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }} className="absolute bottom-1.5 left-1.5 w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
               <Upload className="w-3.5 h-3.5" />
             </button>
-            <button onClick={onRemove} className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
+            <button onClick={(e) => { e.stopPropagation(); onRemove(); }} className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
               <X className="w-3.5 h-3.5" />
             </button>
           </>
@@ -127,6 +155,11 @@ const VideoAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
     }
     onFile(f);
     if (inputRef.current) inputRef.current.value = "";
+  };
+
+  const handleDownload = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (asset) downloadBlob(asset.url, asset.fileName, toast);
   };
 
   if (uploading) {
@@ -172,9 +205,9 @@ const VideoAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
           </>
         )}
       </div>
-      <a href={asset.url} download={asset.fileName} target="_blank" rel="noopener noreferrer" className="mt-1.5 flex items-center justify-center gap-1 text-[10px] text-primary hover:underline">
+      <button onClick={handleDownload} className="mt-1.5 w-full flex items-center justify-center gap-1 text-[10px] text-primary hover:underline">
         <Download className="w-3 h-3" /> Descargar
-      </a>
+      </button>
       <input ref={inputRef} type="file" accept=".mp4,.mov" className="hidden" onChange={handleChange} />
     </div>
   );
@@ -192,6 +225,7 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
   const [progress, setProgress] = useState<Record<AssetType, number>>({
     imagen_1: 0, imagen_2: 0, video_1: 0, video_2: 0,
   });
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   // Load existing assets
   useEffect(() => {
@@ -249,10 +283,8 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
   }, [campaign, dayNumber, toast]);
 
   const removeFile = useCallback(async (assetType: AssetType) => {
-    // Find and delete from storage
     const asset = assets[assetType];
     if (asset) {
-      // Extract path from URL
       const urlParts = asset.url.split(`/storage/v1/object/public/${BUCKET}/`);
       if (urlParts[1]) {
         await supabase.storage.from(BUCKET).remove([urlParts[1]]);
@@ -276,8 +308,8 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
 
         <TabsContent value="imagen" className="space-y-3">
           <div className="flex gap-3">
-            <ImageAssetSlot label="Imagen 1" asset={assets.imagen_1} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_1} progress={progress.imagen_1} onFile={(f) => uploadFile(f, "imagen_1")} onRemove={() => removeFile("imagen_1")} />
-            <ImageAssetSlot label="Imagen 2" asset={assets.imagen_2} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_2} progress={progress.imagen_2} onFile={(f) => uploadFile(f, "imagen_2")} onRemove={() => removeFile("imagen_2")} />
+            <ImageAssetSlot label="Imagen 1" asset={assets.imagen_1} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_1} progress={progress.imagen_1} onFile={(f) => uploadFile(f, "imagen_1")} onRemove={() => removeFile("imagen_1")} onImageTap={(url) => setLightboxSrc(url)} />
+            <ImageAssetSlot label="Imagen 2" asset={assets.imagen_2} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_2} progress={progress.imagen_2} onFile={(f) => uploadFile(f, "imagen_2")} onRemove={() => removeFile("imagen_2")} onImageTap={(url) => setLightboxSrc(url)} />
           </div>
         </TabsContent>
 
@@ -288,6 +320,8 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
           </div>
         </TabsContent>
       </Tabs>
+
+      <ImageLightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
     </section>
   );
 };
