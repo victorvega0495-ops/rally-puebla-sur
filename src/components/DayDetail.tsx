@@ -1,7 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import OpenerSlider from "@/components/OpenerSlider";
 import PromoSlider from "@/components/PromoSlider";
-import { ArrowLeft, Copy, Check, Image as ImageIcon } from "lucide-react";
+import { ArrowLeft, Copy, Check, Image as ImageIcon, Upload, X, Download, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import CelebrationOverlay from "@/components/CelebrationOverlay";
 import { DayData, celebrationMessages } from "@/data/campaignData";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface DayDetailProps {
   day: DayData;
@@ -48,12 +49,68 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
   const [contacted, setContacted] = useState("");
   const [responded, setResponded] = useState("");
   const [sales, setSales] = useState("");
+  const [lookAsset, setLookAsset] = useState<{ url: string; fileName: string } | null>(null);
+  const [lookUploading, setLookUploading] = useState(false);
+  const [lookProgress, setLookProgress] = useState(0);
+  const lookInputRef = useRef<HTMLInputElement>(null);
 
   const contactedN = parseInt(contacted) || 0;
   const respondedN = parseInt(responded) || 0;
   const salesN = parseInt(sales) || 0;
   const responsePct = contactedN > 0 ? Math.round((respondedN / contactedN) * 100) : 0;
   const salesPct = contactedN > 0 ? Math.round((salesN / contactedN) * 100) : 0;
+
+  // Load look_principal asset
+  useEffect(() => {
+    const load = async () => {
+      const { data } = await supabase
+        .from("day_assets")
+        .select("storage_url, file_name")
+        .eq("campaign", campaignId)
+        .eq("day_number", day.day)
+        .eq("asset_type", "look_principal")
+        .maybeSingle();
+      if (data) setLookAsset({ url: data.storage_url, fileName: data.file_name });
+    };
+    load();
+  }, [campaignId, day.day]);
+
+  const uploadLook = useCallback(async (file: File) => {
+    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const path = `${campaignId}/dia-${day.day}/look-principal.${ext}`;
+    setLookUploading(true);
+    setLookProgress(0);
+    const interval = setInterval(() => {
+      setLookProgress((p) => Math.min(p + 12, 90));
+    }, 200);
+
+    const { error } = await supabase.storage.from("campaign-assets").upload(path, file, { upsert: true, contentType: file.type });
+    clearInterval(interval);
+    if (error) {
+      setLookUploading(false);
+      toast({ title: "Error al subir", description: error.message, variant: "destructive" });
+      return;
+    }
+    setLookProgress(100);
+    const { data: urlData } = supabase.storage.from("campaign-assets").getPublicUrl(path);
+    await supabase.from("day_assets").upsert(
+      { campaign: campaignId, day_number: day.day, asset_type: "look_principal", storage_url: urlData.publicUrl, file_name: file.name, updated_at: new Date().toISOString() },
+      { onConflict: "campaign,day_number,asset_type" }
+    );
+    setLookAsset({ url: urlData.publicUrl, fileName: file.name });
+    setLookUploading(false);
+    toast({ title: "¡Look subido! ✓", duration: 2000 });
+  }, [campaignId, day.day, toast]);
+
+  const removeLook = useCallback(async () => {
+    if (lookAsset) {
+      const urlParts = lookAsset.url.split("/storage/v1/object/public/campaign-assets/");
+      if (urlParts[1]) await supabase.storage.from("campaign-assets").remove([urlParts[1]]);
+    }
+    await supabase.from("day_assets").delete().eq("campaign", campaignId).eq("day_number", day.day).eq("asset_type", "look_principal");
+    setLookAsset(null);
+    toast({ title: "Look eliminado ✓", duration: 2000 });
+  }, [campaignId, day.day, lookAsset, toast]);
 
   const copyText = (text: string, label: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -134,14 +191,53 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
             <h2 className="font-display font-bold text-sm text-foreground">👗 El Look del Día</h2>
           </div>
           <div className="p-4 space-y-4">
-            {/* Visual placeholder — NO price, NO brand on image */}
-            <div
-              className="rounded-xl aspect-[9/16] w-full flex flex-col items-center justify-center text-white relative overflow-hidden"
-              style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.7), hsl(275 65% 50% / 0.7))" }}
-            >
-              <ImageIcon className="w-10 h-10 mb-2 opacity-60" />
-              <p className="font-display font-bold text-sm text-center px-4">{day.lookName}</p>
-            </div>
+            {/* Look image with Supabase Storage */}
+            {lookUploading ? (
+              <div className="rounded-xl aspect-[9/16] w-full border-2 border-dashed border-primary/40 flex flex-col items-center justify-center gap-3 bg-muted/20">
+                <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                <Progress value={lookProgress} className="w-3/4 h-2" />
+                <span className="text-xs text-muted-foreground">{Math.round(lookProgress)}%</span>
+              </div>
+            ) : lookAsset ? (
+              <div className="relative">
+                <div className="rounded-xl aspect-[9/16] w-full overflow-hidden relative">
+                  <img src={lookAsset.url} alt={day.lookName} className="w-full h-full object-cover" />
+                  {isAdmin && (
+                    <>
+                      <button onClick={() => lookInputRef.current?.click()} className="absolute bottom-2 left-2 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
+                        <Upload className="w-4 h-4" />
+                      </button>
+                      <button onClick={removeLook} className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
+                        <X className="w-4 h-4" />
+                      </button>
+                    </>
+                  )}
+                </div>
+                <a href={lookAsset.url} download={lookAsset.fileName} target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center justify-center gap-1.5 text-xs text-primary hover:underline font-medium">
+                  <Download className="w-3.5 h-3.5" /> Descargar look
+                </a>
+              </div>
+            ) : (
+              <div className="relative rounded-xl aspect-[9/16] w-full flex flex-col items-center justify-center text-white overflow-hidden"
+                style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.7), hsl(275 65% 50% / 0.7))" }}
+              >
+                {isAdmin ? (
+                  <button onClick={() => lookInputRef.current?.click()} className="flex flex-col items-center gap-2">
+                    <Upload className="w-10 h-10 opacity-70" />
+                    <p className="font-display font-bold text-sm text-center px-4">Subir look</p>
+                  </button>
+                ) : (
+                  <>
+                    <ImageIcon className="w-10 h-10 mb-2 opacity-60" />
+                    <p className="font-display font-bold text-sm text-center px-4">{day.lookName}</p>
+                  </>
+                )}
+              </div>
+            )}
+            <input ref={lookInputRef} type="file" accept=".jpg,.jpeg,.png" className="hidden" onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) { uploadLook(f); e.target.value = ""; }
+            }} />
             <div>
               <p className="font-display font-bold text-foreground">{day.lookName}</p>
               <p className="text-xs text-muted-foreground mt-1">{day.lookProductIds}</p>
