@@ -25,9 +25,9 @@ const openerMessages = {
 };
 
 const tabs = [
-  { value: "cold", emoji: "🥶", label: "Fría", sub: "Más de 60 días sin hablar", borderColor: "border-blue-300/50" },
-  { value: "warm", emoji: "😊", label: "Tibia", sub: "2-4 semanas sin hablar", borderColor: "border-yellow-300/50" },
-  { value: "hot", emoji: "🔥", label: "Caliente", sub: "Habló esta semana", borderColor: "border-red-300/50" },
+  { value: "cold", emoji: "🥶", label: "+60 días", sub: "Más de 60 días sin hablarle", borderColor: "border-blue-300/50" },
+  { value: "warm", emoji: "😊", label: "15-60 días", sub: "Entre 15 y 60 días sin hablarle", borderColor: "border-yellow-300/50" },
+  { value: "hot", emoji: "🔥", label: "-15 días", sub: "Menos de 15 días sin hablarle", borderColor: "border-red-300/50" },
 ] as const;
 
 const OpenerSlider = () => {
@@ -55,7 +55,7 @@ const OpenerSlider = () => {
       </div>
       <div className="p-4 space-y-3">
         <p className="text-xs text-muted-foreground">
-          Elige según cuánto tiempo llevas sin hablar con ella
+          ¿Cuántos días llevas sin hablarle?
         </p>
 
         <Tabs defaultValue="cold" className="space-y-3">

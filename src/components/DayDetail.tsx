@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import OpenerSlider from "@/components/OpenerSlider";
+import PromoSlider from "@/components/PromoSlider";
 import { ArrowLeft, Copy, Check, Play, Image as ImageIcon, Film, Sparkles, User, Search, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -270,13 +271,14 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, onBac
               <h2 className="font-display font-bold text-sm text-foreground">🎁 Tu Promo de Hoy</h2>
             </div>
             <div
-              className="p-5 text-center space-y-3"
+              className="p-5 space-y-4"
               style={{ background: "linear-gradient(135deg, hsl(45 90% 55% / 0.08), hsl(35 90% 50% / 0.08))" }}
             >
-              <p className="font-display font-bold text-lg text-foreground">{day.promo}</p>
-              <Button variant="outline" size="sm" className="border-amber-400/50" onClick={() => copyText(day.promo!, "Promo")}>
+              <p className="font-display font-bold text-lg text-foreground text-center">{day.promo}</p>
+              <Button variant="outline" size="sm" className="w-full border-amber-400/50" onClick={() => copyText(day.promo!, "Promo")}>
                 <Copy className="w-3.5 h-3.5 mr-1" /> Copiar promo ✓
               </Button>
+              <PromoSlider dayNumber={day.day} />
             </div>
           </section>
         )}

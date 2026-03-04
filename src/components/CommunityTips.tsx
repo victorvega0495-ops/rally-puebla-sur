@@ -137,7 +137,7 @@ const CommunityTips = ({ dayNumber, campaign }: CommunityTipsProps) => {
                     </span>
                     {tip.city && (
                       <span className="text-[10px] text-muted-foreground">
-                        📍 {tip.city}
+                        🏪 {tip.city}
                       </span>
                     )}
                   </div>
@@ -174,7 +174,7 @@ const CommunityTips = ({ dayNumber, campaign }: CommunityTipsProps) => {
               className="text-sm"
             />
             <Input
-              placeholder="¿De qué ciudad? (opcional)"
+              placeholder="Escribe el nombre de tu tienda"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="text-sm"
