@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import OpenerSlider from "@/components/OpenerSlider";
 import PromoSlider from "@/components/PromoSlider";
-import { ArrowLeft, Copy, Check, Image as ImageIcon, Sparkles, User, Search, MapPin } from "lucide-react";
+import { ArrowLeft, Copy, Check, Image as ImageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -148,56 +148,22 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
             </div>
 
             {/* Atributos del producto */}
-            <div className="space-y-2">
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">Atributos del Producto</p>
-              <ul className="space-y-1.5">
-                {day.lookAttributes.map((attr, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-                    <Sparkles className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                    <span>{attr}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="text-sm text-muted-foreground">{day.lookAttributes[0]}</p>
 
             {/* La clienta ideal */}
             <div
-              className="rounded-xl p-4 space-y-3"
+              className="rounded-xl p-3"
               style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.06), hsl(275 65% 50% / 0.06))" }}
             >
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">La Clienta Ideal</p>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <User className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-[10px] text-muted-foreground font-bold uppercase">Quién es</p>
-                    <p className="text-sm text-foreground">{day.idealClient.quien}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Search className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-[10px] text-muted-foreground font-bold uppercase">Qué busca</p>
-                    <p className="text-sm text-foreground">{day.idealClient.queBusca}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-[10px] text-muted-foreground font-bold uppercase">Dónde la encuentras</p>
-                    <p className="text-sm text-foreground">{day.idealClient.donde}</p>
-                  </div>
-                </div>
-              </div>
+              <p className="text-sm text-foreground">
+                <span className="font-bold">¿Quién es?</span> {day.idealClient.quien}
+              </p>
             </div>
 
             {/* Hacks de venta */}
-            <div className="space-y-2">
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">🧠 Hacks de Venta</p>
+            <div className="space-y-1.5">
               {day.salesHacks.map((hack, i) => (
-                <div key={i} className="rounded-lg bg-muted/50 p-3">
-                  <p className="text-sm text-foreground leading-relaxed">{hack}</p>
-                </div>
+                <p key={i} className="text-sm text-foreground">{hack}</p>
               ))}
             </div>
 

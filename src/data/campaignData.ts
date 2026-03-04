@@ -76,18 +76,16 @@ const semana1Days: DayData[] = [
     lookProductIds: "ID: 1267366",
     brand: "Price Shoes",
     lookAttributes: [
-      "Corte midi alarga la figura",
-      "Tela ligera ideal para clima cálido",
-      "Versátil — de día con sandalias, de noche con tacón",
+      "Alarga la figura, tela ligera, va de día y de noche",
     ],
     idealClient: {
-      quien: "Mujer de 25-45 años que quiere verse arreglada sin complicarse",
-      queBusca: "Una pieza que funcione para múltiples ocasiones",
-      donde: "Contactos de trabajo, amigas de la escuela, grupos de mamás",
+      quien: "Mujer 25-45 años que quiere verse bien sin complicarse — búscala en contactos de trabajo y grupos de mamás",
+      queBusca: "",
+      donde: "",
     },
     salesHacks: [
-      "Muéstrale cómo el vestido va con tenis para el día y con tacón para la noche — dobla el valor percibido",
-      "Manda primero el mensaje sin foto — cuando diga sí manda la imagen. La curiosidad cierra más que el producto",
+      "💡 Muéstrale 2 looks con el mismo vestido — doble valor",
+      "💡 Manda el mensaje primero, la foto después",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
@@ -134,18 +132,16 @@ const semana1Days: DayData[] = [
     lookProductIds: "ID: 1268748 / ID: 1226364",
     brand: "Price Shoes",
     lookAttributes: [
-      "Tiro alto estiliza la cintura",
-      "Saco con solapa da estructura sin verse rígido",
-      "Tela que no se arruga — perfecta para jornadas largas",
+      "Tiro alto estiliza la cintura, saco versátil, tela que no se arruga",
     ],
     idealClient: {
-      quien: "Mujer profesionista que trabaja en oficina o atiende clientes",
-      queBusca: "Verse formal y moderna sin invertir en traje completo",
-      donde: "Contactos de trabajo, LinkedIn, compañeras de oficina",
+      quien: "Profesionista que necesita verse formal y moderna — búscala en contactos de oficina",
+      queBusca: "",
+      donde: "",
     },
     salesHacks: [
-      "Empieza vendiendo solo el pantalón — cuando le guste ofrece el saco como complemento. Ticket más alto sin que sienta que gasta más",
-      "Este look vende mejor jueves y viernes cuando ya piensan en verse bien el fin de semana",
+      "💡 Empieza vendiendo solo el pantalón, luego ofrece el saco",
+      "💡 Vende más jueves y viernes — ya piensan en el fin de semana",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
@@ -192,18 +188,16 @@ const semana1Days: DayData[] = [
     lookProductIds: "ID: 1271655 / ID: 1268754",
     brand: "Price Shoes",
     lookAttributes: [
-      "Blusa con caída elegante",
-      "Pantalón corte recto combina con todo",
-      "Combo básico que se puede vestir o casual",
+      "Blusa con caída elegante, pantalón combina con todo, ideal para vestir o casual",
     ],
     idealClient: {
-      quien: "Mujer que busca renovar su clóset sin gastar mucho",
-      queBusca: "Piezas básicas versátiles que combinen con lo que ya tiene",
-      donde: "Amigas, vecinas, grupos de WhatsApp de mamás",
+      quien: "Quiere renovar su clóset sin gastar mucho — búscala entre amigas y vecinas",
+      queBusca: "",
+      donde: "",
     },
     salesHacks: [
-      "No menciones la promo en el primer mensaje. Primero genera interés, luego la promo es el cierre",
-      "Si duda del precio recuérdale que son 2 piezas — el costo por pieza baja mucho",
+      "💡 No menciones la promo en el primer mensaje — úsala de cierre",
+      "💡 Si duda del precio recuérdale que son 2 piezas",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
@@ -251,18 +245,16 @@ const semana1Days: DayData[] = [
     lookProductIds: "ID: 1160243 / ID: 1157362",
     brand: "Price Shoes",
     lookAttributes: [
-      "Chaleco efecto piel es la pieza statement de la temporada",
-      "Falda short da frescura sin perder estilo",
-      "Look que destaca en cualquier red social",
+      "Pieza statement de temporada, look que destaca en redes, fresco sin perder estilo",
     ],
     idealClient: {
-      quien: "Mujer joven que sigue tendencias y está activa en redes sociales",
-      queBusca: "Un look que se vea increíble en foto y en persona",
-      donde: "Instagram, TikTok, contactos menores de 35 años",
+      quien: "Mujer joven que sigue tendencias y vive en redes — búscala en contactos menores de 35",
+      queBusca: "",
+      donde: "",
     },
     salesHacks: [
-      "El outfit colaborativo funciona mejor en la mañana — la gente está más activa y juguetona antes del mediodía",
-      "No respondas el resultado hasta las 6pm — genera suspenso todo el día",
+      "💡 Lanza el outfit colaborativo antes del mediodía — hay más actividad",
+      "💡 No reveles el resultado hasta las 6pm — genera suspenso",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
@@ -317,18 +309,16 @@ const semana1Days: DayData[] = [
     lookProductIds: "ID: 1267538",
     brand: "Price Shoes",
     lookAttributes: [
-      "Corte moderno con hombros definidos",
-      "Ideal para eventos casuales y reuniones",
-      "Una sola pieza hace el outfit completo",
+      "Hombros definidos, una sola pieza hace el outfit, ideal para eventos y reuniones",
     ],
     idealClient: {
-      quien: "Mujer que admira el estilo de influencers pero busca opciones accesibles",
-      queBusca: "Verse como sus referentes de moda sin pagar precios de lujo",
-      donde: "Seguidoras de cuentas de moda, grupos de tendencias",
+      quien: "Admira el estilo de influencers pero busca precios accesibles — búscala en seguidoras de moda",
+      queBusca: "",
+      donde: "",
     },
     salesHacks: [
-      "La comparación con celebridad funciona mejor con clientas de 20-35 años. Para clientas mayores usa el gancho del antes/después en su lugar",
-      "Si pregunta dónde consigues la ropa ese es tu momento — 'Trabajo con Price Shoes, tengo acceso a toda la colección nueva'",
+      "💡 La comparación con celebridad funciona mejor con menores de 35",
+      "💡 Si pregunta dónde consigues la ropa, ese es tu momento",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
@@ -376,18 +366,16 @@ const semana1Days: DayData[] = [
     lookProductIds: "ID: 1223683 / ID: 1268752",
     brand: "Price Shoes",
     lookAttributes: [
-      "Chaleco formal eleva cualquier look básico",
-      "Pantalón pierna ancha es tendencia Pri-Ver 2026",
-      "Combo de alto impacto visual",
+      "Chaleco eleva cualquier look, pantalón pierna ancha es tendencia, combo de alto impacto",
     ],
     idealClient: {
-      quien: "Mujer ejecutiva o emprendedora que cuida su imagen profesional",
-      queBusca: "Proyectar autoridad y estilo al mismo tiempo",
-      donde: "Redes profesionales, eventos de negocios, cámaras de comercio",
+      quien: "Ejecutiva o emprendedora que cuida su imagen — búscala en redes profesionales",
+      queBusca: "",
+      donde: "",
     },
     salesHacks: [
-      "El testimonial funciona mejor si la clienta de la foto se parece a quien le estás escribiendo — misma edad, mismo estilo aproximado",
-      "No digas que llevas días intentando contactarla — actúa como si fuera la primera vez",
+      "💡 Usa un testimonial de alguien parecida a quien le escribes",
+      "💡 Actúa como si fuera la primera vez que la contactas",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
@@ -434,18 +422,16 @@ const semana1Days: DayData[] = [
     lookProductIds: "ID: 1267530 / ID: 1267540",
     brand: "Price Shoes",
     lookAttributes: [
-      "Saco largo es la pieza más versátil de la colección",
-      "Vestido corto debajo crea capas con personalidad",
-      "Look de cierre de semana con actitud",
+      "Saco largo más versátil de la colección, capas con personalidad, look de cierre con actitud",
     ],
     idealClient: {
-      quien: "Clienta que ya mostró interés esta semana pero no ha comprado",
-      queBusca: "El empujón final para decidirse",
-      donde: "Tu lista de seguimiento de los días anteriores",
+      quien: "La que mostró interés esta semana pero no ha comprado — está en tu lista de seguimiento",
+      queBusca: "",
+      donde: "",
     },
     salesHacks: [
-      "Manda el mensaje de cierre antes de las 11am — después del mediodía la gente ya está en modo fin de semana y decide menos",
-      "A quien compre hoy pídele foto con la prenda — es tu testimonial para la próxima campaña",
+      "💡 Manda el mensaje de cierre antes de las 11am",
+      "💡 A quien compre hoy pídele foto — es tu testimonial para la próxima campaña",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
