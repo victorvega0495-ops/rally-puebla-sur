@@ -25,9 +25,9 @@ const openerMessages = {
 };
 
 const tabs = [
-  { value: "cold", emoji: "🔴", label: "Fría", sub: "Más de 60 días sin hablar", borderColor: "border-red-300/50" },
-  { value: "warm", emoji: "🟡", label: "Tibia", sub: "2-4 semanas sin hablar", borderColor: "border-yellow-300/50" },
-  { value: "hot", emoji: "🟢", label: "Caliente", sub: "Habló esta semana", borderColor: "border-green-300/50" },
+  { value: "cold", emoji: "🥶", label: "Fría", sub: "Más de 60 días sin hablar", borderColor: "border-blue-300/50" },
+  { value: "warm", emoji: "😊", label: "Tibia", sub: "2-4 semanas sin hablar", borderColor: "border-yellow-300/50" },
+  { value: "hot", emoji: "🔥", label: "Caliente", sub: "Habló esta semana", borderColor: "border-red-300/50" },
 ] as const;
 
 const OpenerSlider = () => {
