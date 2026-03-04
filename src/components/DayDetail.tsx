@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import StatusUploader from "@/components/StatusUploader";
+import OutfitColabCarousel from "@/components/OutfitColabCarousel";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import WhatsAppChat, { WAMessage } from "@/components/WhatsAppChat";
 import CommunityDrawer from "@/components/CommunityDrawer";
@@ -255,16 +256,24 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
           </div>
         </section>
 
-        {/* 4 — Estado de Hoy */}
-        <StatusUploader
-          lookName={day.lookName}
-          statusCopyImage={day.statusCopyImage}
-          statusCopyVideo={day.statusCopyVideo}
-          reelStructure={day.reelStructure}
-          campaign={campaignId}
-          dayNumber={day.day}
-          isAdmin={isAdmin}
-        />
+        {/* 4 — Estado de Hoy / Outfit Colaborativo */}
+        {day.day === 4 ? (
+          <OutfitColabCarousel
+            campaign={campaignId}
+            dayNumber={day.day}
+            isAdmin={isAdmin}
+          />
+        ) : (
+          <StatusUploader
+            lookName={day.lookName}
+            statusCopyImage={day.statusCopyImage}
+            statusCopyVideo={day.statusCopyVideo}
+            reelStructure={day.reelStructure}
+            campaign={campaignId}
+            dayNumber={day.day}
+            isAdmin={isAdmin}
+          />
+        )}
 
 
         {/* 6 — Promo (días que aplica) */}
