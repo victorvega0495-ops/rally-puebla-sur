@@ -419,8 +419,8 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
             <Button
               variant="outline"
               size="sm"
-              className="flex-1 text-xs"
-              onClick={onNavigatePrev}
+              className="flex-1 text-xs border-purple-400 text-purple-600 dark:border-purple-500 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30"
+              onClick={() => { window.scrollTo(0, 0); onNavigatePrev(); }}
             >
               ← Día anterior
             </Button>
@@ -428,17 +428,17 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
           <Button
             variant="outline"
             size="sm"
-            className="flex-1 text-xs"
+            className="flex-1 text-xs border-pink-400 text-pink-600 dark:border-pink-500 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-950/30"
             onClick={onBack}
           >
             ⊞ Ver 7 días
           </Button>
           {day.day < totalDays && (
             <Button
-              variant="outline"
               size="sm"
-              className="flex-1 text-xs"
-              onClick={onNavigateNext}
+              className="flex-1 text-xs text-white font-semibold shadow-lg animate-[nav-glow_2s_ease-in-out_infinite]"
+              style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+              onClick={() => { window.scrollTo(0, 0); onNavigateNext(); }}
             >
               Día siguiente →
             </Button>
