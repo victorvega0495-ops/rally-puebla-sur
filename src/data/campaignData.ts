@@ -187,20 +187,20 @@ const semana1Days: DayData[] = [
       "Cuando respondan y muestren interés, ahí sueltas la promo: \"Oye y además tengo una promo armada para ti\"",
       "Cierra con fecha límite — \"la promo es solo hoy\"",
     ],
-    lookName: "Blusa Dama + Pantalón Cintura Regular",
-    lookProductIds: "ID: 1271655 / ID: 1268754",
+    lookName: "Blusa Tie-Dye + Short Blanco",
+    lookProductIds: "Blusa ID: 1271654 / Short ID: 1197279 / Tacones ID: 1264534",
     brand: "Price Shoes",
     lookAttributes: [
-      "Blusa con caída elegante, pantalón combina con todo, ideal para vestir o casual",
+      "Blusa tie-dye es la pieza que da vida al outfit, short blanco alarga las piernas, look fresco con actitud",
     ],
     idealClient: {
-      quien: "Quiere renovar su clóset sin gastar mucho — búscala entre amigas y vecinas",
+      quien: "Mujer que quiere un look de impacto para salir — búscala entre amigas que salen seguido y contactos jóvenes",
       queBusca: "",
       donde: "",
     },
     salesHacks: [
-      "💡 No menciones la promo en el primer mensaje — úsala de cierre",
-      "💡 Si duda del precio recuérdale que son 2 piezas",
+      "💡 La promo ya viene en la imagen — úsala desde el primer mensaje como gancho",
+      "💡 Si duda del precio recuérdale que son 2 piezas completas",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
