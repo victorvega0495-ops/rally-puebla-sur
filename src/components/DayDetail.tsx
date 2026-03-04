@@ -1,12 +1,12 @@
 import { useState, useCallback } from "react";
 import OpenerSlider from "@/components/OpenerSlider";
 import PromoSlider from "@/components/PromoSlider";
-import { ArrowLeft, Copy, Check, Play, Image as ImageIcon, Film, Sparkles, User, Search, MapPin } from "lucide-react";
+import { ArrowLeft, Copy, Check, Image as ImageIcon, Sparkles, User, Search, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import StatusUploader from "@/components/StatusUploader";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import WhatsAppChat, { WAMessage } from "@/components/WhatsAppChat";
 import CommunityDrawer from "@/components/CommunityDrawer";
@@ -207,58 +207,12 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, onBac
         </section>
 
         {/* 4 — Estado de Hoy */}
-        <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
-          <div className="p-4 border-b border-border bg-muted/30">
-            <h2 className="font-display font-bold text-sm text-foreground">📱 Tu Estado de Hoy</h2>
-          </div>
-          <Tabs defaultValue="imagen" className="p-4">
-            <TabsList className="w-full grid grid-cols-2 mb-4">
-              <TabsTrigger value="imagen" className="text-xs gap-1">
-                <ImageIcon className="w-3.5 h-3.5" /> Imagen
-              </TabsTrigger>
-              <TabsTrigger value="video" className="text-xs gap-1">
-                <Film className="w-3.5 h-3.5" /> Video
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="imagen" className="space-y-3">
-              <div
-                className="rounded-xl aspect-[9/16] max-h-[300px] w-full flex flex-col items-center justify-center text-white relative overflow-hidden"
-                style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.6), hsl(275 65% 50% / 0.6))" }}
-              >
-                <ImageIcon className="w-8 h-8 mb-2 opacity-50" />
-                <p className="text-xs opacity-70 px-4 text-center">{day.lookName}</p>
-              </div>
-              <div className="rounded-lg bg-muted/50 p-3">
-                <p className="text-sm text-foreground font-medium">"{day.statusCopyImage}"</p>
-              </div>
-              <Button variant="outline" size="sm" className="w-full" onClick={() => copyText(day.statusCopyImage, "Copy del estado")}>
-                <Copy className="w-3.5 h-3.5 mr-1" /> Copiar copy ✓
-              </Button>
-            </TabsContent>
-            <TabsContent value="video" className="space-y-3">
-              <div
-                className="rounded-xl aspect-[9/16] max-h-[300px] w-full flex flex-col items-center justify-center text-white relative overflow-hidden"
-                style={{ background: "linear-gradient(180deg, hsl(250 30% 15%), hsl(250 30% 8%))" }}
-              >
-                <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-3">
-                  <Play className="w-7 h-7 text-white ml-1" />
-                </div>
-                <p className="text-xs opacity-70 px-4 text-center mb-3">{day.lookName}</p>
-                <div className="w-full px-4 space-y-1">
-                  {day.reelStructure.map((line, i) => (
-                    <p key={i} className="text-[10px] text-white/60">{line}</p>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-lg bg-muted/50 p-3">
-                <p className="text-sm text-foreground font-medium">"{day.statusCopyVideo}"</p>
-              </div>
-              <Button variant="outline" size="sm" className="w-full" onClick={() => copyText(day.statusCopyVideo, "Copy del video")}>
-                <Copy className="w-3.5 h-3.5 mr-1" /> Copiar copy ✓
-              </Button>
-            </TabsContent>
-          </Tabs>
-        </section>
+        <StatusUploader
+          lookName={day.lookName}
+          statusCopyImage={day.statusCopyImage}
+          statusCopyVideo={day.statusCopyVideo}
+          reelStructure={day.reelStructure}
+        />
 
 
         {/* 6 — Promo (días que aplica) */}
