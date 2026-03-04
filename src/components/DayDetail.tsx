@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import WhatsAppChat, { WAMessage } from "@/components/WhatsAppChat";
-import CommunityTips from "@/components/CommunityTips";
+import CommunityDrawer from "@/components/CommunityDrawer";
 import CelebrationOverlay from "@/components/CelebrationOverlay";
 import { DayData, celebrationMessages } from "@/data/campaignData";
 import { cn } from "@/lib/utils";
@@ -141,7 +141,7 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, onBac
             </div>
             <div>
               <p className="font-display font-bold text-foreground">{day.lookName}</p>
-              <p className="text-sm text-primary font-bold">{day.lookPrice} — {day.brand}</p>
+              <p className="text-xs text-muted-foreground mt-1">{day.lookProductIds}</p>
             </div>
 
             {/* Atributos del producto */}
@@ -414,9 +414,6 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, onBac
           </div>
         </section>
 
-        {/* Community Tips */}
-        <CommunityTips dayNumber={day.day} campaign={campaignTitle} />
-
         {/* Mini Tracker */}
         <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
           <div className="p-4 border-b border-border bg-muted/30">
@@ -494,6 +491,9 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, onBac
           </div>
         )}
       </div>
+
+      {/* Floating community drawer */}
+      <CommunityDrawer dayNumber={day.day} campaign={campaignTitle} />
     </div>
   );
 };

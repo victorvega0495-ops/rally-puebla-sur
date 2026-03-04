@@ -29,7 +29,7 @@ export interface DayData {
   mission: string;
   steps: string[];
   lookName: string;
-  lookPrice: string;
+  lookProductIds: string;
   brand: string;
   lookAttributes: string[];
   idealClient: IdealClient;
@@ -73,7 +73,7 @@ const semana1Days: DayData[] = [
       "Al final del día anota cuántas respondieron",
     ],
     lookName: "Vestido Midi/Largo",
-    lookPrice: "$499",
+    lookProductIds: "ID: 1267366",
     brand: "Price Shoes",
     lookAttributes: [
       "Corte midi alarga la figura",
@@ -99,7 +99,7 @@ const semana1Days: DayData[] = [
     reelStructure: [
       "0-3 seg: look completo de frente",
       "3-6 seg: detalle tela",
-      "6-9 seg: $499 en pantalla",
+      "6-9 seg: ID del producto en pantalla",
       "9-12 seg: \"Te lo mando\"",
       "12-15 seg: cierre con nombre de socia",
     ],
@@ -131,7 +131,7 @@ const semana1Days: DayData[] = [
       "Anota quién mostró interés aunque no haya comprado — las necesitas para el Día 3",
     ],
     lookName: "Pantalón Tiro Alto + Saco Con Solapa",
-    lookPrice: "$529 + $699",
+    lookProductIds: "ID: 1268748 / ID: 1226364",
     brand: "Price Shoes",
     lookAttributes: [
       "Tiro alto estiliza la cintura",
@@ -157,7 +157,7 @@ const semana1Days: DayData[] = [
     reelStructure: [
       "0-3 seg: look de oficina completo",
       "3-6 seg: detalle saco",
-      "6-9 seg: combo precio en pantalla",
+      "6-9 seg: ID del producto en pantalla",
       "9-12 seg: \"Escríbeme\"",
       "12-15 seg: cierre con nombre de socia",
     ],
@@ -189,7 +189,7 @@ const semana1Days: DayData[] = [
       "Cierra con fecha límite — \"la promo es solo hoy\"",
     ],
     lookName: "Blusa Dama + Pantalón Cintura Regular",
-    lookPrice: "$419 + $499",
+    lookProductIds: "ID: 1271655 / ID: 1268754",
     brand: "Price Shoes",
     lookAttributes: [
       "Blusa con caída elegante",
@@ -248,7 +248,7 @@ const semana1Days: DayData[] = [
       "No presiones — hoy es día de sembrar, no de cosechar",
     ],
     lookName: "Chaleco Efecto Piel + Falda Short",
-    lookPrice: "$559 + $449",
+    lookProductIds: "ID: 1160243 / ID: 1157362",
     brand: "Price Shoes",
     lookAttributes: [
       "Chaleco efecto piel es la pieza statement de la temporada",
@@ -274,7 +274,7 @@ const semana1Days: DayData[] = [
     reelStructure: [
       "0-3 seg: look final del outfit colaborativo",
       "3-6 seg: detalle piezas",
-      "6-9 seg: precio en pantalla",
+      "6-9 seg: ID del producto en pantalla",
       "9-12 seg: \"Escríbeme\"",
       "12-15 seg: cierre con nombre de socia",
     ],
@@ -314,7 +314,7 @@ const semana1Days: DayData[] = [
       "Ofrece la promo solo a quien mostró interés real — no la des a todo el mundo",
     ],
     lookName: "Vestido Corto",
-    lookPrice: "$589",
+    lookProductIds: "ID: 1267538",
     brand: "Price Shoes",
     lookAttributes: [
       "Corte moderno con hombros definidos",
@@ -335,12 +335,12 @@ const semana1Days: DayData[] = [
       warm: "Holaaa [Nombre], ¿cómo estás? Oye no me vas a creer — acabo de armar un look que quedó brutal y me acordé de ti. ¿Lo ves?",
       hot: "Oye [Nombre], mira lo que acaba de llegar — de volada pensé en ti. ¿Te lo mando?",
     },
-    statusCopyImage: "Kenia Os vs tú con $589 👀",
-    statusCopyVideo: "Kenia Os vs tú con $589 👀",
+    statusCopyImage: "Kenia Os vs tú — ¿quién lo luce mejor? 👀",
+    statusCopyVideo: "Kenia Os vs tú — ¿quién lo luce mejor? 👀",
     reelStructure: [
       "0-3 seg: foto celebridad",
       "3-6 seg: look Price Shoes",
-      "6-9 seg: $589 en pantalla",
+      "6-9 seg: ID del producto en pantalla",
       "9-12 seg: \"Escríbeme\"",
       "12-15 seg: cierre con nombre de socia",
     ],
@@ -373,7 +373,7 @@ const semana1Days: DayData[] = [
       "Si alguien responde negativo, no insistas — anótala como clienta tibia para la próxima campaña",
     ],
     lookName: "Chaleco Dama + Pantalón Pierna Ancha",
-    lookPrice: "$629 + $539",
+    lookProductIds: "ID: 1223683 / ID: 1268752",
     brand: "Price Shoes",
     lookAttributes: [
       "Chaleco formal eleva cualquier look básico",
@@ -400,7 +400,7 @@ const semana1Days: DayData[] = [
       "0-3 seg: testimonial clienta",
       "3-6 seg: detalle look",
       "6-9 seg: \"Tú puedes ser la siguiente\"",
-      "9-12 seg: precio en pantalla",
+      "9-12 seg: ID del producto en pantalla",
       "12-15 seg: cierre con nombre de socia",
     ],
     messageTemplate:
@@ -431,7 +431,7 @@ const semana1Days: DayData[] = [
       "Al cerrar el día llena tu resultado en el Planeador Semanal — tasa de conversión real vs esperada",
     ],
     lookName: "Saco Largo Str + Vestido Corto",
-    lookPrice: "$609 + $799",
+    lookProductIds: "ID: 1267530 / ID: 1267540",
     brand: "Price Shoes",
     lookAttributes: [
       "Saco largo es la pieza más versátil de la colección",
