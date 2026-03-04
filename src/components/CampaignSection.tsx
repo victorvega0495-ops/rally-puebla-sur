@@ -49,10 +49,15 @@ const CampaignSection = () => {
     if (activeDay < campaign.days.length) {
       setActiveDay(activeDay + 1);
     } else {
-      // Day 7 — back to campaign screen
       setView("campaign");
     }
   }, [campaign, activeDay]);
+
+  const handleNavigatePrev = useCallback(() => {
+    if (activeDay > 1) {
+      setActiveDay(activeDay - 1);
+    }
+  }, [activeDay]);
 
   if (view === "day" && campaign) {
     const dayData = campaign.days.find((d) => d.day === activeDay);
@@ -68,6 +73,7 @@ const CampaignSection = () => {
           onBack={() => setView("campaign")}
           onComplete={() => completeDay(campaign.id, activeDay)}
           onNavigateNext={handleNavigateNext}
+          onNavigatePrev={handleNavigatePrev}
         />
       );
     }

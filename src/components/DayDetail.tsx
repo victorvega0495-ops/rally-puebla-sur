@@ -26,6 +26,7 @@ interface DayDetailProps {
   onBack: () => void;
   onComplete: () => void;
   onNavigateNext: () => void;
+  onNavigatePrev: () => void;
 }
 
 const typeBadgeColors: Record<string, string> = {
@@ -42,7 +43,7 @@ const getMotivationalMessage = (responsePct: number) => {
   return "Eres una máquina 🏆 Eso es lo que pasa cuando el mensaje es personal";
 };
 
-const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdmin, onBack, onComplete, onNavigateNext }: DayDetailProps) => {
+const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdmin, onBack, onComplete, onNavigateNext, onNavigatePrev }: DayDetailProps) => {
   const { toast } = useToast();
   const [justCompleted, setJustCompleted] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
@@ -411,6 +412,38 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
             )}
           </div>
         </section>
+
+        {/* Navigation row */}
+        <div className="flex items-center gap-2">
+          {day.day > 1 && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1 text-xs"
+              onClick={onNavigatePrev}
+            >
+              ← Día anterior
+            </Button>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1 text-xs"
+            onClick={onBack}
+          >
+            ⊞ Ver 7 días
+          </Button>
+          {day.day < totalDays && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1 text-xs"
+              onClick={onNavigateNext}
+            >
+              Día siguiente →
+            </Button>
+          )}
+        </div>
 
         {/* Complete button */}
         {!completed && !justCompleted ? (
