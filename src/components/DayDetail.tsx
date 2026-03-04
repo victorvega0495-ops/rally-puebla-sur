@@ -163,6 +163,11 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
           <p className="text-2xl mb-2">🎯</p>
           <h2 className="font-display font-bold text-sm text-foreground mb-2">Tu Misión de Hoy</h2>
           <p className="text-sm text-foreground/90 leading-relaxed">{day.mission}</p>
+          {day.missionQuote && (
+            <p className="text-sm italic mt-2" style={{ color: "hsl(330 85% 55%)" }}>
+              "{day.missionQuote}"
+            </p>
+          )}
         </section>
 
 
