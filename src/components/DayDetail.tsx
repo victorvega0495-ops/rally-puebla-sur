@@ -165,25 +165,6 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
           <p className="text-sm text-foreground/90 leading-relaxed">{day.mission}</p>
         </section>
 
-        {/* 2 — Tus Pasos de Hoy */}
-        <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
-          <div className="p-4 border-b border-border bg-muted/30">
-            <h2 className="font-display font-bold text-sm text-foreground">📋 Tus Pasos de Hoy</h2>
-          </div>
-          <div className="p-4 space-y-3">
-            {day.steps.map((step, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <span
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0 mt-0.5"
-                  style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
-                >
-                  {i + 1}
-                </span>
-                <p className="text-sm text-foreground leading-relaxed">{step}</p>
-              </div>
-            ))}
-          </div>
-        </section>
 
         {/* 3 — El Look del Día (enhanced) */}
         <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
