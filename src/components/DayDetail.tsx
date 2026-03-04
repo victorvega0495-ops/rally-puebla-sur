@@ -212,6 +212,8 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, onBac
           statusCopyImage={day.statusCopyImage}
           statusCopyVideo={day.statusCopyVideo}
           reelStructure={day.reelStructure}
+          campaign={campaignId}
+          dayNumber={day.day}
         />
 
 

@@ -47,6 +47,36 @@ export type Database = {
         }
         Relationships: []
       }
+      day_assets: {
+        Row: {
+          asset_type: string
+          campaign: string
+          created_at: string
+          day_number: number
+          id: string
+          storage_url: string
+          updated_at: string
+        }
+        Insert: {
+          asset_type: string
+          campaign: string
+          created_at?: string
+          day_number: number
+          id?: string
+          storage_url: string
+          updated_at?: string
+        }
+        Update: {
+          asset_type?: string
+          campaign?: string
+          created_at?: string
+          day_number?: number
+          id?: string
+          storage_url?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
