@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ImageIcon, Film, Upload, X, Download, Loader2, Sparkles, Check } from "lucide-react";
+import { ImageIcon, Film, Upload, X, Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
@@ -263,16 +263,6 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
     toast({ title: "Eliminado ✓", duration: 2000 });
   }, [campaign, dayNumber, assets, toast]);
 
-  const [copied, setCopied] = useState(false);
-
-  const copyUniversal = () => {
-    const text = statusCopyImage || statusCopyVideo;
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
   return (
     <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
       <div className="p-4 border-b border-border bg-muted/30">
@@ -298,28 +288,6 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
           </div>
         </TabsContent>
       </Tabs>
-
-      {/* Universal copy button */}
-      <div className="px-4 pb-4">
-        <div className="rounded-lg bg-muted/50 p-3 mb-3">
-          <p className="text-sm text-foreground font-medium text-center">"{statusCopyImage}"</p>
-        </div>
-        <button
-          onClick={copyUniversal}
-          className="w-full py-3 rounded-xl font-display font-bold text-sm text-white flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
-          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
-        >
-          {copied ? (
-            <>
-              <Check className="w-4 h-4" /> ¡Copiado! Úsalo en tu imagen o video 🚀
-            </>
-          ) : (
-            <>
-              <Sparkles className="w-4 h-4" /> Copiar texto para cualquier imagen o video
-            </>
-          )}
-        </button>
-      </div>
     </section>
   );
 };
