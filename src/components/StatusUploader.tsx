@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ImageIcon, Film, Upload, X, Download, Loader2, Smartphone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ImageIcon, Film, Upload, X, Download, Loader2, Smartphone, ArrowDown } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -56,6 +54,28 @@ const downloadBlob = async (url: string, fileName: string, toast: ReturnType<typ
     }
   }
 };
+
+/* ── Step Indicator ── */
+const StepIndicator = ({ currentStep }: { currentStep?: number }) => (
+  <div className="flex items-center justify-center gap-0 py-4">
+    {[1, 2, 3].map((step, i) => (
+      <div key={step} className="flex items-center">
+        <div
+          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+        >
+          {step}
+        </div>
+        {i < 2 && (
+          <div
+            className="w-10 h-0.5 mx-1"
+            style={{ background: "linear-gradient(90deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+          />
+        )}
+      </div>
+    ))}
+  </div>
+);
 
 /* ── Placeholder (no asset) ── */
 const PlaceholderSlot = ({ label, lookName, type }: { label: string; lookName: string; type: "image" | "video" }) => (
@@ -208,6 +228,11 @@ const VideoAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
       <button onClick={handleDownload} className="mt-1.5 w-full flex items-center justify-center gap-1 text-[10px] text-primary hover:underline">
         <Download className="w-3 h-3" /> Descargar
       </button>
+      {isIOS() && (
+        <p className="text-[9px] text-muted-foreground text-center mt-1 flex items-center justify-center gap-1">
+          <Smartphone className="w-3 h-3" /> En iPhone: mantén presionado y selecciona 'Guardar video'
+        </p>
+      )}
       <input ref={inputRef} type="file" accept=".mp4,.mov" className="hidden" onChange={handleChange} />
     </div>
   );
@@ -300,26 +325,58 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
       <div className="p-4 border-b border-border bg-muted/30">
         <h2 className="font-display font-bold text-sm text-foreground">📱 Tu Estado de Hoy</h2>
       </div>
-      <Tabs defaultValue="imagen" className="p-4">
-        <TabsList className="w-full grid grid-cols-2 mb-4">
-          <TabsTrigger value="imagen" className="text-xs gap-1"><ImageIcon className="w-3.5 h-3.5" /> Imagen</TabsTrigger>
-          <TabsTrigger value="video" className="text-xs gap-1"><Film className="w-3.5 h-3.5" /> Video</TabsTrigger>
-        </TabsList>
 
-        <TabsContent value="imagen" className="space-y-3">
+      {/* Step indicator */}
+      <StepIndicator />
+
+      <div className="px-4 pb-5 space-y-6">
+        {/* PASO 1 — Images */}
+        <div className="space-y-3">
+          <h3 className="font-display font-bold text-sm text-foreground">📸 Paso 1 — Elige una imagen para tu historia</h3>
           <div className="flex gap-3">
             <ImageAssetSlot label="Imagen 1" asset={assets.imagen_1} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_1} progress={progress.imagen_1} onFile={(f) => uploadFile(f, "imagen_1")} onRemove={() => removeFile("imagen_1")} onImageTap={(url) => setLightboxSrc(url)} />
             <ImageAssetSlot label="Imagen 2" asset={assets.imagen_2} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_2} progress={progress.imagen_2} onFile={(f) => uploadFile(f, "imagen_2")} onRemove={() => removeFile("imagen_2")} onImageTap={(url) => setLightboxSrc(url)} />
           </div>
-        </TabsContent>
+          <p className="text-xs text-muted-foreground text-center">Descarga la que más te guste y súbela como historia en WhatsApp</p>
+        </div>
 
-        <TabsContent value="video" className="space-y-3">
+        {/* Divider */}
+        <div className="flex justify-center">
+          <ArrowDown className="w-5 h-5 text-primary/40" />
+        </div>
+
+        {/* PASO 2 — Videos */}
+        <div className="space-y-3">
+          <h3 className="font-display font-bold text-sm text-foreground">🎬 Paso 2 — Agrega un video después de tu imagen</h3>
           <div className="flex gap-3">
             <VideoAssetSlot label="Video 1" asset={assets.video_1} lookName={lookName} isAdmin={isAdmin} uploading={uploading.video_1} progress={progress.video_1} onFile={(f) => uploadFile(f, "video_1")} onRemove={() => removeFile("video_1")} />
             <VideoAssetSlot label="Video 2" asset={assets.video_2} lookName={lookName} isAdmin={isAdmin} uploading={uploading.video_2} progress={progress.video_2} onFile={(f) => uploadFile(f, "video_2")} onRemove={() => removeFile("video_2")} />
           </div>
-        </TabsContent>
-      </Tabs>
+          <p className="text-xs text-muted-foreground text-center">Sube este video justo después de la imagen — el movimiento engancha más</p>
+        </div>
+
+        {/* Divider */}
+        <div className="flex justify-center">
+          <ArrowDown className="w-5 h-5 text-primary/40" />
+        </div>
+
+        {/* PASO 3 — Direct send */}
+        <div className="space-y-3">
+          <h3 className="font-display font-bold text-sm text-foreground">💬 Paso 3 — Envía lo que te sobró a 5-10 personas</h3>
+          <p className="text-sm text-foreground/80 leading-relaxed">
+            La imagen o video que no subiste a tu historia mándalo directo en conversación a tus clientas. Usa los mensajes de la sección <strong>'¿Cómo arrancar según tu clienta?'</strong> para acompañarlo.
+          </p>
+          <div className="flex justify-center pt-1">
+            <div
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium text-white"
+              style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.7), hsl(275 65% 50% / 0.7))" }}
+            >
+              <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
+              Baja a la siguiente sección
+            </div>
+          </div>
+        </div>
+      </div>
 
       <ImageLightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
     </section>
