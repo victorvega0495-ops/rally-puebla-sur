@@ -250,9 +250,6 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
               ))}
             </div>
 
-            <p className="text-xs text-muted-foreground italic">
-              📌 Familiarízate con este look antes de empezar
-            </p>
           </div>
         </section>
 
