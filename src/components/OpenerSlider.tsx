@@ -9,18 +9,18 @@ import { cn } from "@/lib/utils";
 const openerMessages = {
   cold: [
     "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
-    "Hola [Nombre]! Qué gusto — hace rato no hablamos 😊 Oye, estaba acomodando mis piezas nuevas y de volada me acordé de ti. ¿Tienes dos minutos?",
-    "Holaaa [Nombre], ¿todo bien por allá? Te escribo porque acabo de recibir algo que no había visto antes y pensé que a ti te iba a encantar. ¿Lo ves?",
+    "Hola [Nombre]! Qué gusto — hace rato no hablamos 😊 Oye, estoy armando unos outfits preciosos y de volada me acordé de ti. ¿Te los mando?",
+    "Holaaa [Nombre], ¿todo bien por allá? Te escribo porque acabo de recibir algo que no había visto antes y pensé que a ti te iba a encantar. ¿Te lo mando?",
   ],
   warm: [
-    "Holaaa [Nombre], ¿cómo estás? Oye no me vas a creer — acabo de armar un look que quedó brutal y me acordé de ti. ¿Lo ves?",
-    "Hola [Nombre] 😊 Oye te tengo que mostrar algo — acabo de recibir piezas nuevas y hay una que es completamente para ti. ¿Te la mando?",
+    "Holaaa [Nombre], ¿cómo estás? Oye no me vas a creer — acabo de armar un look que quedó brutal y me acordé de ti. ¿Te lo mando?",
+    "Hola [Nombre] 😊 Oye te tengo que mostrar algo — acabo de armar unos outfits nuevos y hay uno que es completamente para ti. ¿Te lo mando?",
     "Holaaa [Nombre]! Oye adivina qué — acabo de armar algo que creo que te va a fascinar. ¿Me das chance de mandártelo?",
   ],
   hot: [
     "Oye [Nombre], mira lo que acaba de llegar — de volada pensé en ti. ¿Te lo mando?",
     "[Nombre]! Esto que te voy a mostrar no lo he publicado todavía en ningún lado. Eres de las primeras porque sé que lo vas a saber aprovechar. ¿Te lo mando?",
-    "Oye [Nombre], ¿a poco no? Acabo de armar algo increíble y quedaste en mi mente de volada. ¿Lo ves?",
+    "Oye [Nombre], acabo de armar algo increíble y fuiste la primera clienta en la que pensé. ¿Te lo mando?",
   ],
 };
 
