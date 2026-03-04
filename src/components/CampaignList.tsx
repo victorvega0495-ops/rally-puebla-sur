@@ -42,6 +42,9 @@ const CampaignList = ({ onEnter, getProgress }: CampaignListProps) => (
                 <h2 className="font-display font-bold text-lg text-foreground">
                   {c.title}
                 </h2>
+                {c.subtitle && (
+                  <p className="text-xs text-muted-foreground">{c.subtitle}</p>
+                )}
                 {c.active && (
                   <p className="text-xs text-muted-foreground">
                     {done} de {c.days.length} días completados
