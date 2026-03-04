@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Copy, ImageIcon, Film, Upload, X, Download, Loader2 } from "lucide-react";
+import { ImageIcon, Film, Upload, X, Download, Loader2, Sparkles, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
@@ -263,9 +263,13 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
     toast({ title: "Eliminado ✓", duration: 2000 });
   }, [campaign, dayNumber, assets, toast]);
 
-  const copyText = (text: string, label: string) => {
+  const [copied, setCopied] = useState(false);
+
+  const copyUniversal = () => {
+    const text = statusCopyImage || statusCopyVideo;
     navigator.clipboard.writeText(text).then(() => {
-      toast({ title: `${label} copiado ✓`, duration: 2000 });
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     });
   };
 
@@ -285,12 +289,6 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
             <ImageAssetSlot label="Imagen 1" asset={assets.imagen_1} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_1} progress={progress.imagen_1} onFile={(f) => uploadFile(f, "imagen_1")} onRemove={() => removeFile("imagen_1")} />
             <ImageAssetSlot label="Imagen 2" asset={assets.imagen_2} lookName={lookName} isAdmin={isAdmin} uploading={uploading.imagen_2} progress={progress.imagen_2} onFile={(f) => uploadFile(f, "imagen_2")} onRemove={() => removeFile("imagen_2")} />
           </div>
-          <div className="rounded-lg bg-muted/50 p-3">
-            <p className="text-sm text-foreground font-medium">"{statusCopyImage}"</p>
-          </div>
-          <Button variant="outline" size="sm" className="w-full" onClick={() => copyText(statusCopyImage, "Copy del estado")}>
-            <Copy className="w-3.5 h-3.5 mr-1" /> Copiar copy ✓
-          </Button>
         </TabsContent>
 
         <TabsContent value="video" className="space-y-3">
@@ -298,19 +296,30 @@ const StatusUploader = ({ lookName, statusCopyImage, statusCopyVideo, reelStruct
             <VideoAssetSlot label="Video 1" asset={assets.video_1} lookName={lookName} isAdmin={isAdmin} uploading={uploading.video_1} progress={progress.video_1} onFile={(f) => uploadFile(f, "video_1")} onRemove={() => removeFile("video_1")} />
             <VideoAssetSlot label="Video 2" asset={assets.video_2} lookName={lookName} isAdmin={isAdmin} uploading={uploading.video_2} progress={progress.video_2} onFile={(f) => uploadFile(f, "video_2")} onRemove={() => removeFile("video_2")} />
           </div>
-          <div className="space-y-1.5 rounded-lg bg-muted/50 p-3">
-            {reelStructure.map((line, i) => (
-              <p key={i} className="text-xs text-muted-foreground">{line}</p>
-            ))}
-          </div>
-          <div className="rounded-lg bg-muted/50 p-3">
-            <p className="text-sm text-foreground font-medium">"{statusCopyVideo}"</p>
-          </div>
-          <Button variant="outline" size="sm" className="w-full" onClick={() => copyText(statusCopyVideo, "Copy del video")}>
-            <Copy className="w-3.5 h-3.5 mr-1" /> Copiar copy ✓
-          </Button>
         </TabsContent>
       </Tabs>
+
+      {/* Universal copy button */}
+      <div className="px-4 pb-4">
+        <div className="rounded-lg bg-muted/50 p-3 mb-3">
+          <p className="text-sm text-foreground font-medium text-center">"{statusCopyImage}"</p>
+        </div>
+        <button
+          onClick={copyUniversal}
+          className="w-full py-3 rounded-xl font-display font-bold text-sm text-white flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+        >
+          {copied ? (
+            <>
+              <Check className="w-4 h-4" /> ¡Copiado! Úsalo en tu imagen o video 🚀
+            </>
+          ) : (
+            <>
+              <Sparkles className="w-4 h-4" /> Copiar texto para cualquier imagen o video
+            </>
+          )}
+        </button>
+      </div>
     </section>
   );
 };
