@@ -27,6 +27,7 @@ export interface DayData {
   typeLabel: string;
   focus: string;
   mission: string;
+  missionQuote?: string;
   steps: string[];
   lookName: string;
   lookProductIds: string;
@@ -64,7 +65,8 @@ const semana1Days: DayData[] = [
     type: "activacion",
     typeLabel: "Activación",
     focus: "Clientas Activas",
-    mission: "Hoy vas a despertar el deseo en tus clientas que ya te conocen. Son las más fáciles de convertir porque ya confían en ti. Tu trabajo es aparecer con algo que no esperaban y hacerlas querer verlo.",
+    mission: "Hoy vas con tus clientas de confianza — ellas ya te conocen, solo necesitan que aparezcas. A quien compre hoy pídele foto con la prenda.",
+    missionQuote: "La venta empieza cuando apareces — hoy apareces.",
     steps: [
       "Sube el Estado de WhatsApp con la imagen del Vestido Midi/Largo antes de las 10am",
       "Haz una lista de 5 clientas activas — las que te compraron en los últimos 60 días",
@@ -120,7 +122,8 @@ const semana1Days: DayData[] = [
     type: "activacion",
     typeLabel: "Activación",
     focus: "Clientas Activas",
-    mission: "Segundo día de activación. Las clientas que no respondieron ayer necesitan un segundo estímulo diferente. Hoy atacas con un look distinto y un gancho nuevo — no repitas el mismo mensaje.",
+    mission: "Las que no respondieron ayer son tu prioridad — un look diferente, una segunda oportunidad. A quien compre hoy pídele foto con la prenda.",
+    missionQuote: "El no de ayer es el sí de hoy con el mensaje correcto.",
     steps: [
       "Sube el Estado con el look de oficina antes de las 10am",
       "Revisa quién no respondió ayer — esas son tus primeras clientas de hoy",
@@ -176,7 +179,8 @@ const semana1Days: DayData[] = [
     type: "activacion",
     typeLabel: "Activación + Promo",
     focus: "Primera Promo",
-    mission: "Hoy cierras las que mostraron interés estos dos días. La promo es tu herramienta — no la menciones al principio, úsala cuando sientas que la clienta quiere pero le falta un empujón.",
+    mission: "Hoy cierras con las interesadas — muestra la promo desde el primer mensaje, es tu gancho más fuerte hoy.",
+    missionQuote: "Las mejores vendedoras no esperan — cierran.",
     steps: [
       "Sube el Estado con la promo antes de las 10am",
       "Contacta primero a las que mostraron interés los días 1 y 2 — ellas son las más calientes",
@@ -233,7 +237,8 @@ const semana1Days: DayData[] = [
     type: "prospeccion",
     typeLabel: "Prospección",
     focus: "Nuevas Clientas",
-    mission: "Hoy salimos a buscar clientas nuevas. El outfit colaborativo es tu gancho — no estás vendiendo, estás invitando a jugar. Mándalo a contactos que nunca te han comprado pero que conoces.",
+    mission: "Hoy saltas a territorio nuevo — el outfit colaborativo es tu gancho. A quien compre hoy pídele foto.",
+    missionQuote: "Cada clienta nueva que ganas hoy es una VIP de mañana.",
     steps: [
       "Prepara los 6 estados del outfit colaborativo y súbelos en secuencia con 1-2 horas entre cada uno",
       "Identifica 10 contactos que nunca te han comprado pero que conoces — vecinas, amigas, compañeras",
@@ -297,7 +302,8 @@ const semana1Days: DayData[] = [
     type: "prospeccion",
     typeLabel: "Prospección",
     focus: "Nuevas Clientas",
-    mission: "Segundo día de prospección. Hoy usas la referencia de celebridad para conectar con clientas nuevas que no conocen tu trabajo. La curiosidad es tu mejor aliada — no reveles todo de una vez.",
+    mission: "Hoy prospectas con deseo — el look de celebridad abre puertas que el catálogo no abre. A quien compre hoy pídele foto.",
+    missionQuote: "No estás vendiendo ropa — estás vendiendo cómo se va a sentir.",
     steps: [
       "Sube el Estado con la comparación de celebridad antes de las 10am",
       "Identifica 10 contactos nuevos diferentes a los de ayer",
@@ -354,7 +360,8 @@ const semana1Days: DayData[] = [
     type: "seguimiento",
     typeLabel: "Seguimiento",
     focus: "Seguimiento",
-    mission: "Hoy no vendes — hoy reactivás. Todos los contactos que no respondieron esta semana reciben un último toque con prueba social. Ver que alguien como ellas ya lo tiene es más poderoso que cualquier argumento.",
+    mission: "Hoy reactivas con prueba social — usa las fotos de clientas que juntaste esta semana, ellas venden mejor que tú.",
+    missionQuote: "Una clienta feliz vale más que mil palabras tuyas.",
     steps: [
       "Haz una lista de todos los contactos que no respondieron esta semana",
       "Sube el Estado con el testimonial antes de las 10am",
@@ -410,7 +417,8 @@ const semana1Days: DayData[] = [
     type: "cierre",
     typeLabel: "Cierre",
     focus: "Cierre de Semana",
-    mission: "Último día. Hoy cierras todo lo que quedó abierto en la semana. La urgencia es real — la promo termina hoy. Sé directa, amable y firme. Las que dijeron 'lo pienso' hoy deciden.",
+    mission: "Hoy es el último día — las que dudaron esta semana, hoy deciden. A quien compre pídele foto para tu próxima campaña.",
+    missionQuote: "Las que terminan lo que empiezan son las que ganan.",
     steps: [
       "Sube el Estado de cierre antes de las 9am — hoy más temprano que nunca",
       "Manda el mensaje de cierre a todos los que mostraron interés esta semana pero no compraron",
