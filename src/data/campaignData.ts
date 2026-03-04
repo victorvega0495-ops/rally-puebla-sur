@@ -87,7 +87,6 @@ const semana1Days: DayData[] = [
     },
     salesHacks: [
       "💡 Muéstrale cómo el cinturón cambia todo el look — con y sin él son dos vestidos distintos",
-      "💡 Manda el mensaje primero, la foto después",
     ],
     openingMessages: {
       cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
