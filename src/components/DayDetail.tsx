@@ -136,7 +136,7 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
           <div className="p-4 space-y-4">
             {/* Visual placeholder — NO price, NO brand on image */}
             <div
-              className="rounded-xl aspect-[3/4] max-h-[280px] w-full flex flex-col items-center justify-center text-white relative overflow-hidden"
+              className="rounded-xl aspect-[9/16] w-full flex flex-col items-center justify-center text-white relative overflow-hidden"
               style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.7), hsl(275 65% 50% / 0.7))" }}
             >
               <ImageIcon className="w-10 h-10 mb-2 opacity-60" />
