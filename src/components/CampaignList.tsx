@@ -1,4 +1,4 @@
-import { Lock, ChevronRight } from "lucide-react";
+import { Lock, ChevronRight, Settings } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { campaigns } from "@/data/campaignData";
@@ -6,9 +6,10 @@ import { campaigns } from "@/data/campaignData";
 interface CampaignListProps {
   onEnter: (campaignId: string) => void;
   getProgress: (campaignId: string) => number;
+  isAdmin?: boolean;
 }
 
-const CampaignList = ({ onEnter, getProgress }: CampaignListProps) => (
+const CampaignList = ({ onEnter, getProgress, isAdmin }: CampaignListProps) => (
   <div className="pt-20 pb-16 px-4 max-w-2xl mx-auto">
     <h1 className="font-display text-2xl md:text-3xl font-bold gradient-text text-center mb-2">
       Mis Campañas
@@ -19,6 +20,7 @@ const CampaignList = ({ onEnter, getProgress }: CampaignListProps) => (
     <div className="space-y-4">
       {campaigns.map((c) => {
         const done = getProgress(c.id);
+        const adminCanEdit = !c.active && isAdmin && c.days.length > 0;
         return (
           <div
             key={c.id}
@@ -59,6 +61,15 @@ const CampaignList = ({ onEnter, getProgress }: CampaignListProps) => (
                   className="shrink-0"
                 >
                   Entrar <ChevronRight className="w-4 h-4" />
+                </Button>
+              ) : adminCanEdit ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onEnter(c.id)}
+                  className="shrink-0 border-amber-400 text-amber-600 hover:bg-amber-50 dark:border-amber-500 dark:text-amber-400 dark:hover:bg-amber-950/30"
+                >
+                  <Settings className="w-4 h-4 mr-1" /> Editar
                 </Button>
               ) : (
                 <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
