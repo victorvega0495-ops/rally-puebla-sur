@@ -102,6 +102,7 @@ const CampaignSection = () => {
         setView("campaign");
       }}
       getProgress={(id) => getCompleted(id).length}
+      isAdmin={isAdmin}
     />
   );
 };
