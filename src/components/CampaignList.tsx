@@ -105,8 +105,13 @@ const CampaignList = ({ onEnter, getProgress, isAdmin, onAdminUnlock }: Campaign
                   </Button>
                 ) : (
                   <button
-                    onClick={() => hasEditableDays ? handleLockClick(c.id) : undefined}
-                    className={`w-10 h-10 rounded-full bg-muted flex items-center justify-center ${hasEditableDays ? "cursor-pointer hover:bg-muted/80 transition-colors" : ""}`}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (hasEditableDays) handleLockClick(c.id);
+                    }}
+                    className={`w-10 h-10 rounded-full bg-muted flex items-center justify-center shrink-0 ${hasEditableDays ? "cursor-pointer hover:bg-muted/80 active:scale-95 transition-all" : ""}`}
                   >
                     <Lock className="w-5 h-5 text-muted-foreground" />
                   </button>
