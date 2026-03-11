@@ -480,9 +480,9 @@ export const campaigns: Campaign[] = [
   },
   {
     id: "semana-2",
-    title: "Semana 2",
-    subtitle: "Playa y Sandalias",
-    active: false,
+    title: "Semana 2 — Playa y Sandalias",
+    subtitle: "Price Shoes Verano 2026",
+    active: true,
 days: [
       {
         day: 1,
