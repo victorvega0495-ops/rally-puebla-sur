@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ImageIcon, Film, Upload, X, Download, Loader2, Smartphone, ArrowDown } from "lucide-react";
+import { ImageIcon, Film, Upload, X, Download, Loader2, Smartphone, ArrowDown, Share2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -54,6 +54,29 @@ const downloadBlob = async (url: string, fileName: string, toast: ReturnType<typ
     }
   }
 };
+
+const shareOrDownload = async (url: string, fileName: string, mimePrefix: string, toast: ReturnType<typeof useToast>["toast"]) => {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const ext = fileName.split(".").pop()?.toLowerCase() || "bin";
+    const mimeType = blob.type || `${mimePrefix}/${ext === "jpg" ? "jpeg" : ext}`;
+    const file = new File([blob], fileName, { type: mimeType });
+
+    if (navigator.share && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ files: [file], title: fileName });
+      return;
+    }
+  } catch (err: any) {
+    if (err?.name === "AbortError") return; // user cancelled
+  }
+  // Fallback to download
+  downloadBlob(url, fileName, toast);
+};
+
+const ACTION_BTN = "flex items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold transition-colors";
+const DL_BTN = `${ACTION_BTN} text-primary hover:bg-primary/10`;
+const SHARE_BTN = `${ACTION_BTN} text-white`;
 
 /* ── Step Indicator ── */
 const StepIndicator = ({ currentStep }: { currentStep?: number }) => (
@@ -150,9 +173,18 @@ const ImageAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
           </>
         )}
       </div>
-      <a href={asset.url} download={asset.fileName} target="_blank" rel="noopener noreferrer" className="mt-1.5 flex items-center justify-center gap-1 text-[10px] text-primary hover:underline">
-        <Download className="w-3 h-3" /> Descargar
-      </a>
+      <div className="mt-2 flex items-center justify-center gap-2">
+        <a href={asset.url} download={asset.fileName} target="_blank" rel="noopener noreferrer" className={DL_BTN}>
+          <Download className="w-3.5 h-3.5" /> Descargar
+        </a>
+        <button
+          onClick={(e) => { e.stopPropagation(); shareOrDownload(asset.url, asset.fileName, "image", toast); }}
+          className={SHARE_BTN}
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+        >
+          <Share2 className="w-3.5 h-3.5" /> Compartir 📤
+        </button>
+      </div>
       <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png" className="hidden" onChange={handleChange} />
     </div>
   );
@@ -225,9 +257,18 @@ const VideoAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
           </>
         )}
       </div>
-      <button onClick={handleDownload} className="mt-1.5 w-full flex items-center justify-center gap-1 text-[10px] text-primary hover:underline">
-        <Download className="w-3 h-3" /> Descargar
-      </button>
+      <div className="mt-2 flex items-center justify-center gap-2">
+        <button onClick={handleDownload} className={DL_BTN}>
+          <Download className="w-3.5 h-3.5" /> Descargar
+        </button>
+        <button
+          onClick={() => asset && shareOrDownload(asset.url, asset.fileName, "video", toast)}
+          className={SHARE_BTN}
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+        >
+          <Share2 className="w-3.5 h-3.5" /> Compartir 📤
+        </button>
+      </div>
       {isIOS() && (
         <p className="text-[9px] text-muted-foreground text-center mt-1 flex items-center justify-center gap-1">
           <Smartphone className="w-3 h-3" /> En iPhone: mantén presionado y selecciona 'Guardar video'
