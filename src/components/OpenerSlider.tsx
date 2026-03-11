@@ -6,7 +6,7 @@ import WhatsAppChat from "@/components/WhatsAppChat";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-const openerMessages = {
+const defaultMessages = {
   cold: [
     "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
     "Hola [Nombre]! Qué gusto — hace rato no hablamos 😊 Oye, estoy armando unos outfits preciosos y de volada me acordé de ti. ¿Te los mando?",
@@ -30,9 +30,26 @@ const tabs = [
   { value: "hot", emoji: "🔥", label: "-15 días", sub: "Menos de 15 días sin hablarle", borderColor: "border-red-300/50" },
 ] as const;
 
-const OpenerSlider = () => {
+interface OpenerSliderProps {
+  dayMessages?: {
+    cold: string | string[];
+    warm: string | string[];
+    hot: string | string[];
+  };
+}
+
+const OpenerSlider = ({ dayMessages }: OpenerSliderProps) => {
   const { toast } = useToast();
   const [indices, setIndices] = useState({ cold: 0, warm: 0, hot: 0 });
+
+  const getMessages = (temp: "cold" | "warm" | "hot"): string[] => {
+    if (dayMessages) {
+      const val = dayMessages[temp];
+      if (Array.isArray(val)) return val;
+      if (val) return [val];
+    }
+    return defaultMessages[temp];
+  };
 
   const copyText = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -41,9 +58,10 @@ const OpenerSlider = () => {
   };
 
   const navigate = (temp: "cold" | "warm" | "hot", dir: -1 | 1) => {
+    const msgs = getMessages(temp);
     setIndices((prev) => {
       const next = prev[temp] + dir;
-      if (next < 0 || next > 2) return prev;
+      if (next < 0 || next >= msgs.length) return prev;
       return { ...prev, [temp]: next };
     });
   };
@@ -68,8 +86,9 @@ const OpenerSlider = () => {
           </TabsList>
 
           {tabs.map((t) => {
-            const msgs = openerMessages[t.value];
+            const msgs = getMessages(t.value);
             const idx = indices[t.value];
+            const isLastMsg = msgs.length === 4 && idx === 3;
             return (
               <TabsContent key={t.value} value={t.value}>
                 <div className={cn("rounded-xl border-2 p-4 space-y-3", t.borderColor)}>
@@ -88,15 +107,25 @@ const OpenerSlider = () => {
                         className="flex transition-transform duration-300 ease-out"
                         style={{ transform: `translateX(-${idx * 100}%)` }}
                       >
-                        {msgs.map((msg, i) => (
-                          <div key={i} className="w-full shrink-0 px-0.5">
-                            <WhatsAppChat
-                              contactName="[Nombre]"
-                              messages={[{ text: msg, sent: true, time: "10:30 a.m." }]}
-                              compact
-                            />
-                          </div>
-                        ))}
+                        {msgs.map((msg, i) => {
+                          const isFollowUp = msgs.length === 4 && i === 3;
+                          return (
+                            <div key={i} className="w-full shrink-0 px-0.5">
+                              {isFollowUp && (
+                                <p className="text-[11px] text-muted-foreground/70 font-medium mb-1.5 ml-1">
+                                  🔄 Si no respondió ayer
+                                </p>
+                              )}
+                              <div className={cn(isFollowUp && "ring-1 ring-muted-foreground/15 rounded-xl")}>
+                                <WhatsAppChat
+                                  contactName="[Nombre]"
+                                  messages={[{ text: msg, sent: true, time: "10:30 a.m." }]}
+                                  compact
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
@@ -109,7 +138,7 @@ const OpenerSlider = () => {
                         <ChevronLeft className="w-4 h-4" />
                       </button>
                     )}
-                    {idx < 2 && (
+                    {idx < msgs.length - 1 && (
                       <button
                         onClick={() => navigate(t.value, 1)}
                         className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-8 h-8 rounded-full bg-background border border-border shadow-md flex items-center justify-center z-10"
@@ -121,7 +150,7 @@ const OpenerSlider = () => {
 
                   {/* Dots */}
                   <div className="flex justify-center gap-2">
-                    {[0, 1, 2].map((dot) => (
+                    {msgs.map((_, dot) => (
                       <button
                         key={dot}
                         onClick={() => setIndices((prev) => ({ ...prev, [t.value]: dot }))}

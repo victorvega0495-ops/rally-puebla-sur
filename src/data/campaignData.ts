@@ -36,9 +36,9 @@ export interface DayData {
   idealClient: IdealClient;
   salesHacks: string[];
   openingMessages: {
-    cold: string;
-    warm: string;
-    hot: string;
+    cold: string | string[];
+    warm: string | string[];
+    hot: string | string[];
   };
   statusCopyImage: string;
   statusCopyVideo: string;
@@ -515,9 +515,24 @@ days: [
           "💡 El mono se vende mejor cuando muestras lo fácil que es usarlo — una pieza, lista para salir",
         ],
         openingMessages: {
-          cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
-          warm: "Holaaa [Nombre], ¿cómo estás? Oye no me vas a creer — acabo de armar un look de playa que quedó brutal y me acordé de ti. ¿Lo ves?",
-          hot: "Oye [Nombre], mira lo que acaba de llegar — de volada pensé en ti. ¿Te lo mando?",
+          cold: [
+            "Holaaa [Nombre], ¿cómo has estado? Me acordé de ti porque vi algo perfecto para este calor. ¿Te lo mando?",
+            "Hola [Nombre]! Hace tiempo — espero que estés bien 😊 Tengo algo que cuando lo vi dije 'esto es para ella'. ¿Te mando foto?",
+            "Holaaa [Nombre], ¿todo bien por allá? Con este calor armé unos looks de playa que quedaron increíbles y pensé en ti. ¿Te los mando?",
+            "Holaaa [Nombre], ayer te escribí y creo que no te llegó 😊 Oye tengo algo que de verdad creo que te va a gustar. ¿Te lo mando?",
+          ],
+          warm: [
+            "Holaaa [Nombre], ¿cómo estás? Acabo de armar algo para este verano que quedó brutal y pensé en ti. ¿Te lo mando?",
+            "Hola [Nombre] 😊 Con este calor tengo algo que creo que te va a encantar. ¿Te lo mando?",
+            "Holaaa [Nombre], ¿ya tienes tus looks de verano listos? Porque tengo algo que necesitas ver. ¿Te mando foto?",
+            "Holaaa [Nombre], ayer te mandé algo y no sé si te llegó — oye de verdad creo que este look te va a gustar. ¿Te lo mando?",
+          ],
+          hot: [
+            "Oye [Nombre], acabo de recibir cosas nuevas para playa y de volada pensé en ti. ¿Te las mando?",
+            "[Nombre]! Llegaron cosas nuevas de verano y este look tiene tu nombre escrito. ¿Te lo mando?",
+            "Oye [Nombre], ¿ya tienes todo para tus planes de verano? Tengo algo perfecto para ti. ¿Te mando foto?",
+            "Oye [Nombre], ayer te escribí — creo que no te llegó. Oye en serio este look que tengo para ti está increíble. ¿Te lo mando?",
+          ],
         },
         statusCopyImage: "¿A la playa o al paseo? Este mono lo hace todo 👀",
         statusCopyVideo: "¿A la playa o al paseo? Este mono lo hace todo 👀",
@@ -572,9 +587,24 @@ days: [
           "💡 Este vestido se vende solo con el fondo — manda la imagen en el muelle o la playa, el contexto cierra la venta",
         ],
         openingMessages: {
-          cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
-          warm: "Holaaa [Nombre], ¿cómo estás? Oye no me vas a creer — acabo de armar un look floral que quedó brutal y me acordé de ti. ¿Lo ves?",
-          hot: "Oye [Nombre], mira lo que acaba de llegar — de volada pensé en ti. ¿Te lo mando?",
+          cold: [
+            "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Tengo algo nuevo de playa que de volada pensé en ti. ¿Te lo mando?",
+            "Hola [Nombre]! Espero que estés bien — te escribo porque tengo un look de verano que creo que es para ti. ¿Te mando foto?",
+            "Holaaa [Nombre], ¿todo bien por allá? Vi algo hoy que no pude no pensar en ti. ¿Te lo mando?",
+            "Holaaa [Nombre], ayer te escribí y creo que se me fue el mensaje 😊 Oye tengo algo de playa que de verdad te va a gustar. ¿Te lo mando?",
+          ],
+          warm: [
+            "Holaaa [Nombre], ¿cómo estás? Tengo un look de verano que quedó increíble y pensé en ti. ¿Te lo mando?",
+            "Hola [Nombre] 😊 Oye tengo algo nuevo para este calor que creo que te va a encantar. ¿Te mando foto?",
+            "Holaaa [Nombre], ¿lista para el verano? Tengo algo que necesitas ver. ¿Te lo mando?",
+            "Holaaa [Nombre], ayer te mandé algo — oye no quiero que te lo pierdas porque de verdad creo que es para ti. ¿Te lo mando?",
+          ],
+          hot: [
+            "Oye [Nombre], tengo algo nuevo de verano y de volada pensé en ti. ¿Te lo mando?",
+            "[Nombre]! Mira lo que llegó hoy — tiene tu nombre escrito. ¿Te lo mando?",
+            "Oye [Nombre], ¿ya viste todo lo que tengo para este verano? Porque hoy llegó algo más. ¿Te mando foto?",
+            "Oye [Nombre], ayer te escribí y no sé si te llegó — este look de verdad es para ti. ¿Te lo mando?",
+          ],
         },
         statusCopyImage: "¿Azul o rosa? Elige tu mood 🌸🌊",
         statusCopyVideo: "¿Azul o rosa? Elige tu mood 🌸🌊",
@@ -629,9 +659,24 @@ days: [
           "💡 El azul marino es más versátil, el rosa más femenino — pregúntale cuál es su color favorito para engancharla",
         ],
         openingMessages: {
-          cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
-          warm: "Holaaa [Nombre], ¿cómo estás? Oye no me vas a creer — acabo de armar un combo de verano que quedó brutal y me acordé de ti. ¿Lo ves?",
-          hot: "Oye [Nombre], mira lo que acaba de llegar — de volada pensé en ti. ¿Te lo mando?",
+          cold: [
+            "Holaaa [Nombre], ¿cómo has estado? Hace tiempo — te escribo porque hoy tengo una promo especial de verano y pensé en ti. ¿Te cuento?",
+            "Hola [Nombre] 😊 Hace rato que no hablamos — hoy armé algo para mis clientas de confianza, una promo de verano que no voy a publicar. ¿Te interesa?",
+            "Holaaa [Nombre], ¿todo bien? Hoy es un buen día para renovar los looks de playa 😊 Tengo una promo que creo que te va a gustar. ¿Te la cuento?",
+            "Holaaa [Nombre], ayer te escribí y creo que no te llegó 😊 Hoy tengo algo mejor — una promo especial de verano. ¿Te la cuento?",
+          ],
+          warm: [
+            "Holaaa [Nombre], ¿cómo estás? Hoy tengo una promo de verano que vale la pena — ¿te la cuento?",
+            "Hola [Nombre] 😊 Hoy armé algo especial para este calor — si te llevas dos piezas te hago un descuento. ¿Te cuento?",
+            "Holaaa [Nombre], ¿ya tienes todo para el verano? Hoy tengo una promo que te puede ayudar. ¿Te la mando?",
+            "Holaaa [Nombre], ayer te mandé algo — hoy tengo algo mejor todavía, una promo especial de verano. ¿Te la cuento?",
+          ],
+          hot: [
+            "Oye [Nombre], hoy tengo una promo especial de verano para ti. ¿Te la cuento?",
+            "[Nombre]! Hoy es un buen día — tengo un descuento de temporada que no te puedes perder. ¿Le entramos?",
+            "Oye [Nombre], hoy armé algo bueno — una promo de verano que está increíble. ¿Te la mando?",
+            "Oye [Nombre], ayer te escribí — hoy tengo algo mejor todavía. Una promo de playa que de verdad vale la pena. ¿Te la cuento?",
+          ],
         },
         statusCopyImage: "Combo de verano — top + short juntos 🌞",
         statusCopyVideo: "Combo de verano — top + short juntos 🌞",

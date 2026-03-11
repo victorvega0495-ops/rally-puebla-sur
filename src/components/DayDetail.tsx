@@ -329,7 +329,7 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
         )}
 
         {/* 7 — ¿Cómo arrancar según tu clienta? — animated slider */}
-        <OpenerSlider />
+        <OpenerSlider dayMessages={day.openingMessages} />
 
         {/* 8 — Manejo de Objeciones */}
         <section className="rounded-2xl border border-border overflow-hidden shadow-sm">
