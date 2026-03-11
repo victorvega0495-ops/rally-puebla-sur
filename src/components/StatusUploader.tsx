@@ -257,9 +257,18 @@ const VideoAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
           </>
         )}
       </div>
-      <button onClick={handleDownload} className="mt-1.5 w-full flex items-center justify-center gap-1 text-[10px] text-primary hover:underline">
-        <Download className="w-3 h-3" /> Descargar
-      </button>
+      <div className="mt-2 flex items-center justify-center gap-2">
+        <button onClick={handleDownload} className={DL_BTN}>
+          <Download className="w-3.5 h-3.5" /> Descargar
+        </button>
+        <button
+          onClick={() => asset && shareOrDownload(asset.url, asset.fileName, "video", toast)}
+          className={SHARE_BTN}
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+        >
+          <Share2 className="w-3.5 h-3.5" /> Compartir 📤
+        </button>
+      </div>
       {isIOS() && (
         <p className="text-[9px] text-muted-foreground text-center mt-1 flex items-center justify-center gap-1">
           <Smartphone className="w-3 h-3" /> En iPhone: mantén presionado y selecciona 'Guardar video'
