@@ -173,9 +173,18 @@ const ImageAssetSlot = ({ label, asset, lookName, isAdmin, uploading, progress: 
           </>
         )}
       </div>
-      <a href={asset.url} download={asset.fileName} target="_blank" rel="noopener noreferrer" className="mt-1.5 flex items-center justify-center gap-1 text-[10px] text-primary hover:underline">
-        <Download className="w-3 h-3" /> Descargar
-      </a>
+      <div className="mt-2 flex items-center justify-center gap-2">
+        <a href={asset.url} download={asset.fileName} target="_blank" rel="noopener noreferrer" className={DL_BTN}>
+          <Download className="w-3.5 h-3.5" /> Descargar
+        </a>
+        <button
+          onClick={(e) => { e.stopPropagation(); shareOrDownload(asset.url, asset.fileName, "image", toast); }}
+          className={SHARE_BTN}
+          style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+        >
+          <Share2 className="w-3.5 h-3.5" /> Compartir 📤
+        </button>
+      </div>
       <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png" className="hidden" onChange={handleChange} />
     </div>
   );
