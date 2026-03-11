@@ -61,7 +61,8 @@ const shareOrDownload = async (url: string, fileName: string, mimePrefix: string
     const blob = await res.blob();
     const ext = fileName.split(".").pop()?.toLowerCase() || "bin";
     const mimeType = blob.type || `${mimePrefix}/${ext === "jpg" ? "jpeg" : ext}`;
-    const file = new File([blob], fileName, { type: mimeType });
+    const cleanName = mimePrefix === "image" ? `look.${ext}` : `look.${ext}`;
+    const file = new File([blob], cleanName, { type: mimeType });
 
     if (navigator.share && navigator.canShare?.({ files: [file] })) {
       await navigator.share({ files: [file], title: fileName });
