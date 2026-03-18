@@ -597,15 +597,22 @@ interface SummaryProps {
 }
 
 const StepSummary = ({ completed, onComplete, onBackToImages, onNavigateNext, onBackToMenu }: SummaryProps) => {
-  const [showPostButtons, setShowPostButtons] = useState(false);
+  const [phase, setPhase] = useState<"idle" | "green" | "nav">(completed ? "nav" : "idle");
 
-  // After confetti (completed flips true), fade in the post-completion buttons
-  useEffect(() => {
-    if (completed && !showPostButtons) {
-      const t = setTimeout(() => setShowPostButtons(true), 2500);
-      return () => clearTimeout(t);
+  const handleTap = async () => {
+    onComplete();
+    setPhase("green");
+
+    // Fire canvas-confetti
+    try {
+      const { default: confetti } = await import("https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" as string);
+      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+    } catch {
+      // confetti unavailable, continue
     }
-  }, [completed, showPostButtons]);
+
+    setTimeout(() => setPhase("nav"), 2500);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-8 py-8">
@@ -615,19 +622,25 @@ const StepSummary = ({ completed, onComplete, onBackToImages, onNavigateNext, on
       </h1>
 
       <div className="w-full max-w-xs space-y-3">
-        {/* Main CTA — hidden after completion */}
-        {!completed && (
+        {phase === "idle" && (
           <Button
             className="w-full text-base py-6 text-white font-bold shadow-xl"
             style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
-            onClick={onComplete}
+            onClick={handleTap}
           >
             ✅ ¡Día completado!
           </Button>
         )}
 
-        {/* Post-completion buttons — fade in after confetti */}
-        {completed && showPostButtons && (
+        {phase === "green" && (
+          <Button
+            className="w-full text-base py-6 text-white font-bold shadow-xl bg-emerald-500 hover:bg-emerald-500 cursor-default"
+          >
+            ✓ ¡Listo!
+          </Button>
+        )}
+
+        {phase === "nav" && (
           <div className="space-y-3 animate-fade-in">
             <Button
               className="w-full text-base py-6 text-white font-bold"
@@ -647,8 +660,7 @@ const StepSummary = ({ completed, onComplete, onBackToImages, onNavigateNext, on
         )}
       </div>
 
-      {/* Small back link at very bottom */}
-      {!completed && (
+      {phase === "idle" && (
         <button
           onClick={onBackToImages}
           className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-4"
