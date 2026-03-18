@@ -177,6 +177,7 @@ const Day5Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
                 "Oye, ¿ya tienes tu outfit para el finde? Mira estos tennis con este look casual — te van a encantar 😍",
                 "Para las que trabajan y quieren verse increíbles sin complicarse — mira este combo de viernes 💃"
               ]}
+              messageSection="video_ideas"
             />
           )}
           {step === 2 && (
