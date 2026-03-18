@@ -355,32 +355,15 @@ const MediaSlider = ({
 };
 
 /* ========== STEP 4 — Copyable Messages ========== */
-const MESSAGES = [
-  {
-    label: "Casual",
-    text: "Hola! Sí hay una dinámica especial 😊 Si me das el contacto de 3 personas que creas que les pueden gustar los tennis, yo les escribo y tú te llevas el tuyo con 15% de descuento. ¿Le entramos?",
-  },
-  {
-    label: "Directa",
-    text: "La dinámica es sencilla — me referencias 3 contactos y tú te llevas el descuento del 15%. No tienen que comprar, solo darme chance de escribirles. ¿Tienes alguien en mente?",
-  },
-  {
-    label: "Formal",
-    text: "Claro que sí 😊 Tenemos una promoción especial: si nos compartes el contacto de 3 personas interesadas en calzado deportivo, aplicamos el 15% de descuento en tu compra. ¿Te interesa?",
-  },
+const DEFAULT_REFERRAL_MESSAGES = [
+  "Hola! Sí hay una dinámica especial 😊 Si me das el contacto de 3 personas que creas que les pueden gustar los tennis, yo les escribo y tú te llevas el tuyo con 15% de descuento. ¿Le entramos?",
+  "La dinámica es sencilla — me referencias 3 contactos y tú te llevas el descuento del 15%. No tienen que comprar, solo darme chance de escribirles. ¿Tienes alguien en mente?",
+  "Claro que sí 😊 Tenemos una promoción especial: si nos compartes el contacto de 3 personas interesadas en calzado deportivo, aplicamos el 15% de descuento en tu compra. ¿Te interesa?",
 ];
+const DEFAULT_REFERRAL_LABELS = ["Casual", "Directa", "Formal"];
+const LABEL_COLORS = ["hsl(330 85% 55%)", "hsl(275 65% 50%)", "hsl(200 80% 50%)"];
 
-const Step4Messages = () => {
-  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
-
-  const handleCopy = async (text: string, idx: number) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedIdx(idx);
-      setTimeout(() => setCopiedIdx(null), 2000);
-    } catch { /* clipboard unavailable */ }
-  };
-
+const Step4Messages = ({ campaignId, isAdmin }: { campaignId: string; isAdmin?: boolean }) => {
   return (
     <div className="flex flex-col items-center min-h-[60vh] py-4 space-y-6">
       <div className="text-center space-y-2">
@@ -388,28 +371,17 @@ const Step4Messages = () => {
         <p className="text-sm text-muted-foreground">Usa cualquiera de estos mensajes para explicar la dinámica — cópialo y mándalo directo</p>
       </div>
 
-      <div className="w-full space-y-4">
-        {MESSAGES.map((msg, i) => (
-          <div key={i} className="rounded-xl border border-border p-4 space-y-3" style={{ background: "hsl(var(--muted) / 0.3)" }}>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full text-white" style={{ background: i === 0 ? "hsl(330 85% 55%)" : i === 1 ? "hsl(275 65% 50%)" : "hsl(200 80% 50%)" }}>
-                {msg.label}
-              </span>
-              <button
-                onClick={() => handleCopy(msg.text, i)}
-                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
-                style={copiedIdx === i
-                  ? { background: "hsl(150 60% 45%)", color: "white" }
-                  : { background: "hsl(var(--muted))", color: "hsl(var(--foreground))" }
-                }
-              >
-                {copiedIdx === i ? <><Check className="w-3.5 h-3.5" /> Copiado</> : <><Copy className="w-3.5 h-3.5" /> Copiar</>}
-              </button>
-            </div>
-            <p className="text-sm text-foreground leading-relaxed">{msg.text}</p>
-          </div>
-        ))}
-      </div>
+      <EditableMessages
+        campaignId={campaignId}
+        dayNumber={DAY}
+        section="referral_copy"
+        isAdmin={isAdmin}
+        defaultMessages={DEFAULT_REFERRAL_MESSAGES}
+        labels={DEFAULT_REFERRAL_LABELS}
+        labelColors={LABEL_COLORS}
+        showCopyButton
+        title="Mensajes de referido"
+      />
     </div>
   );
 };
