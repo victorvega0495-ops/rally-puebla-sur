@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { ProductMetaInputs, ProductMetaOverlay } from "./ProductMetaFields";
+import EditableMessages from "./EditableMessages";
 
 interface Day2FlowProps {
   campaignId: string;
