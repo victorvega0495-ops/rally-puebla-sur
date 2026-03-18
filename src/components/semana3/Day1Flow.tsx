@@ -444,7 +444,14 @@ const Step3Slider = ({ assets, uploading, isAdmin, inputRefs, campaignId, active
         </button>
       )}
 
-      {/* Dot indicators */}
+      {/* Admin meta inputs */}
+      {isAdmin && (
+        <div className="px-5 w-full max-w-sm mt-3">
+          <ProductMetaInputs campaignId={campaignId} dayNumber={DAY} assetType={`carousel_${activeIndex}`} />
+        </div>
+      )}
+
+
       <div className="flex items-center justify-center gap-2.5 mt-5">
         {Array.from({ length: total }, (_, i) => (
           <button
