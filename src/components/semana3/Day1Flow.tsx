@@ -112,24 +112,6 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
     }
   }, []);
 
-  const downloadAll = useCallback(async () => {
-    for (let i = 0; i < 5; i++) {
-      const asset = carouselAssets[i];
-      if (asset) {
-        try {
-          const res = await fetch(asset.url);
-          const blob = await res.blob();
-          const ext = asset.fileName.split(".").pop()?.toLowerCase() || "jpg";
-          const blobUrl = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = blobUrl;
-          a.download = `look-${i + 1}.${ext}`;
-          a.click();
-          URL.revokeObjectURL(blobUrl);
-        } catch { /* skip */ }
-      }
-    }
-  }, [carouselAssets]);
 
   const goNext = () => {
     if (step < TOTAL_STEPS - 1) { setDirection("right"); setStep(step + 1); window.scrollTo(0, 0); }
