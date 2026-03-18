@@ -163,6 +163,7 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
               campaignId={campaignId}
               onUpload={(file, idx) => uploadAsset(file, `grid_${idx}`, idx, setGridAssets, setGridUploading)}
               onRemove={(idx) => removeAsset(`grid_${idx}`, idx, setGridAssets, gridAssets)}
+              onShare={shareOrDownload}
             />
           )}
           {step === 2 && (
