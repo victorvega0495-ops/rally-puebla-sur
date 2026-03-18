@@ -163,6 +163,7 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
               campaignId={campaignId}
               onUpload={(file, idx) => uploadAsset(file, `grid_${idx}`, idx, setGridAssets, setGridUploading)}
               onRemove={(idx) => removeAsset(`grid_${idx}`, idx, setGridAssets, gridAssets)}
+              onShare={shareOrDownload}
             />
           )}
           {step === 2 && (
@@ -235,9 +236,10 @@ interface Step2Props {
   campaignId: string;
   onUpload: (file: File, idx: number) => void;
   onRemove: (idx: number) => void;
+  onShare: (url: string, fileName: string) => void;
 }
 
-const Step2Products = ({ assets, uploading, isAdmin, inputRefs, campaignId, onUpload, onRemove }: Step2Props) => {
+const Step2Products = ({ assets, uploading, isAdmin, inputRefs, campaignId, onUpload, onRemove, onShare }: Step2Props) => {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   useEffect(() => {
@@ -303,9 +305,24 @@ const Step2Products = ({ assets, uploading, isAdmin, inputRefs, campaignId, onUp
           <button onClick={() => setLightboxIdx(null)} className="absolute top-4 right-4 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10">
             <X className="w-6 h-6" />
           </button>
-          <div className="relative max-h-[85vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
-            <img src={lightboxAsset.url} alt={`Producto ${lightboxIdx + 1}`} className="max-h-[85vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-300" />
+          <div className="relative max-h-[75vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
+            <img src={lightboxAsset.url} alt={`Producto ${lightboxIdx + 1}`} className="max-h-[75vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-300" />
             <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType={`grid_${lightboxIdx}`} />
+          </div>
+          <div className="flex items-center gap-3 mt-4 w-full max-w-sm px-5" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => { try { fetch(lightboxAsset.url).then(r => r.blob()).then(b => { const u = URL.createObjectURL(b); const a = document.createElement("a"); a.href = u; a.download = lightboxAsset.fileName; a.click(); URL.revokeObjectURL(u); }); } catch {} }}
+              className="flex-1 flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 transition-colors"
+            >
+              <Download className="w-4 h-4" /> ⬇️ Descargar
+            </button>
+            <button
+              onClick={() => onShare(lightboxAsset.url, lightboxAsset.fileName)}
+              className="flex-1 flex items-center justify-center gap-2 text-sm font-bold text-white py-3 rounded-xl shadow-lg"
+              style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+            >
+              <Share2 className="w-4 h-4" /> 📤 Compartir
+            </button>
           </div>
         </div>
       )}
