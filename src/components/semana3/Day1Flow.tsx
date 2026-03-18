@@ -186,7 +186,7 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
           {step === 2 && (
             <Step3Slider
               assets={carouselAssets} uploading={carouselUploading} isAdmin={isAdmin} inputRefs={carouselInputRefs}
-              activeIndex={carouselIndex} onIndexChange={setCarouselIndex}
+              campaignId={campaignId} activeIndex={carouselIndex} onIndexChange={setCarouselIndex}
               onUpload={(file, idx) => uploadAsset(file, `carousel_${idx}`, idx, setCarouselAssets, setCarouselUploading)}
               onRemove={(idx) => removeAsset(`carousel_${idx}`, idx, setCarouselAssets, carouselAssets)}
               onShare={shareOrDownload}
