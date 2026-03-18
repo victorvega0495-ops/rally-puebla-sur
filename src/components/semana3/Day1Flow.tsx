@@ -337,6 +337,7 @@ interface Step3Props {
   uploading: number | null;
   isAdmin?: boolean;
   inputRefs: React.MutableRefObject<Record<number, HTMLInputElement | null>>;
+  campaignId: string;
   activeIndex: number;
   onIndexChange: (i: number) => void;
   onUpload: (file: File, idx: number) => void;
@@ -344,7 +345,7 @@ interface Step3Props {
   onShare: (url: string, fileName: string) => void;
 }
 
-const Step3Slider = ({ assets, uploading, isAdmin, inputRefs, activeIndex, onIndexChange, onUpload, onRemove, onShare }: Step3Props) => {
+const Step3Slider = ({ assets, uploading, isAdmin, inputRefs, campaignId, activeIndex, onIndexChange, onUpload, onRemove, onShare }: Step3Props) => {
   const total = 5;
   const asset = assets[activeIndex];
   const isUploading = uploading === activeIndex;
