@@ -199,7 +199,7 @@ const CampaignView = ({ campaign, completedDays, isAdmin, onAdminToggle, onBack,
           {/* Community card */}
           <button
             onClick={() => setShowCommunity(true)}
-            className="rounded-xl border-0 p-4 text-left transition-all hover:shadow-lg hover:-translate-y-0.5 animate-[community-pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+            className="rounded-xl border-0 p-4 text-left transition-all hover:shadow-lg hover:-translate-y-0.5 animate-community-pulse"
             style={{ background: "linear-gradient(135deg, #ec4899, #8b5cf6)" }}
           >
             <div className="flex items-center justify-between mb-2">
