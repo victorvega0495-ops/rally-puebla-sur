@@ -78,6 +78,20 @@ const CampaignSection = () => {
           />
         );
       }
+      // Semana 3 Day 2 uses the video/image flow
+      if (campaign.id === "semana-3" && activeDay === 2) {
+        return (
+          <Day2Flow
+            campaignId={campaign.id}
+            campaignTitle={campaign.title}
+            isAdmin={isAdmin}
+            completed={getCompleted(campaign.id).includes(2)}
+            onBack={() => setView("campaign")}
+            onComplete={() => completeDay(campaign.id, 2)}
+            onNavigateNext={handleNavigateNext}
+          />
+        );
+      }
       return (
         <DayDetail
           day={dayData}
