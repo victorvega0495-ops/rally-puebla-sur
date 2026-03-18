@@ -134,8 +134,8 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
                     </button>
                   )}
                   {!isAdmin && slot.productId && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                      <p className="text-white text-[10px] font-bold truncate">{slot.productId}</p>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-2.5 py-1.5">
+                      <p className="text-white text-sm font-bold truncate" style={{ fontSize: "14px" }}>{slot.productId}</p>
                     </div>
                   )}
                   {!isAdmin && slot.points && (
