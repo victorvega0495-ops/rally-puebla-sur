@@ -500,7 +500,7 @@ const Step4Upload = ({ assets, onShare }: Step4Props) => {
   );
 };
 
-/* ========== STEP 5 — Confirmation ========== */
+/* ========== STEP 4 — Confirmation ========== */
 interface SummaryProps {
   completed: boolean;
   onComplete: () => void;
@@ -553,28 +553,20 @@ const StepSummary = ({ completed, onComplete, onBackToImages, onNavigateNext, on
 
       <div className="w-full max-w-xs space-y-3">
         {phase === "idle" && (
-          <button
-            style={gradientStyle}
-            onClick={handleTap}
-          >
+          <button style={gradientStyle} onClick={handleTap}>
             ✅ ¡Día completado!
           </button>
         )}
 
         {phase === "green" && (
-          <button
-            style={{ ...gradientStyle, background: "#10b981", cursor: "default" }}
-          >
+          <button style={{ ...gradientStyle, background: "#22c55e", cursor: "default" }}>
             ¡Listo! ✅
           </button>
         )}
 
         {phase === "nav" && (
           <div className="space-y-3 animate-fade-in">
-            <button
-              style={gradientStyle}
-              onClick={onNavigateNext}
-            >
+            <button style={gradientStyle} onClick={onNavigateNext}>
               Ir al Día siguiente →
             </button>
             <button
