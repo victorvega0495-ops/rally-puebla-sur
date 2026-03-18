@@ -109,6 +109,7 @@ export default {
         "float-delayed": "float 6s ease-in-out 2s infinite",
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "pulse-glow": "pulse-glow 4s ease-in-out infinite",
+        "fade-in": "fade-in 0.5s ease-out forwards",
       },
     },
   },
