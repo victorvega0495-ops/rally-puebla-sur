@@ -83,6 +83,42 @@ export type Database = {
         }
         Relationships: []
       }
+      day_messages: {
+        Row: {
+          campaign: string
+          created_at: string
+          day_number: number
+          id: string
+          label: string | null
+          message: string
+          section: string
+          slot_index: number
+          updated_at: string
+        }
+        Insert: {
+          campaign: string
+          created_at?: string
+          day_number: number
+          id?: string
+          label?: string | null
+          message?: string
+          section: string
+          slot_index?: number
+          updated_at?: string
+        }
+        Update: {
+          campaign?: string
+          created_at?: string
+          day_number?: number
+          id?: string
+          label?: string | null
+          message?: string
+          section?: string
+          slot_index?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
