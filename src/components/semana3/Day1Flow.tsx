@@ -42,10 +42,7 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
         .eq("day_number", DAY);
       if (data) {
         data.forEach((row) => {
-          if (row.asset_type.startsWith("grid_")) {
-            const idx = parseInt(row.asset_type.replace("grid_", ""));
-            setGridAssets((prev) => ({ ...prev, [idx]: { url: row.storage_url, fileName: row.file_name } }));
-          } else if (row.asset_type.startsWith("carousel_")) {
+          if (row.asset_type.startsWith("carousel_")) {
             const idx = parseInt(row.asset_type.replace("carousel_", ""));
             setCarouselAssets((prev) => ({ ...prev, [idx]: { url: row.storage_url, fileName: row.file_name } }));
           }
