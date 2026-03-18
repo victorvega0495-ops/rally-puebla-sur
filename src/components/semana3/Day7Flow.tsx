@@ -197,7 +197,7 @@ const Day7Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
               promoBanner={PROMO_BANNER}
             />
           )}
-          {step === 3 && <Step4Messages />}
+          {step === 3 && <Step4Messages campaignId={campaignId} isAdmin={isAdmin} />}
           {step === 4 && (
             <StepSummary
               completed={dayCompleted}
