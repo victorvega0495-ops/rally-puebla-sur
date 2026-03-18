@@ -222,6 +222,7 @@ const Day3Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
                 "¿Viste el video que te mandé? Aquí está la foto del outfit por si lo quieres ver mejor 📸",
                 "Te dejo la imagen para que lo veas con calma — si te gusta me dices y te lo aparto 😊"
               ]}
+              messageSection="image_ideas"
             />
           )}
           {step === 3 && (
