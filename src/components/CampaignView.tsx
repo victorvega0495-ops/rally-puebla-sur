@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import CommunityActivityFeed from "@/components/CommunityActivityFeed";
 import CommunityDrawer from "@/components/CommunityDrawer";
+import PremiosSemana from "@/components/semana3/PremiosSemana";
 
 interface CampaignViewProps {
   campaign: Campaign;
@@ -152,7 +153,7 @@ const CampaignView = ({ campaign, completedDays, isAdmin, onAdminToggle, onBack,
                 )}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-2xl">{d.emoji}</span>
+                  {d.emoji ? <span className="text-2xl">{d.emoji}</span> : <span className="text-2xl">📋</span>}
                   {completed && (
                     <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
                       <Check className="w-3 h-3 text-white" />
@@ -176,6 +177,11 @@ const CampaignView = ({ campaign, completedDays, isAdmin, onAdminToggle, onBack,
           })}
         </div>
       </div>
+
+      {/* Premios section for semana-3 */}
+      {campaign.id === "semana-3" && (
+        <PremiosSemana campaignId={campaign.id} isAdmin={isAdmin} />
+      )}
 
         {/* Community activity feed */}
         <CommunityActivityFeed

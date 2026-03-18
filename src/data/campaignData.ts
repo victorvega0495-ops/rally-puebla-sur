@@ -735,13 +735,13 @@ days: [
       ...Array.from({ length: 7 }, (_, i) => {
         const dayNum = i + 1;
         const typeMap: Record<number, { type: "activacion" | "prospeccion" | "seguimiento" | "cierre"; label: string; emoji: string; focus: string }> = {
-          1: { type: "activacion", emoji: "🔥", label: "Activación", focus: "Clientas Activas" },
-          2: { type: "activacion", emoji: "🔥", label: "Activación", focus: "Clientas Activas" },
-          3: { type: "activacion", emoji: "🔥", label: "Activación + Promo", focus: "Primera Promo" },
-          4: { type: "prospeccion", emoji: "👥", label: "Prospección", focus: "Nuevas Clientas" },
-          5: { type: "prospeccion", emoji: "👥", label: "Prospección", focus: "Nuevas Clientas" },
-          6: { type: "seguimiento", emoji: "🔄", label: "Seguimiento", focus: "Seguimiento" },
-          7: { type: "cierre", emoji: "🏆", label: "Cierre", focus: "Cierre Semanal" },
+          1: { type: "activacion", emoji: "", label: "Activación", focus: "Carrusel en estados" },
+          2: { type: "activacion", emoji: "", label: "Activación", focus: "Ataque 1 a 1 — clientas anteriores" },
+          3: { type: "activacion", emoji: "", label: "Activación + Promo", focus: "Looks deportivos — gym y correr" },
+          4: { type: "prospeccion", emoji: "", label: "Prospección", focus: "Looks papá e hijo / mamá e hijo" },
+          5: { type: "prospeccion", emoji: "", label: "Prospección", focus: "Looks de viernes — tennis + outfit casual" },
+          6: { type: "seguimiento", emoji: "", label: "Seguimiento", focus: "Presumir componentes del producto" },
+          7: { type: "cierre", emoji: "", label: "Cierre", focus: "Ofertas exclusivas — referidos" },
         };
         const t = typeMap[dayNum];
         return {
