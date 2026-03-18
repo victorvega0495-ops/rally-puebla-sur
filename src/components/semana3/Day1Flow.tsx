@@ -24,7 +24,7 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
   const { toast } = useToast();
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
-  const [showCelebration, setShowCelebration] = useState(false);
+  const [dayCompleted, setDayCompleted] = useState(completed);
   const [dayCompleted, setDayCompleted] = useState(completed);
 
   const [gridAssets, setGridAssets] = useState<Record<number, { url: string; fileName: string } | null>>({});
