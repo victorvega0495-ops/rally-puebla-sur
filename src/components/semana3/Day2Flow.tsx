@@ -360,20 +360,23 @@ const MediaSlider = ({
             <Loader2 className="w-8 h-8 text-white animate-spin" />
           </div>
         ) : asset ? (
-          type === "video" ? (
-            <video
-              src={asset.url}
-              controls
-              playsInline
-              className="w-full max-h-[50vh] object-contain rounded-2xl animate-in fade-in duration-200"
-            />
-          ) : (
-            <img
-              src={asset.url}
-              alt={`Imagen ${activeIndex + 1}`}
-              className="w-full max-h-[50vh] object-contain animate-in fade-in duration-200"
-            />
-          )
+          <div className="relative w-full">
+            {type === "video" ? (
+              <video
+                src={asset.url}
+                controls
+                playsInline
+                className="w-full max-h-[50vh] object-contain rounded-2xl animate-in fade-in duration-200"
+              />
+            ) : (
+              <img
+                src={asset.url}
+                alt={`Imagen ${activeIndex + 1}`}
+                className="w-full max-h-[50vh] object-contain animate-in fade-in duration-200"
+              />
+            )}
+            {!isAdmin && <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType={slotAssetType} />}
+          </div>
         ) : (
           <div
             className="w-full aspect-[9/16] max-h-[50vh] flex flex-col items-center justify-center gap-2 rounded-2xl mx-5 cursor-pointer"
