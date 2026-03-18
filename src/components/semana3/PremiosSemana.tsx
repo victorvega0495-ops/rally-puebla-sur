@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Upload, X, Plus } from "lucide-react";
+import { Upload, X, Plus, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface PremiosSemanaProps {
@@ -25,6 +25,7 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
   const [slots, setSlots] = useState<Record<number, SlotData>>({});
   const [totalSlots, setTotalSlots] = useState(BASE_SLOTS);
   const [uploading, setUploading] = useState<number | null>(null);
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   useEffect(() => {
     supabase
@@ -52,6 +53,14 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
         setTotalSlots(Math.max(BASE_SLOTS, maxIdx + 1));
       });
   }, [campaignId]);
+
+  useEffect(() => {
+    if (lightboxIdx === null) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setLightboxIdx(null); };
+    document.addEventListener("keydown", handler);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", handler); document.body.style.overflow = ""; };
+  }, [lightboxIdx]);
 
   const uploadImage = useCallback(async (idx: number, file: File) => {
     setUploading(idx);
@@ -104,7 +113,47 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
     } as any, { onConflict: "campaign,day_number,asset_type" });
   }, [campaignId, slots]);
 
+  const shareOrDownload = useCallback(async (url: string, fileName: string) => {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const ext = fileName.split(".").pop()?.toLowerCase() || "jpg";
+      const cleanName = `producto.${ext}`;
+      const mimeType = blob.type || `image/${ext === "jpg" ? "jpeg" : ext}`;
+      const file = new File([blob], cleanName, { type: mimeType });
+      if (navigator.share) {
+        await navigator.share({ files: [file] });
+      } else {
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = cleanName;
+        a.click();
+        URL.revokeObjectURL(blobUrl);
+      }
+    } catch {
+      // user cancelled
+    }
+  }, []);
+
+  const downloadFile = useCallback(async (url: string, fileName: string) => {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      // download failed
+    }
+  }, []);
+
   const addSlot = () => setTotalSlots((prev) => prev + 1);
+
+  const lightboxSlot = lightboxIdx !== null ? slots[lightboxIdx] : null;
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto space-y-6">
@@ -123,11 +172,14 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
           return (
             <div key={i} className="relative rounded-xl border border-border bg-card overflow-hidden aspect-square flex flex-col">
               {slot?.imageUrl ? (
-                <div className="relative flex-1">
+                <div
+                  className="relative flex-1 cursor-pointer"
+                  onClick={() => !isAdmin && setLightboxIdx(i)}
+                >
                   <img src={slot.imageUrl} alt={`Producto ${i + 1}`} className="w-full h-full object-cover" />
                   {isAdmin && (
                     <button
-                      onClick={() => deleteSlot(i)}
+                      onClick={(e) => { e.stopPropagation(); deleteSlot(i); }}
                       className="absolute top-1 right-1 w-6 h-6 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center"
                     >
                       <X className="w-3.5 h-3.5" />
@@ -192,6 +244,50 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
           <Plus className="w-4 h-4 mr-1.5" />
           Agregar producto
         </Button>
+      )}
+
+      {/* Lightbox */}
+      {lightboxIdx !== null && lightboxSlot?.imageUrl && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-sm animate-in fade-in duration-300"
+          onClick={() => setLightboxIdx(null)}
+        >
+          <button
+            onClick={() => setLightboxIdx(null)}
+            className="absolute top-4 right-4 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <img
+            src={lightboxSlot.imageUrl}
+            alt={lightboxSlot.productId || `Producto ${lightboxIdx + 1}`}
+            className="max-h-[65vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {lightboxSlot.productId && (
+            <p className="text-white font-bold mt-4" style={{ fontSize: "16px" }} onClick={(e) => e.stopPropagation()}>
+              {lightboxSlot.productId}
+            </p>
+          )}
+
+          <div className="flex items-center gap-3 mt-4 w-full max-w-sm px-5" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => downloadFile(lightboxSlot.imageUrl, lightboxSlot.productId ? `${lightboxSlot.productId}.jpg` : `producto-${lightboxIdx + 1}.jpg`)}
+              className="flex-1 flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 transition-colors"
+            >
+              <Download className="w-4 h-4" /> ⬇️ Descargar
+            </button>
+            <button
+              onClick={() => shareOrDownload(lightboxSlot.imageUrl, lightboxSlot.productId ? `${lightboxSlot.productId}.jpg` : `producto-${lightboxIdx + 1}.jpg`)}
+              className="flex-1 flex items-center justify-center gap-2 text-sm font-bold text-white py-3 rounded-xl shadow-lg"
+              style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+            >
+              <Share2 className="w-4 h-4" /> 📤 Compartir
+            </button>
+          </div>
+        </div>
       )}
 
       {/* Prize structure */}
