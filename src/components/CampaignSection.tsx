@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import CampaignList from "./CampaignList";
 import CampaignView from "./CampaignView";
 import DayDetail from "./DayDetail";
+import Day1Flow from "./semana3/Day1Flow";
 import { campaigns } from "@/data/campaignData";
 
 type View = "list" | "campaign" | "day";
@@ -62,6 +63,20 @@ const CampaignSection = () => {
   if (view === "day" && campaign) {
     const dayData = campaign.days.find((d) => d.day === activeDay);
     if (dayData) {
+      // Semana 3 Day 1 uses the special full-screen flow
+      if (campaign.id === "semana-3" && activeDay === 1) {
+        return (
+          <Day1Flow
+            campaignId={campaign.id}
+            campaignTitle={campaign.title}
+            isAdmin={isAdmin}
+            completed={getCompleted(campaign.id).includes(1)}
+            onBack={() => setView("campaign")}
+            onComplete={() => completeDay(campaign.id, 1)}
+            onNavigateNext={handleNavigateNext}
+          />
+        );
+      }
       return (
         <DayDetail
           day={dayData}
