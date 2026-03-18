@@ -728,10 +728,51 @@ days: [
   },
   {
     id: "semana-3",
-    title: "Semana 3",
-    subtitle: "Próximamente",
-    active: false,
-    days: [],
+    title: "Semana 3 — Importados",
+    subtitle: "Price Shoes Pri-Ver 2026",
+    active: true,
+    days: [
+      ...Array.from({ length: 7 }, (_, i) => {
+        const dayNum = i + 1;
+        const typeMap: Record<number, { type: "activacion" | "prospeccion" | "seguimiento" | "cierre"; label: string; emoji: string; focus: string }> = {
+          1: { type: "activacion", emoji: "🔥", label: "Activación", focus: "Clientas Activas" },
+          2: { type: "activacion", emoji: "🔥", label: "Activación", focus: "Clientas Activas" },
+          3: { type: "activacion", emoji: "🔥", label: "Activación + Promo", focus: "Primera Promo" },
+          4: { type: "prospeccion", emoji: "👥", label: "Prospección", focus: "Nuevas Clientas" },
+          5: { type: "prospeccion", emoji: "👥", label: "Prospección", focus: "Nuevas Clientas" },
+          6: { type: "seguimiento", emoji: "🔄", label: "Seguimiento", focus: "Seguimiento" },
+          7: { type: "cierre", emoji: "🏆", label: "Cierre", focus: "Cierre Semanal" },
+        };
+        const t = typeMap[dayNum];
+        return {
+          day: dayNum,
+          emoji: t.emoji,
+          type: t.type,
+          typeLabel: t.label,
+          focus: t.focus,
+          mission: "",
+          missionQuote: "",
+          steps: [],
+          lookName: "",
+          lookProductIds: "",
+          brand: "Price Shoes",
+          lookAttributes: [],
+          idealClient: { quien: "", queBusca: "", donde: "" },
+          salesHacks: [],
+          openingMessages: {
+            cold: "Holaaa [Nombre], ¿cómo has estado? Hace tiempo que no sé nada de ti 😊 Oye, acabo de recibir algo que de volada pensé en ti cuando lo vi. ¿Te mando foto?",
+            warm: "Holaaa [Nombre], ¿cómo estás? Oye no me vas a creer — acabo de armar un look que quedó brutal y me acordé de ti. ¿Lo ves?",
+            hot: "Oye [Nombre], mira lo que acaba de llegar — de volada pensé en ti. ¿Te lo mando?",
+          },
+          statusCopyImage: "",
+          statusCopyVideo: "",
+          reelStructure: [],
+          messageTemplate: "",
+          followUps: [],
+          objections: [],
+        };
+      }),
+    ],
   },
   {
     id: "semana-4",

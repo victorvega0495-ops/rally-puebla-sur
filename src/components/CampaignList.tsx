@@ -43,10 +43,10 @@ const CampaignList = ({ onEnter, getProgress, isAdmin, onAdminUnlock }: Campaign
   return (
     <div className="pt-20 pb-16 px-4 max-w-2xl mx-auto">
       <h1 className="font-display text-2xl md:text-3xl font-bold gradient-text text-center mb-2">
-        Mis Campañas
+        Mi Contenido
       </h1>
       <p className="text-center text-muted-foreground text-sm mb-8">
-        Tu motor de ventas semanal — ejecuta sin pensar
+        Tu motor de ventas semanal
       </p>
       <div className="space-y-4">
         {campaigns.map((c) => {
