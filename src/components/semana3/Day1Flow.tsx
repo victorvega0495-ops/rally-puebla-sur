@@ -146,23 +146,12 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
   const handleComplete = () => {
     onComplete();
     setDayCompleted(true);
-    setShowCelebration(true);
   };
-
-  const handleCelebrationDone = useCallback(() => {
-    setShowCelebration(false);
-  }, []);
 
   const stepLabels = ["La misión", "Los productos", "Tu contenido", "Súbelas", "Resumen"];
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {showCelebration && (
-        <CelebrationOverlay
-          message={celebrationMessages[0] || "¡Día completado! 🎉"}
-          onDone={handleCelebrationDone}
-        />
-      )}
 
       {/* Top bar */}
       <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3 space-y-2">
