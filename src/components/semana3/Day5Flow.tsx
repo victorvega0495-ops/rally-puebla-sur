@@ -266,11 +266,12 @@ interface MediaSliderProps {
   onShare: (url: string, fileName: string) => void;
   onDownload: (url: string, fileName: string) => void;
   inspirationMessages: string[];
+  messageSection: string;
 }
 
 const MediaSlider = ({
   type, title, instruction, totalSlots, assets, uploading, isAdmin, campaignId, inputRefs,
-  activeIndex, onIndexChange, onUpload, onRemove, onShare, onDownload, inspirationMessages
+  activeIndex, onIndexChange, onUpload, onRemove, onShare, onDownload, inspirationMessages, messageSection
 }: MediaSliderProps) => {
   const asset = assets[activeIndex];
   const isUploading = uploading === activeIndex;
