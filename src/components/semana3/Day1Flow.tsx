@@ -407,11 +407,14 @@ const Step3Slider = ({ assets, uploading, isAdmin, inputRefs, campaignId, active
             <Loader2 className="w-8 h-8 text-white animate-spin" />
           </div>
         ) : asset ? (
-          <img
-            src={asset.url}
-            alt={`Imagen ${activeIndex + 1}`}
-            className="w-full max-h-[55vh] object-contain animate-in fade-in duration-200"
-          />
+          <div className="relative w-full">
+            <img
+              src={asset.url}
+              alt={`Imagen ${activeIndex + 1}`}
+              className="w-full max-h-[55vh] object-contain animate-in fade-in duration-200"
+            />
+            {!isAdmin && <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType={`carousel_${activeIndex}`} />}
+          </div>
         ) : (
           <div
             className="w-full aspect-[9/16] max-h-[55vh] flex flex-col items-center justify-center gap-2 rounded-2xl mx-5 cursor-pointer"
