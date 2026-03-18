@@ -254,7 +254,7 @@ interface Step2Props {
   onRemove: (idx: number) => void;
 }
 
-const Step2Products = ({ assets, uploading, isAdmin, inputRefs, onUpload, onRemove }: Step2Props) => {
+const Step2Products = ({ assets, uploading, isAdmin, inputRefs, campaignId, onUpload, onRemove }: Step2Props) => {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   useEffect(() => {
