@@ -301,6 +301,7 @@ const MediaSlider = ({
   const isUploading = uploading === activeIndex;
   const acceptTypes = type === "video" ? ".mp4,.mov,.webm,.avi" : ".jpg,.jpeg,.png,.webp";
   const IconComponent = type === "video" ? Film : ImageIcon;
+  const slotAssetType = type === "video" ? `video_${activeIndex}` : `image_${activeIndex}`;
 
   const goPrev = () => { if (activeIndex > 0) onIndexChange(activeIndex - 1); };
   const goNext = () => { if (activeIndex < totalSlots - 1) onIndexChange(activeIndex + 1); };
