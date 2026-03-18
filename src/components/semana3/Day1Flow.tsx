@@ -554,15 +554,6 @@ const Step4Upload = ({ assets, onShare }: Step4Props) => {
         })}
       </div>
 
-      <div className="text-center space-y-2">
-        <p className="text-xs text-muted-foreground">También puedes descargarlas todas y subirlas desde tu galería</p>
-        <button
-          onClick={onDownloadAll}
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-muted/50 hover:bg-muted rounded-full px-4 py-2 transition-colors"
-        >
-          <Download className="w-3.5 h-3.5" /> Descargar todas
-        </button>
-      </div>
 
       {/* Full-screen lightbox with share */}
       {fullScreenIdx !== null && fullScreenAsset && (
