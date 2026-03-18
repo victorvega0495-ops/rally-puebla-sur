@@ -188,6 +188,7 @@ const Day2Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
               assets={videoAssets}
               uploading={videoUploading}
               isAdmin={isAdmin}
+              campaignId={campaignId}
               inputRefs={videoInputRefs}
               activeIndex={videoIndex}
               onIndexChange={setVideoIndex}
