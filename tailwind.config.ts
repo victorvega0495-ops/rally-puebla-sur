@@ -114,6 +114,7 @@ export default {
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "pulse-glow": "pulse-glow 4s ease-in-out infinite",
         "fade-in": "fade-in 0.5s ease-out forwards",
+        "community-pulse": "community-pulse 2s cubic-bezier(0.4,0,0.6,1) infinite",
       },
     },
   },
