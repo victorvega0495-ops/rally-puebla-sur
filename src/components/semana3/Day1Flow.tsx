@@ -596,19 +596,36 @@ interface SummaryProps {
 const StepSummary = ({ completed, onComplete, onBackToImages, onNavigateNext, onBackToMenu }: SummaryProps) => {
   const [phase, setPhase] = useState<"idle" | "green" | "nav">(completed ? "nav" : "idle");
 
-  const handleTap = async () => {
+  const fireConfetti = async () => {
+    try {
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
+      script.onload = () => {
+        (window as any).confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+      };
+      document.head.appendChild(script);
+    } catch {
+      // confetti unavailable
+    }
+  };
+
+  const handleTap = () => {
     onComplete();
     setPhase("green");
-
-    // Fire canvas-confetti
-    try {
-      const { default: confetti } = await import("https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" as string);
-      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-    } catch {
-      // confetti unavailable, continue
-    }
-
+    fireConfetti();
     setTimeout(() => setPhase("nav"), 2500);
+  };
+
+  const gradientStyle: React.CSSProperties = {
+    background: "linear-gradient(to right, #ec4899, #8b5cf6)",
+    color: "white",
+    fontWeight: "bold",
+    width: "100%",
+    padding: "16px",
+    borderRadius: "12px",
+    fontSize: "16px",
+    border: "none",
+    cursor: "pointer",
   };
 
   return (
@@ -620,39 +637,46 @@ const StepSummary = ({ completed, onComplete, onBackToImages, onNavigateNext, on
 
       <div className="w-full max-w-xs space-y-3">
         {phase === "idle" && (
-          <Button
-            className="w-full text-base py-6 text-white font-bold shadow-xl"
-            style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+          <button
+            style={gradientStyle}
             onClick={handleTap}
           >
             ✅ ¡Día completado!
-          </Button>
+          </button>
         )}
 
         {phase === "green" && (
-          <Button
-            className="w-full text-base py-6 text-white font-bold shadow-xl bg-emerald-500 hover:bg-emerald-500 cursor-default"
+          <button
+            style={{ ...gradientStyle, background: "#10b981", cursor: "default" }}
           >
-            ✓ ¡Listo!
-          </Button>
+            ¡Listo! ✅
+          </button>
         )}
 
         {phase === "nav" && (
           <div className="space-y-3 animate-fade-in">
-            <Button
-              className="w-full text-base py-6 text-white font-bold"
-              style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
+            <button
+              style={gradientStyle}
               onClick={onNavigateNext}
             >
               Ir al Día siguiente →
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full text-base py-6 border-muted-foreground/30 text-muted-foreground"
+            </button>
+            <button
+              style={{
+                width: "100%",
+                padding: "16px",
+                borderRadius: "12px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                border: "1px solid hsl(var(--muted-foreground) / 0.3)",
+                background: "transparent",
+                color: "hsl(var(--muted-foreground))",
+                cursor: "pointer",
+              }}
               onClick={onBackToMenu}
             >
               ← Volver al menú
-            </Button>
+            </button>
           </div>
         )}
       </div>
@@ -661,6 +685,7 @@ const StepSummary = ({ completed, onComplete, onBackToImages, onNavigateNext, on
         <button
           onClick={onBackToImages}
           className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-4"
+          style={{ background: "none", border: "none", cursor: "pointer" }}
         >
           ← Volver a las imágenes
         </button>
