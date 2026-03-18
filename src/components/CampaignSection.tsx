@@ -8,6 +8,7 @@ import Day3Flow from "./semana3/Day3Flow";
 import Day4Flow from "./semana3/Day4Flow";
 import Day5Flow from "./semana3/Day5Flow";
 import Day6Flow from "./semana3/Day6Flow";
+import Day7Flow from "./semana3/Day7Flow";
 import { campaigns } from "@/data/campaignData";
 
 type View = "list" | "campaign" | "day";
