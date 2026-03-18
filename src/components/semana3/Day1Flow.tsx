@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { ProductMetaInputs, ProductMetaOverlay } from "./ProductMetaFields";
 
+const TOTAL_STEPS = 4;
+
 interface Day1FlowProps {
   campaignId: string;
   campaignTitle: string;
@@ -17,7 +19,6 @@ interface Day1FlowProps {
   onNavigateNext: () => void;
 }
 
-const TOTAL_STEPS = 5;
 const BUCKET = "campaign-assets";
 const DAY = 1;
 
@@ -26,10 +27,6 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
   const [dayCompleted, setDayCompleted] = useState(completed);
-
-  const [gridAssets, setGridAssets] = useState<Record<number, { url: string; fileName: string } | null>>({});
-  const [gridUploading, setGridUploading] = useState<number | null>(null);
-  const gridInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
 
   const [carouselAssets, setCarouselAssets] = useState<Record<number, { url: string; fileName: string } | null>>({});
   const [carouselUploading, setCarouselUploading] = useState<number | null>(null);
@@ -45,10 +42,7 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
         .eq("day_number", DAY);
       if (data) {
         data.forEach((row) => {
-          if (row.asset_type.startsWith("grid_")) {
-            const idx = parseInt(row.asset_type.replace("grid_", ""));
-            setGridAssets((prev) => ({ ...prev, [idx]: { url: row.storage_url, fileName: row.file_name } }));
-          } else if (row.asset_type.startsWith("carousel_")) {
+          if (row.asset_type.startsWith("carousel_")) {
             const idx = parseInt(row.asset_type.replace("carousel_", ""));
             setCarouselAssets((prev) => ({ ...prev, [idx]: { url: row.storage_url, fileName: row.file_name } }));
           }
@@ -112,7 +106,6 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
     }
   }, []);
 
-
   const goNext = () => {
     if (step < TOTAL_STEPS - 1) { setDirection("right"); setStep(step + 1); window.scrollTo(0, 0); }
   };
@@ -128,7 +121,7 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
     setDayCompleted(true);
   };
 
-  const stepLabels = ["La misión", "Los productos", "Tu contenido", "Súbelas", "Resumen"];
+  const stepLabels = ["La misión", "Tu contenido", "Súbelas", "Resumen"];
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -158,15 +151,6 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
         >
           {step === 0 && <Step1Mission />}
           {step === 1 && (
-            <Step2Products
-              assets={gridAssets} uploading={gridUploading} isAdmin={isAdmin} inputRefs={gridInputRefs}
-              campaignId={campaignId}
-              onUpload={(file, idx) => uploadAsset(file, `grid_${idx}`, idx, setGridAssets, setGridUploading)}
-              onRemove={(idx) => removeAsset(`grid_${idx}`, idx, setGridAssets, gridAssets)}
-              onShare={shareOrDownload}
-            />
-          )}
-          {step === 2 && (
             <Step3Slider
               assets={carouselAssets} uploading={carouselUploading} isAdmin={isAdmin} inputRefs={carouselInputRefs}
               campaignId={campaignId} activeIndex={carouselIndex} onIndexChange={setCarouselIndex}
@@ -175,14 +159,14 @@ const Day1Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
               onShare={shareOrDownload}
             />
           )}
-          {step === 3 && (
+          {step === 2 && (
             <Step4Upload assets={carouselAssets} onShare={shareOrDownload} isAdmin={isAdmin} />
           )}
-          {step === 4 && (
+          {step === 3 && (
             <StepSummary
               completed={dayCompleted}
               onComplete={handleComplete}
-              onBackToImages={() => goToStep(2)}
+              onBackToImages={() => goToStep(1)}
               onNavigateNext={onNavigateNext}
               onBackToMenu={onBack}
             />
@@ -227,110 +211,8 @@ const Step1Mission = () => (
   </div>
 );
 
-/* ========== STEP 2 — Products grid with lightbox banner ========== */
-interface Step2Props {
-  assets: Record<number, { url: string; fileName: string } | null>;
-  uploading: number | null;
-  isAdmin?: boolean;
-  inputRefs: React.MutableRefObject<Record<number, HTMLInputElement | null>>;
-  campaignId: string;
-  onUpload: (file: File, idx: number) => void;
-  onRemove: (idx: number) => void;
-  onShare: (url: string, fileName: string) => void;
-}
 
-const Step2Products = ({ assets, uploading, isAdmin, inputRefs, campaignId, onUpload, onRemove, onShare }: Step2Props) => {
-  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (lightboxIdx === null) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setLightboxIdx(null); };
-    document.addEventListener("keydown", handler);
-    document.body.style.overflow = "hidden";
-    return () => { document.removeEventListener("keydown", handler); document.body.style.overflow = ""; };
-  }, [lightboxIdx]);
-
-  const lightboxAsset = lightboxIdx !== null ? assets[lightboxIdx] : null;
-
-  return (
-    <div className="space-y-5 py-6">
-      <div className="text-center space-y-2">
-        <h1 className="font-display text-2xl font-bold text-foreground">Los productos de hoy</h1>
-        <p className="text-sm text-muted-foreground">Toca cualquier imagen para verla completa</p>
-      </div>
-      <div className="grid grid-cols-3 gap-2">
-        {Array.from({ length: 12 }, (_, i) => {
-          const asset = assets[i];
-          const isUploading = uploading === i;
-          const assetType = `grid_${i}`;
-          return (
-            <div key={i}>
-              <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
-                {isUploading ? (
-                  <div className="w-full h-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.3), hsl(275 65% 50% / 0.3))" }}>
-                    <Loader2 className="w-6 h-6 text-white animate-spin" />
-                  </div>
-                ) : asset ? (
-                  <>
-                    <img src={asset.url} alt={`Producto ${i + 1}`} className="w-full h-full object-cover cursor-pointer hover:brightness-90 transition-all" onClick={() => setLightboxIdx(i)} />
-                    {!isAdmin && <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType={assetType} />}
-                    {isAdmin && (
-                      <button onClick={() => onRemove(i)} className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
-                        <X className="w-3 h-3" />
-                      </button>
-                    )}
-                  </>
-                ) : (
-                  <div
-                    className="w-full h-full flex flex-col items-center justify-center gap-1 cursor-pointer"
-                    style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.15), hsl(275 65% 50% / 0.15))" }}
-                    onClick={() => isAdmin && inputRefs.current[i]?.click()}
-                  >
-                    {isAdmin ? <Upload className="w-4 h-4 text-muted-foreground" /> : <ImageIcon className="w-4 h-4 text-muted-foreground/50" />}
-                    <span className="text-[9px] text-muted-foreground">{i + 1}</span>
-                  </div>
-                )}
-                <input ref={(el) => { inputRefs.current[i] = el; }} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden"
-                  onChange={(e) => { const f = e.target.files?.[0]; if (f) { onUpload(f, i); e.target.value = ""; } }} />
-              </div>
-              {isAdmin && <ProductMetaInputs campaignId={campaignId} dayNumber={DAY} assetType={assetType} />}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Lightbox with product banner */}
-      {lightboxIdx !== null && lightboxAsset && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setLightboxIdx(null)}>
-          <button onClick={() => setLightboxIdx(null)} className="absolute top-4 right-4 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10">
-            <X className="w-6 h-6" />
-          </button>
-          <div className="relative max-h-[75vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
-            <img src={lightboxAsset.url} alt={`Producto ${lightboxIdx + 1}`} className="max-h-[75vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-300" />
-            <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType={`grid_${lightboxIdx}`} />
-          </div>
-          <div className="flex items-center gap-3 mt-4 w-full max-w-sm px-5" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => { try { fetch(lightboxAsset.url).then(r => r.blob()).then(b => { const u = URL.createObjectURL(b); const a = document.createElement("a"); a.href = u; a.download = lightboxAsset.fileName; a.click(); URL.revokeObjectURL(u); }); } catch {} }}
-              className="flex-1 flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 transition-colors"
-            >
-              <Download className="w-4 h-4" /> ⬇️ Descargar
-            </button>
-            <button
-              onClick={() => onShare(lightboxAsset.url, lightboxAsset.fileName)}
-              className="flex-1 flex items-center justify-center gap-2 text-sm font-bold text-white py-3 rounded-xl shadow-lg"
-              style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}
-            >
-              <Share2 className="w-4 h-4" /> 📤 Compartir
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-/* ========== STEP 3 — Full-screen slider ========== */
+/* ========== STEP 2 — Full-screen slider ========== */
 interface Step3Props {
   assets: Record<number, { url: string; fileName: string } | null>;
   uploading: number | null;
