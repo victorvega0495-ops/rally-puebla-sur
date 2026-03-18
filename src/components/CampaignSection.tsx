@@ -3,6 +3,7 @@ import CampaignList from "./CampaignList";
 import CampaignView from "./CampaignView";
 import DayDetail from "./DayDetail";
 import Day1Flow from "./semana3/Day1Flow";
+import Day2Flow from "./semana3/Day2Flow";
 import { campaigns } from "@/data/campaignData";
 
 type View = "list" | "campaign" | "day";
@@ -73,6 +74,20 @@ const CampaignSection = () => {
             completed={getCompleted(campaign.id).includes(1)}
             onBack={() => setView("campaign")}
             onComplete={() => completeDay(campaign.id, 1)}
+            onNavigateNext={handleNavigateNext}
+          />
+        );
+      }
+      // Semana 3 Day 2 uses the video/image flow
+      if (campaign.id === "semana-3" && activeDay === 2) {
+        return (
+          <Day2Flow
+            campaignId={campaign.id}
+            campaignTitle={campaign.title}
+            isAdmin={isAdmin}
+            completed={getCompleted(campaign.id).includes(2)}
+            onBack={() => setView("campaign")}
+            onComplete={() => completeDay(campaign.id, 2)}
             onNavigateNext={handleNavigateNext}
           />
         );
