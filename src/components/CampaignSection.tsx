@@ -93,6 +93,20 @@ const CampaignSection = () => {
           />
         );
       }
+      // Semana 3 Day 3 uses the gym/deportiva flow
+      if (campaign.id === "semana-3" && activeDay === 3) {
+        return (
+          <Day3Flow
+            campaignId={campaign.id}
+            campaignTitle={campaign.title}
+            isAdmin={isAdmin}
+            completed={getCompleted(campaign.id).includes(3)}
+            onBack={() => setView("campaign")}
+            onComplete={() => completeDay(campaign.id, 3)}
+            onNavigateNext={handleNavigateNext}
+          />
+        );
+      }
       return (
         <DayDetail
           day={dayData}
