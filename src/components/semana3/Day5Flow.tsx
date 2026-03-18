@@ -201,6 +201,7 @@ const Day5Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
                 "¿Viste el video que te mandé? Aquí te dejo la foto del look por si quieres verlo mejor 📸",
                 "Te dejo la imagen para que lo veas con calma — si te gusta me dices y te lo aparto para el finde 😊"
               ]}
+              messageSection="image_ideas"
             />
           )}
           {step === 3 && (
