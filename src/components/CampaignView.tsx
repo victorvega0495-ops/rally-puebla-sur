@@ -153,7 +153,7 @@ const CampaignView = ({ campaign, completedDays, isAdmin, onAdminToggle, onBack,
                 )}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-2xl">{d.emoji}</span>
+                  {d.emoji ? <span className="text-2xl">{d.emoji}</span> : <span className="text-2xl">📋</span>}
                   {completed && (
                     <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
                       <Check className="w-3 h-3 text-white" />
