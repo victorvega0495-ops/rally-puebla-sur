@@ -178,6 +178,11 @@ const CampaignView = ({ campaign, completedDays, isAdmin, onAdminToggle, onBack,
         </div>
       </div>
 
+      {/* Premios section for semana-3 */}
+      {campaign.id === "semana-3" && (
+        <PremiosSemana campaignId={campaign.id} isAdmin={isAdmin} />
+      )}
+
         {/* Community activity feed */}
         <CommunityActivityFeed
           campaign={campaign.title}
