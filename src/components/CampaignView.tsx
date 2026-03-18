@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import CommunityActivityFeed from "@/components/CommunityActivityFeed";
 import CommunityDrawer from "@/components/CommunityDrawer";
+import PremiosSemana from "@/components/semana3/PremiosSemana";
 
 interface CampaignViewProps {
   campaign: Campaign;
