@@ -212,7 +212,7 @@ const Day2Flow = ({ campaignId, campaignTitle, isAdmin, completed, onBack, onCom
               assets={imageAssets}
               uploading={imageUploading}
               isAdmin={isAdmin}
-              inputRefs={imageInputRefs}
+              campaignId={campaignId}
               activeIndex={imageIndex}
               onIndexChange={setImageIndex}
               onUpload={(file, idx) => uploadAsset(file, `image_${idx}`, idx, setImageAssets, setImageUploading)}
