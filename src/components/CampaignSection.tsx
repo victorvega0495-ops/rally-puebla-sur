@@ -98,7 +98,7 @@ const CampaignSection = () => {
         );
       }
       // Semana 3 Day 3 uses the gym/deportiva flow
-      if (campaign.id === "semana-3" && activeDay === 3) {
+      if ((campaign.id === "semana-3" || campaign.id === "semana-4") && activeDay === 3) {
         return (
           <Day3Flow
             campaignId={campaign.id}
