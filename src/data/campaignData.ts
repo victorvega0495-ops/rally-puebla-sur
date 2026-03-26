@@ -776,7 +776,7 @@ days: [
   },
   {
     id: "semana-4",
-    title: "Semana 4 — Importados",
+    title: "Semana 4 — Último empujón",
     subtitle: "Price Shoes Pri-Ver 2026",
     active: true,
     days: [
