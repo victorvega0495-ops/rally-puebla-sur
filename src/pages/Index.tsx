@@ -1,22 +1,21 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Trophy, BookOpen, Star, Settings, ChevronRight } from "lucide-react";
-import CampaignSection from "@/components/CampaignSection";
+import { MessageCircle, BookOpen, Star, Settings, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Secretos de Ventas | Price Shoes";
+    document.title = "Rally Calzado Dama";
   }, []);
 
   const sections = [
     {
       id: "rally",
-      title: "Rally de Ventas",
+      title: "Contenido WhatsApp",
       subtitle: "6 semanas de contenido para vender más",
-      icon: <Trophy className="w-6 h-6 text-yellow-500" />,
-      gradient: "from-pink-500 to-purple-500",
+      icon: <MessageCircle className="w-6 h-6 text-green-400" />,
+      gradient: "from-green-500 to-emerald-500",
       path: "/rally",
     },
     {
@@ -45,9 +44,8 @@ const Index = () => {
         style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%), hsl(220 85% 55%))" }}
       >
         <h1 className="font-display text-2xl md:text-3xl font-bold">
-          Secretos de Ventas
+          Rally Calzado Dama
         </h1>
-        <p className="text-sm text-white/80 mt-1">Price Shoes Pri-Ver 2026</p>
         <p className="text-xs text-white/60 mt-2">Tu motor de ventas semanal</p>
       </div>
 
@@ -76,11 +74,6 @@ const Index = () => {
             </div>
           </button>
         ))}
-      </div>
-
-      {/* Existing campaigns (Mi Contenido) */}
-      <div className="border-t border-border">
-        <CampaignSection />
       </div>
 
       {/* Admin link */}
