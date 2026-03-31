@@ -15,11 +15,6 @@ interface SlotData {
 }
 
 const BASE_SLOTS = 12;
-const PRIZE_DATA = [
-  { place: "🥇 1er lugar", desc: "Cupón de $2,000 válido en tienda o app", gradient: "from-yellow-200 to-amber-300", border: "border-amber-400" },
-  { place: "🥈 2do lugar", desc: "2 boletos para Six Flags o cupón de $1,500", gradient: "from-gray-200 to-slate-300", border: "border-slate-400" },
-  { place: "🥉 3er lugar", desc: "Cupón de $1,000", gradient: "from-orange-200 to-amber-400", border: "border-orange-400" },
-];
 
 const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
   const [slots, setSlots] = useState<Record<number, SlotData>>({});
@@ -157,13 +152,7 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto space-y-6">
-      <h2 className="text-xl font-bold text-foreground text-center">🏆 Premios de la semana</h2>
-
-      <div className="w-full rounded-2xl px-5 py-4 text-center" style={{ background: "linear-gradient(135deg, #ec4899, #8b5cf6)" }}>
-        <p className="text-white font-bold text-sm leading-snug">
-          ⭐ Cada producto que compras acumula puntos — quien sume más puntos, ¡gana!
-        </p>
-      </div>
+      <h2 className="text-xl font-bold text-foreground text-center">IDs de la semana</h2>
 
       {/* Product mosaic */}
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
@@ -290,16 +279,6 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
         </div>
       )}
 
-      {/* Prize structure */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {PRIZE_DATA.map((p) => (
-          <div key={p.place} className={`rounded-xl border ${p.border} bg-gradient-to-br ${p.gradient} p-4 text-center space-y-1`}>
-            <p className="text-2xl">{p.place.slice(0, 2)}</p>
-            <p className="font-bold text-sm text-foreground">{p.place.slice(2).trim()}</p>
-            <p className="text-xs text-foreground/80">{p.desc}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
