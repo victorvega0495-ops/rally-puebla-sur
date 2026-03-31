@@ -6,7 +6,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Rally Calzado Dama";
+    document.title = "Rally Puebla Sur";
   }, []);
 
   const sections = [
@@ -44,7 +44,7 @@ const Index = () => {
         style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%), hsl(220 85% 55%))" }}
       >
         <h1 className="font-display text-2xl md:text-3xl font-bold">
-          Rally Calzado Dama
+          Rally Puebla Sur
         </h1>
         <p className="text-xs text-white/60 mt-2">Tu motor de ventas semanal</p>
       </div>

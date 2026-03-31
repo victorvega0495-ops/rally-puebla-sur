@@ -19,7 +19,7 @@ const Rally = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Rally Calzado Dama | Price Shoes";
+    document.title = "Rally Puebla Sur | Price Shoes";
     supabase
       .from("campaigns")
       .select("*")
@@ -54,8 +54,8 @@ const Rally = () => {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <Trophy className="w-10 h-10 mx-auto mb-2 text-yellow-300" />
-        <h1 className="font-display text-2xl md:text-3xl font-bold">Rally Calzado Dama</h1>
-        <p className="text-sm text-white/80 mt-1">Price Shoes Pri-Ver 2026</p>
+        <h1 className="font-display text-2xl md:text-3xl font-bold">Rally Puebla Sur</h1>
+        <p className="text-sm text-white/80 mt-1">Price Shoes 2026</p>
         <p className="text-xs text-white/60 mt-2">8 semanas de contenido</p>
       </div>
 
