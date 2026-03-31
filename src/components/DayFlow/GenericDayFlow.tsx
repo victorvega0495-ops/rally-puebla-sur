@@ -64,6 +64,12 @@ const GenericDayFlow = ({
   const stepLabels = getStepsForFormat(dayConfig.format);
   const TOTAL_STEPS = stepLabels.length;
 
+  // Reset step when navigating between days
+  useEffect(() => {
+    setStep(0);
+    setDirection("right");
+  }, [dayConfig.dayNumber]);
+
   // Video assets
   const [videoAssets, setVideoAssets] = useState<Record<number, { url: string; fileName: string } | null>>({});
   const [videoUploading, setVideoUploading] = useState<number | null>(null);

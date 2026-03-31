@@ -19,7 +19,7 @@ const Rally = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Rally de Ventas | Price Shoes";
+    document.title = "Rally Calzado Dama | Price Shoes";
     supabase
       .from("campaigns")
       .select("*")
@@ -31,7 +31,7 @@ const Rally = () => {
       });
   }, []);
 
-  const weekEmojis = ["🔥", "🏖️", "✨", "🏃‍♀️", "👟", "🏆"];
+  const weekEmojis = ["🔥", "🏖️", "✨", "🏃‍♀️", "👟", "🏆", "💎", "🎯"];
   const weekColors = [
     "from-pink-500 to-rose-500",
     "from-cyan-500 to-blue-500",
@@ -39,6 +39,8 @@ const Rally = () => {
     "from-orange-500 to-amber-500",
     "from-emerald-500 to-green-500",
     "from-yellow-500 to-pink-500",
+    "from-indigo-500 to-purple-500",
+    "from-teal-500 to-cyan-500",
   ];
 
   return (
@@ -52,9 +54,9 @@ const Rally = () => {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <Trophy className="w-10 h-10 mx-auto mb-2 text-yellow-300" />
-        <h1 className="font-display text-2xl md:text-3xl font-bold">Rally de Ventas</h1>
+        <h1 className="font-display text-2xl md:text-3xl font-bold">Rally Calzado Dama</h1>
         <p className="text-sm text-white/80 mt-1">Price Shoes Pri-Ver 2026</p>
-        <p className="text-xs text-white/60 mt-2">6 semanas de contenido para vender más</p>
+        <p className="text-xs text-white/60 mt-2">8 semanas de contenido</p>
       </div>
 
       {/* Weeks grid */}

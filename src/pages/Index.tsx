@@ -13,7 +13,7 @@ const Index = () => {
     {
       id: "rally",
       title: "Contenido WhatsApp",
-      subtitle: "6 semanas de contenido para vender más",
+      subtitle: "8 semanas de contenido",
       icon: <MessageCircle className="w-6 h-6 text-green-400" />,
       gradient: "from-green-500 to-emerald-500",
       path: "/rally",
