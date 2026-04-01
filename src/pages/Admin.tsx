@@ -65,11 +65,18 @@ const Admin = () => {
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
       <div className="px-4 py-4 border-b border-border flex items-center justify-between">
-        <button onClick={() => navigate("/")} className="text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={() => navigate("/")}
+            className="w-10 h-10 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors">
+            <ArrowLeft className="w-5 h-5 text-foreground" />
+          </button>
+          <button onClick={() => navigate("/")}
+            className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors">
+            Inicio
+          </button>
+        </div>
         <h1 className="font-display font-bold text-lg">Panel Admin</h1>
-        <div className="w-5" />
+        <div className="w-10" />
       </div>
 
       {/* Tabs */}

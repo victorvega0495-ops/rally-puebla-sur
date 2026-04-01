@@ -60,13 +60,21 @@ export function useSaveMeta(campaignId: string, dayNumber: number, assetType: st
 
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(async () => {
+      // Preservar storage_url y file_name existentes
+      const { data: existing } = await supabase.from("day_assets")
+        .select("storage_url, file_name")
+        .eq("campaign", campaignId)
+        .eq("day_number", dayNumber)
+        .eq("asset_type", assetType)
+        .maybeSingle();
+
       await supabase.from("day_assets").upsert(
         {
           campaign: campaignId,
           day_number: dayNumber,
           asset_type: assetType,
-          storage_url: "",
-          file_name: "",
+          storage_url: (existing as any)?.storage_url ?? "",
+          file_name: (existing as any)?.file_name ?? "",
           [field]: value,
           updated_at: new Date().toISOString(),
         } as any,

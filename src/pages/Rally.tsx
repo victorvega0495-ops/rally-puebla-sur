@@ -50,9 +50,16 @@ const Rally = () => {
         className="px-4 py-8 text-center text-white relative"
         style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%), hsl(220 85% 55%))" }}
       >
-        <button onClick={() => navigate("/")} className="absolute left-4 top-4 text-white/80 hover:text-white">
-          <ArrowLeft className="w-5 h-5" />
-        </button>
+        <div className="absolute left-3 top-3 flex items-center gap-2">
+          <button onClick={() => navigate("/")}
+            className="w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors">
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </button>
+          <button onClick={() => navigate("/")}
+            className="text-xs text-white/70 hover:text-white transition-colors">
+            Inicio
+          </button>
+        </div>
         <Trophy className="w-10 h-10 mx-auto mb-2 text-yellow-300" />
         <h1 className="font-display text-2xl md:text-3xl font-bold">Rally Puebla Sur</h1>
         <p className="text-sm text-white/80 mt-1">Price Shoes 2026</p>

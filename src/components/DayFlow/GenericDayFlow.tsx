@@ -52,6 +52,38 @@ const getStepsForFormat = (format: DayFormat): string[] => {
   }
 };
 
+const getStepBreakdown = (format: DayFormat): { icon: string; text: string }[] => {
+  switch (format) {
+    case "solo_imagenes":
+      return [
+        { icon: "📸", text: "Sube 5 imágenes al carrusel" },
+        { icon: "📤", text: "Comparte en tu estado de WhatsApp" },
+      ];
+    case "video_imagen":
+      return [
+        { icon: "🎬", text: "Sube 2 videos" },
+        { icon: "📸", text: "Sube 2 imágenes" },
+        { icon: "📤", text: "Comparte con tus clientas" },
+      ];
+    case "solo_video":
+      return [
+        { icon: "🎬", text: "Sube 2 videos" },
+        { icon: "📤", text: "Comparte en tu estado" },
+      ];
+    case "imagenes_detalle":
+      return [
+        { icon: "🔍", text: "Sube 4 imágenes a detalle" },
+        { icon: "📤", text: "Comparte los detalles" },
+      ];
+    case "referidos":
+      return [
+        { icon: "🎬", text: "Sube 2 videos" },
+        { icon: "📸", text: "Sube 2 imágenes" },
+        { icon: "💬", text: "Copia los mensajes de referidos" },
+      ];
+  }
+};
+
 const GenericDayFlow = ({
   campaignSlug, campaignTitle, dayConfig, totalDays, isAdmin,
   completed, onBack, onComplete, onNavigateNext,
@@ -64,10 +96,15 @@ const GenericDayFlow = ({
   const stepLabels = getStepsForFormat(dayConfig.format);
   const TOTAL_STEPS = stepLabels.length;
 
-  // Reset step when navigating between days
+  // Reset ALL states when navigating between days
   useEffect(() => {
     setStep(0);
     setDirection("right");
+    setVideoIndex(0);
+    setImageIndex(0);
+    setVideoAssets({});
+    setImageAssets({});
+    setDayCompleted(completed);
   }, [dayConfig.dayNumber]);
 
   // Video assets
@@ -155,8 +192,24 @@ const GenericDayFlow = ({
     toast({ title: "Eliminado ✓", duration: 2000 });
   }, [campaignSlug, dayConfig.dayNumber, toast]);
 
-  const goNext = () => { if (step < TOTAL_STEPS - 1) { setDirection("right"); setStep(step + 1); window.scrollTo(0, 0); } };
-  const goPrev = () => { if (step > 0) { setDirection("left"); setStep(step - 1); window.scrollTo(0, 0); } };
+  const goNext = () => {
+    if (step < TOTAL_STEPS - 1) {
+      setDirection("right");
+      setStep(step + 1);
+      setVideoIndex(0);
+      setImageIndex(0);
+      window.scrollTo(0, 0);
+    }
+  };
+  const goPrev = () => {
+    if (step > 0) {
+      setDirection("left");
+      setStep(step - 1);
+      setVideoIndex(0);
+      setImageIndex(0);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const handleComplete = () => {
     onComplete();
@@ -176,6 +229,7 @@ const GenericDayFlow = ({
         title={dayConfig.title}
         mission={dayConfig.mission}
         missionQuote={dayConfig.missionQuote}
+        format={dayConfig.format}
       />
     );
 
@@ -302,13 +356,20 @@ const GenericDayFlow = ({
       {/* Top bar */}
       <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3 space-y-2">
         <div className="flex items-center justify-between">
-          <button onClick={onBack} className="text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={onBack}
+              className="w-10 h-10 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors">
+              <ArrowLeft className="w-5 h-5 text-foreground" />
+            </button>
+            <button onClick={() => window.location.href = "/"}
+              className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors">
+              Inicio
+            </button>
+          </div>
           <span className="text-xs font-semibold text-muted-foreground">
-            Día {dayConfig.dayNumber} — Paso {step + 1} de {TOTAL_STEPS} — {stepLabels[step]}
+            Día {dayConfig.dayNumber} — {stepLabels[step]}
           </span>
-          <div className="w-5" />
+          <div className="w-10" />
         </div>
         <Progress value={((step + 1) / TOTAL_STEPS) * 100} className="h-2 bg-muted" />
       </div>
@@ -348,22 +409,36 @@ const GenericDayFlow = ({
 };
 
 /* ========== Mission Step ========== */
-const MissionStep = ({ title, mission, missionQuote }: { title: string; mission?: string; missionQuote?: string }) => (
-  <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-8 py-8">
-    <p className="text-5xl">🎯</p>
-    <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground leading-tight">
-      {title || "Misión del día"}
-    </h1>
-    {mission && (
-      <p className="text-base text-muted-foreground leading-relaxed max-w-sm">{mission}</p>
-    )}
-    {missionQuote && (
-      <p className="text-sm italic max-w-xs" style={{ color: "hsl(330, 85%, 55%)" }}>
-        "{missionQuote}"
-      </p>
-    )}
-  </div>
-);
+const MissionStep = ({ title, mission, missionQuote, format }: { title: string; mission?: string; missionQuote?: string; format?: DayFormat }) => {
+  const breakdown = format ? getStepBreakdown(format) : [];
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6 py-8">
+      <p className="text-5xl">🎯</p>
+      <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground leading-tight">
+        {title || "Misión del día"}
+      </h1>
+      {mission && (
+        <p className="text-base text-muted-foreground leading-relaxed max-w-sm">{mission}</p>
+      )}
+      {breakdown.length > 0 && (
+        <div className="w-full max-w-sm space-y-2 mt-2">
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Hoy harás</p>
+          {breakdown.map((item, i) => (
+            <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border bg-card text-left">
+              <span className="text-xl">{item.icon}</span>
+              <span className="text-sm text-foreground font-medium">{item.text}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {missionQuote && (
+        <p className="text-sm italic max-w-xs" style={{ color: "hsl(330, 85%, 55%)" }}>
+          "{missionQuote}"
+        </p>
+      )}
+    </div>
+  );
+};
 
 /* ========== Media Slider ========== */
 interface MediaSliderProps {

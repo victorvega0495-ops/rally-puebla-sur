@@ -14,6 +14,27 @@ import type { DayFormat } from "@/components/DayFlow/GenericDayFlow";
 
 const ADMIN_PASSWORD = "priceshoes2026";
 const STORAGE_KEY = "campaign-progress";
+const ADMIN_KEY = "rally-admin";
+const ADMIN_EXPIRY_HOURS = 24;
+
+const checkAdminSession = (): boolean => {
+  try {
+    const raw = localStorage.getItem(ADMIN_KEY);
+    if (!raw) return false;
+    const { expiresAt } = JSON.parse(raw);
+    if (Date.now() > expiresAt) {
+      localStorage.removeItem(ADMIN_KEY);
+      return false;
+    }
+    return true;
+  } catch { return false; }
+};
+
+const saveAdminSession = () => {
+  localStorage.setItem(ADMIN_KEY, JSON.stringify({
+    expiresAt: Date.now() + ADMIN_EXPIRY_HOURS * 60 * 60 * 1000
+  }));
+};
 
 const loadProgress = (): Record<string, number[]> => {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; }
@@ -58,7 +79,7 @@ const RallyWeek = () => {
   const [campaign, setCampaign] = useState<CampaignRow | null>(null);
   const [days, setDays] = useState<DayRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(checkAdminSession);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [password, setPassword] = useState("");
   const [showCommunity, setShowCommunity] = useState(false);
@@ -78,7 +99,7 @@ const RallyWeek = () => {
         .single();
       if (campData) {
         setCampaign(campData as CampaignRow);
-        document.title = `${campData.title} | Rally Price Shoes`;
+        document.title = `${campData.title} | Rally Puebla Sur`;
         const { data: daysData } = await supabase
           .from("campaign_days")
           .select("*")
@@ -94,6 +115,7 @@ const RallyWeek = () => {
   const handlePasswordSubmit = () => {
     if (password === ADMIN_PASSWORD) {
       setIsAdmin(true);
+      saveAdminSession();
       setShowPasswordPrompt(false);
       setPassword("");
       toast({ title: "Modo admin activado", duration: 2000 });
@@ -123,9 +145,16 @@ const RallyWeek = () => {
     return (
       <div className="pt-16 pb-16 min-h-screen">
         <div className="px-4 py-6 text-center text-white relative" style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%), hsl(220 85% 55%))" }}>
-          <button onClick={() => setShowCommunity(false)} className="absolute left-4 top-4 text-white/80 hover:text-white flex items-center gap-1 text-sm">
-            <ArrowLeft className="w-4 h-4" /> Volver
-          </button>
+          <div className="absolute left-3 top-3 flex items-center gap-2">
+            <button onClick={() => setShowCommunity(false)}
+              className="w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors">
+              <ArrowLeft className="w-5 h-5 text-white" />
+            </button>
+            <button onClick={() => navigate("/")}
+              className="text-xs text-white/70 hover:text-white transition-colors">
+              Inicio
+            </button>
+          </div>
           <h1 className="font-display text-lg font-bold mt-2">Comunidad</h1>
           <p className="text-xs text-white/80 mt-1">Lo que dicen las socias</p>
         </div>
@@ -146,9 +175,16 @@ const RallyWeek = () => {
         className="px-4 py-8 text-center text-white relative"
         style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%), hsl(220 85% 55%))" }}
       >
-        <button onClick={() => navigate("/rally")} className="absolute left-4 top-4 text-white/80 hover:text-white">
-          <ArrowLeft className="w-5 h-5" />
-        </button>
+        <div className="absolute left-3 top-3 flex items-center gap-2">
+          <button onClick={() => navigate("/rally")}
+            className="w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors">
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </button>
+          <button onClick={() => navigate("/")}
+            className="text-xs text-white/70 hover:text-white transition-colors">
+            Inicio
+          </button>
+        </div>
         <h1 className="font-display text-xl md:text-2xl font-bold">{campaign.title}</h1>
         <p className="text-sm text-white/80 mt-1">{campaign.subtitle}</p>
         <div className="max-w-xs mx-auto mt-4 space-y-2">

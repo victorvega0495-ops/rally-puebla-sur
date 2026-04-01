@@ -30,7 +30,14 @@ const RallyDay = () => {
   const [dayConfig, setDayConfig] = useState<DayRow | null>(null);
   const [campaignTitle, setCampaignTitle] = useState("");
   const [totalDays, setTotalDays] = useState(7);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(() => {
+    try {
+      const raw = localStorage.getItem("rally-admin");
+      if (!raw) return false;
+      const { expiresAt } = JSON.parse(raw);
+      return Date.now() <= expiresAt;
+    } catch { return false; }
+  });
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState<Record<string, number[]>>(loadProgress);
 
@@ -43,7 +50,7 @@ const RallyDay = () => {
     if (state?.dayConfig && state?.campaign) {
       setDayConfig(state.dayConfig);
       setCampaignTitle(state.campaign.title);
-      setIsAdmin(state.isAdmin || false);
+      document.title = `Día ${dayNum} – ${state.campaign.title} | Rally Puebla Sur`;
       setLoading(false);
       return;
     }
@@ -57,6 +64,7 @@ const RallyDay = () => {
         .single();
       if (campData) {
         setCampaignTitle(campData.title);
+        document.title = `Día ${dayNum} – ${campData.title} | Rally Puebla Sur`;
         const { data: daysData } = await supabase
           .from("campaign_days")
           .select("*")
