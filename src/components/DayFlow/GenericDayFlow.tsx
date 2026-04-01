@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
-import { shareOrDownload } from "@/lib/share";
+import { shareOrDownload, downloadFile } from "@/lib/share";
 import { fireConfetti } from "@/lib/confetti";
 import { ProductMetaInputs, ProductMetaOverlay } from "@/components/semana3/ProductMetaFields";
 import EditableMessages from "@/components/semana3/EditableMessages";
@@ -616,6 +616,10 @@ const ShareStep = ({ assets }: { assets: Record<number, { url: string; fileName:
               <img src={asset.url} alt={`Imagen ${i + 1}`} className="w-full h-full object-cover" />
             </div>
             <div className="flex-1 flex items-center gap-2">
+              <button onClick={() => downloadFile(asset.url, asset.fileName)}
+                className="flex items-center justify-center gap-1.5 text-xs font-semibold py-2.5 px-3 rounded-xl border border-muted-foreground/30 text-foreground hover:bg-muted/50 transition-colors">
+                <Download className="w-3.5 h-3.5" />
+              </button>
               <button onClick={() => shareOrDownload(asset.url, asset.fileName)}
                 className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-white py-2.5 rounded-xl shadow-lg"
                 style={{ background: "linear-gradient(135deg, hsl(330 85% 55%), hsl(275 65% 50%))" }}>
