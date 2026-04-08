@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { ProductMetaInputs, ProductMetaOverlay } from "./ProductMetaFields";
+import { optimizeImage } from "@/lib/mediaUrl";
 
 const TOTAL_STEPS = 4;
 
@@ -290,10 +291,18 @@ const Step3Slider = ({ assets, uploading, isAdmin, inputRefs, campaignId, active
         ) : asset ? (
           <div className="relative w-full">
             <img
-              src={asset.url}
+              src={optimizeImage(asset.url, 900)}
               alt={`Imagen ${activeIndex + 1}`}
+              loading="eager"
+              decoding="async"
               className="w-full max-h-[55vh] object-contain animate-in fade-in duration-200"
             />
+            {activeIndex > 0 && assets[activeIndex - 1] && (
+              <img src={optimizeImage(assets[activeIndex - 1]!.url, 900)} alt="" className="hidden" loading="eager" decoding="async" />
+            )}
+            {activeIndex < total - 1 && assets[activeIndex + 1] && (
+              <img src={optimizeImage(assets[activeIndex + 1]!.url, 900)} alt="" className="hidden" loading="eager" decoding="async" />
+            )}
             {!isAdmin && <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType={`carousel_${activeIndex}`} />}
           </div>
         ) : (
@@ -423,7 +432,7 @@ const Step4Upload = ({ assets, onShare }: Step4Props) => {
                   {i + 1}
                 </div>
                 {asset ? (
-                  <img src={asset.url} alt={`Imagen ${i + 1}`} className="w-full h-full object-cover" />
+                  <img src={optimizeImage(asset.url, 200)} alt={`Imagen ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, hsl(330 85% 55% / 0.15), hsl(275 65% 50% / 0.15))" }}>
                     <ImageIcon className="w-4 h-4 text-muted-foreground/40" />
@@ -464,7 +473,7 @@ const Step4Upload = ({ assets, onShare }: Step4Props) => {
             {fullScreenIdx + 1}
           </div>
 
-          <img src={fullScreenAsset.url} alt={`Imagen ${fullScreenIdx + 1}`} className="max-h-[70vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()} />
+          <img src={optimizeImage(fullScreenAsset.url, 1200)} alt={`Imagen ${fullScreenIdx + 1}`} loading="eager" decoding="async" className="max-h-[70vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()} />
 
           <div className="flex items-center gap-3 mt-6" onClick={(e) => e.stopPropagation()}>
             <button

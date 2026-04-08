@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { checkLocalAccess, saveLocalAccess } from "@/lib/accessCode";
 import { shareOrDownload } from "@/lib/share";
+import { optimizeImage, videoPoster } from "@/lib/mediaUrl";
 import { useToast } from "@/hooks/use-toast";
 
 interface VideoRow {
@@ -192,7 +193,7 @@ const Exclusive = () => {
               >
                 <div className="relative aspect-[9/16]">
                   {vid.thumbnail_url ? (
-                    <img src={vid.thumbnail_url} alt={vid.title} className="w-full h-full object-cover" />
+                    <img src={optimizeImage(vid.thumbnail_url, 400)} alt={vid.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full bg-muted flex items-center justify-center">
                       <Film className="w-8 h-8 text-muted-foreground" />
@@ -226,9 +227,11 @@ const Exclusive = () => {
             <X className="w-6 h-6" />
           </button>
           <video
-            src={playingVideo.storage_url}
+            src={videoPoster(playingVideo.storage_url)}
             controls
             autoPlay
+            playsInline
+            preload="metadata"
             className="max-h-[80vh] max-w-[95vw] rounded-xl"
             onClick={(e) => e.stopPropagation()}
           />

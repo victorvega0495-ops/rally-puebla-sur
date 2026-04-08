@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { X, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { optimizeImage } from "@/lib/mediaUrl";
 
 interface ImageLightboxProps {
   src: string | null;
@@ -40,8 +41,10 @@ const ImageLightbox = ({ src, alt, onClose }: ImageLightboxProps) => {
       </button>
 
       <img
-        src={src}
+        src={optimizeImage(src, 1200)}
         alt={alt || ""}
+        loading="eager"
+        decoding="async"
         className="max-h-[85vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-300"
         onClick={(e) => e.stopPropagation()}
       />

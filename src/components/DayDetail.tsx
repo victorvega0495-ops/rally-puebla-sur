@@ -16,6 +16,7 @@ import { DayData, celebrationMessages } from "@/data/campaignData";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { optimizeImage } from "@/lib/mediaUrl";
 
 interface DayDetailProps {
   day: DayData;
@@ -189,7 +190,7 @@ const DayDetail = ({ day, totalDays, completed, campaignId, campaignTitle, isAdm
             ) : lookAsset ? (
               <div className="relative">
                 <div className="rounded-xl aspect-[9/16] w-full overflow-hidden relative">
-                  <img src={lookAsset.url} alt={day.lookName} className="w-full h-full object-cover" />
+                  <img src={optimizeImage(lookAsset.url, 600)} alt={day.lookName} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   {isAdmin && (
                     <>
                       <button onClick={() => lookInputRef.current?.click()} className="absolute bottom-2 left-2 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">

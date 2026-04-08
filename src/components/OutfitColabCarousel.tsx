@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ImageLightbox from "@/components/ImageLightbox";
+import { optimizeImage, videoPoster } from "@/lib/mediaUrl";
 
 const BUCKET = "campaign-assets";
 const MAX_SIZE = 50 * 1024 * 1024;
@@ -310,7 +311,7 @@ const SlotCard = ({ index, label, asset, isAdmin, uploading, progress: prog, onF
       ) : asset ? (
         <>
           <div className="relative w-full aspect-[9/16] rounded-xl overflow-hidden cursor-pointer" onClick={() => onImageTap(asset.url)}>
-            <img src={asset.url} alt={label} className="w-full h-full object-cover" />
+            <img src={optimizeImage(asset.url, 400)} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" />
             {isAdmin && (
               <>
                 <button onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }} className="absolute bottom-1.5 left-1.5 w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">
@@ -405,7 +406,7 @@ const VideoSlot = ({ label, asset, isAdmin, uploading, progress: prog, onFile, o
     <div className="flex-1 min-w-0">
       <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wide mb-1.5 text-center">{label}</p>
       <div className="relative w-full aspect-[9/16] max-h-[220px] rounded-xl overflow-hidden bg-black">
-        <video src={asset.url} controls className="w-full h-full object-cover" />
+        <video src={videoPoster(asset.url)} controls playsInline preload="metadata" className="w-full h-full object-cover" />
         {isAdmin && (
           <>
             <button onClick={() => inputRef.current?.click()} className="absolute bottom-1.5 left-1.5 w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80">

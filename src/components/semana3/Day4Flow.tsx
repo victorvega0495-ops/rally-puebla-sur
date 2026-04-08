@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { ProductMetaInputs, ProductMetaOverlay } from "./ProductMetaFields";
+import { optimizeImage, videoPoster } from "@/lib/mediaUrl";
 import EditableMessages from "./EditableMessages";
 
 interface Day4FlowProps {
@@ -277,7 +278,7 @@ const SingleVideoSlot = ({ assets, uploading, isAdmin, campaignId, inputRefs, on
           </div>
         ) : asset ? (
           <div className="relative w-full">
-            <video src={asset.url} controls playsInline className="w-full max-h-[50vh] object-contain rounded-2xl animate-in fade-in duration-200" />
+            <video src={videoPoster(asset.url)} controls playsInline preload="metadata" className="w-full max-h-[50vh] object-contain rounded-2xl animate-in fade-in duration-200" />
             {!isAdmin && <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType="video_0" />}
           </div>
         ) : (
@@ -392,9 +393,15 @@ const MediaSlider = ({
         ) : asset ? (
           <div className="relative w-full">
             {type === "video" ? (
-              <video src={asset.url} controls playsInline className="w-full max-h-[50vh] object-contain rounded-2xl animate-in fade-in duration-200" />
+              <video src={videoPoster(asset.url)} controls playsInline preload="metadata" className="w-full max-h-[50vh] object-contain rounded-2xl animate-in fade-in duration-200" />
             ) : (
-              <img src={asset.url} alt={`Imagen ${activeIndex + 1}`} className="w-full max-h-[50vh] object-contain animate-in fade-in duration-200" />
+              <img src={optimizeImage(asset.url, 900)} alt={`Imagen ${activeIndex + 1}`} loading="eager" decoding="async" className="w-full max-h-[50vh] object-contain animate-in fade-in duration-200" />
+            )}
+            {type === "image" && activeIndex > 0 && assets[activeIndex - 1] && (
+              <img src={optimizeImage(assets[activeIndex - 1]!.url, 900)} alt="" className="hidden" loading="eager" decoding="async" />
+            )}
+            {type === "image" && activeIndex < totalSlots - 1 && assets[activeIndex + 1] && (
+              <img src={optimizeImage(assets[activeIndex + 1]!.url, 900)} alt="" className="hidden" loading="eager" decoding="async" />
             )}
             {!isAdmin && <ProductMetaOverlay campaignId={campaignId} dayNumber={DAY} assetType={slotAssetType} />}
           </div>

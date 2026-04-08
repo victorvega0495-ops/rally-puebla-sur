@@ -210,7 +210,7 @@ const Classes = () => {
                 >
                   <div className="relative w-36 h-24 flex-shrink-0">
                     {thumb ? (
-                      <img src={thumb} alt={cls.title} className="w-full h-full object-cover" />
+                      <img src={thumb} alt={cls.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full bg-muted flex items-center justify-center">
                         <Play className="w-8 h-8 text-muted-foreground" />
