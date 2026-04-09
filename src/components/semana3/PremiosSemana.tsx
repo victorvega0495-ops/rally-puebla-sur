@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Upload, X, Plus, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { optimizeImage } from "@/lib/mediaUrl";
 
 interface PremiosSemanaProps {
   campaignId: string;
@@ -166,7 +165,7 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
                   className="relative flex-1 cursor-pointer"
                   onClick={() => !isAdmin && setLightboxIdx(i)}
                 >
-                  <img src={optimizeImage(slot.imageUrl, 400)} alt={`Producto ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                  <img src={slot.imageUrl} alt={`Producto ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   {isAdmin && (
                     <button
                       onClick={(e) => { e.stopPropagation(); deleteSlot(i); }}
@@ -250,7 +249,7 @@ const PremiosSemana = ({ campaignId, isAdmin }: PremiosSemanaProps) => {
           </button>
 
           <img
-            src={optimizeImage(lightboxSlot.imageUrl, 1200)}
+            src={lightboxSlot.imageUrl}
             alt={lightboxSlot.productId || `Producto ${lightboxIdx + 1}`}
             loading="eager"
             decoding="async"
